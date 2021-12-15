@@ -31,6 +31,8 @@ project "Olala"
     {
         "src",
         "vendor",
+        "vendor/imgui",
+        "vendor/yaml-cpp/include",
         "%{wks.location}/Dependencies/GLFW/include",
         "%{wks.location}/Dependencies/GLEW/include"
     }
@@ -43,6 +45,8 @@ project "Olala"
 
     links
     {
+        "imgui",
+        "yaml-cpp",
         "glfw3.lib",
         "glew32s.lib",
         "opengl32.lib"

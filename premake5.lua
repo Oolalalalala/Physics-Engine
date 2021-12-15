@@ -6,6 +6,10 @@ workspace "Physics-Engine-2D"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+group "Dependencies"
+    include "Olala/vendor/imgui"
+    include "Olala/vendor/yaml-cpp"
+group ""
 
 include "Olala"
 include "Editor"

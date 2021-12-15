@@ -30,7 +30,7 @@ namespace Olala {
 		static void Flush();
 		static void Reset();
 
-		static void WriteQuadDataToBuffer(uint32_t index, uint32_t textureIndex);
+		static void WriteQuadDataToBuffer(std::vector<uint32_t>& quadIndices, uint32_t textureIndex);
 
 	private:
 		struct CameraData

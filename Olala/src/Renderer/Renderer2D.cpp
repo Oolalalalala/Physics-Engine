@@ -51,7 +51,7 @@ namespace Olala {
 
         QuadData* QuadDataArray = nullptr;
         uint32_t QuadCount = 0;
-        std::unordered_map<Ref<Texture2D>, std::vector<int>> QuadTextures;// int as index
+        std::unordered_map<Ref<Texture2D>, std::vector<uint32_t>> QuadTextures;// int as index
 
     };
     static Renderer2DData s_Data;
@@ -142,10 +142,7 @@ namespace Olala {
 
         for (int i = 0; i < length; i++, it++)
         {
-            for (int quadIndex : it->second)
-            {
-                WriteQuadDataToBuffer(quadIndex, it->first == nullptr ? -1 : i);
-            }
+            WriteQuadDataToBuffer(it->second, it->first == nullptr ? -1 : i);
 
             if (it->first)
                 it->first->Bind(i);
@@ -169,12 +166,8 @@ namespace Olala {
         RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadBatchingIndexCount);
     }
 
-    void Renderer2D::WriteQuadDataToBuffer(uint32_t index, uint32_t textureIndex)
+    void Renderer2D::WriteQuadDataToBuffer(std::vector<uint32_t>& quadIndices, uint32_t textureIndex)
     { 
-        glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(s_Data.QuadDataArray[index].Position, 0.0f)) *
-                              glm::rotate(glm::mat4(1.0f), glm::radians(s_Data.QuadDataArray[index].Rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
-                              glm::scale(glm::mat4(1.0f), glm::vec3(s_Data.QuadDataArray[index].Size, 0.0f));
-
         constexpr glm::vec4 vertexPositions[4] = { { -0.5f,  0.5f, 0.0f, 1.0f  },
                                                    {  0.5f,  0.5f, 0.0f, 1.0f  },
                                                    {  0.5f, -0.5f, 0.0f, 1.0f  },
@@ -182,17 +175,23 @@ namespace Olala {
 
         constexpr glm::vec2 texCoords[4] = { { 0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f}, {0.0f, 0.0f} };
 
-        for (int i = 0; i < 4; i++)
+        for (const auto& index : quadIndices)
         {
-            s_Data.QuadVertexBufferPtr->Position = transform * vertexPositions[i];
-            s_Data.QuadVertexBufferPtr->Color = s_Data.QuadDataArray[index].Color;
-            s_Data.QuadVertexBufferPtr->TexCoord = texCoords[i];
-            s_Data.QuadVertexBufferPtr->TexIndex = (float)textureIndex;
-            s_Data.QuadVertexBufferPtr++;
+            glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(s_Data.QuadDataArray[index].Position, 0.0f)) *
+                glm::rotate(glm::mat4(1.0f), glm::radians(s_Data.QuadDataArray[index].Rotation), glm::vec3(0.0f, 0.0f, 1.0f)) *
+                glm::scale(glm::mat4(1.0f), glm::vec3(s_Data.QuadDataArray[index].Size, 0.0f));
+
+            for (int i = 0; i < 4; i++)
+            {
+                s_Data.QuadVertexBufferPtr->Position = transform * vertexPositions[i];
+                s_Data.QuadVertexBufferPtr->Color = s_Data.QuadDataArray[index].Color;
+                s_Data.QuadVertexBufferPtr->TexCoord = texCoords[i];
+                s_Data.QuadVertexBufferPtr->TexIndex = (float)textureIndex;
+                s_Data.QuadVertexBufferPtr++;
+            }
+
+            s_Data.QuadBatchingIndexCount += 6;
         }
-
-
-        s_Data.QuadBatchingIndexCount += 6;
     }
 
     void Renderer2D::Reset()
