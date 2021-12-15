@@ -27,6 +27,8 @@ namespace Olala {
 		Renderer2D::Init();
 
 		m_LayerStack = CreateScope<LayerStack>();
+		m_ImGuiLayer = new ImGuiLayer();
+		m_LayerStack->PushOverlay(m_ImGuiLayer);
 
 		m_Running = true;
 	}
@@ -40,6 +42,13 @@ namespace Olala {
 			{
 				layer->OnUpdate(dt);
 			}
+
+			m_ImGuiLayer->Begin();
+			for (Layer* layer : *m_LayerStack)
+			{
+				layer->OnImGuiRender();
+			}
+			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
 		}

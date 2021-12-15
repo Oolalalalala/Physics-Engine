@@ -14,6 +14,7 @@ namespace Olala {
 		virtual void OnDetach() {}
 		virtual void OnUpdate(float dt) {}
 		virtual void OnEvent(Event& e) {}
+		virtual void OnImGuiRender() {}
 	};
 
 }

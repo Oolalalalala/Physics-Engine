@@ -1,7 +1,8 @@
 #pragma once
 #include "Window.h"
 #include "Event/ApplicationEvent.h"
-#include "Layer/LayerStack.h"
+#include "LayerStack.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace Olala {
 	
@@ -27,10 +28,13 @@ namespace Olala {
 	private:
 		bool m_Running;
 		std::string m_ApplicationName;
-		Scope<Window> m_Window;
 
+		ImGuiLayer* m_ImGuiLayer;
+
+		Scope<Window> m_Window;
 		Scope<LayerStack> m_LayerStack;
 
+	private:
 		static Application* s_Instance;
 	};
 
