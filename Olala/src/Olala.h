@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Windows.h>
+
 #include "Core/Application.h"
 #include "Core/Base.h"
 

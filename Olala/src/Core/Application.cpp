@@ -61,6 +61,7 @@ namespace Olala {
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
 		m_Running = false;
+		Renderer2D::ShutDown();
 		return true;
 	}
 

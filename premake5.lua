@@ -1,4 +1,4 @@
-workspace "Physics Engine 2D"
+workspace "Physics-Engine-2D"
     architecture "x86"
 
     configurations { "Debug" , "Release" }

@@ -51,7 +51,7 @@ namespace Olala {
 
         QuadData* QuadDataArray = nullptr;
         uint32_t QuadCount = 0;
-        std::unordered_map<Ref<Texture2D>, std::vector<int>> QuadTexture;// int as index
+        std::unordered_map<Ref<Texture2D>, std::vector<int>> QuadTextures;// int as index
 
     };
     static Renderer2DData s_Data;
@@ -96,6 +96,14 @@ namespace Olala {
         s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(CameraData), 0);
 
         s_Data.TextureShader = Shader::Create("../Olala/Asset/Texture.glsl");
+
+        // Set the texture uniform index
+        s_Data.TextureShader->Bind();
+        int slotIndices[32] = { 0 };
+        for (int j = 0; j < 32; j++)
+            slotIndices[j] = j;
+
+        s_Data.TextureShader->SetUniformIntArray("u_Textures", slotIndices, 32);
     }
 
     void Renderer2D::ShutDown()
@@ -122,15 +130,15 @@ namespace Olala {
 
     bool Renderer2D::Batch()
     {
-        if (s_Data.QuadTexture.empty())
+        if (s_Data.QuadTextures.empty())
             return false;
 
 
         s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
         s_Data.QuadBatchingIndexCount = 0;
 
-        int length = std::min(s_Data.MaxTextureSlots,s_Data.QuadTexture.size());
-        auto it = s_Data.QuadTexture.begin();
+        int length = std::min(s_Data.MaxTextureSlots,s_Data.QuadTextures.size());
+        auto it = s_Data.QuadTextures.begin();
 
         for (int i = 0; i < length; i++, it++)
         {
@@ -141,11 +149,11 @@ namespace Olala {
 
             if (it->first)
                 it->first->Bind(i);
-            else if (s_Data.MaxTextureSlots < s_Data.QuadTexture.size())
+            else if (s_Data.MaxTextureSlots < s_Data.QuadTextures.size())
                 i--;
         }
 
-        s_Data.QuadTexture.erase(s_Data.QuadTexture.begin(), it);
+        s_Data.QuadTextures.erase(s_Data.QuadTextures.begin(), it);
 
         return true;
     }
@@ -179,7 +187,7 @@ namespace Olala {
             s_Data.QuadVertexBufferPtr->Position = transform * vertexPositions[i];
             s_Data.QuadVertexBufferPtr->Color = s_Data.QuadDataArray[index].Color;
             s_Data.QuadVertexBufferPtr->TexCoord = texCoords[i];
-            s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+            s_Data.QuadVertexBufferPtr->TexIndex = (float)textureIndex;
             s_Data.QuadVertexBufferPtr++;
         }
 
@@ -199,7 +207,7 @@ namespace Olala {
         s_Data.QuadDataArray[s_Data.QuadCount].Rotation = 0.f;
         s_Data.QuadDataArray[s_Data.QuadCount].Color = color;
 
-        s_Data.QuadTexture[nullptr].push_back(s_Data.QuadCount);
+        s_Data.QuadTextures[nullptr].push_back(s_Data.QuadCount);
 
         s_Data.QuadCount++;
     }
@@ -211,7 +219,7 @@ namespace Olala {
         s_Data.QuadDataArray[s_Data.QuadCount].Rotation = rotation;
         s_Data.QuadDataArray[s_Data.QuadCount].Color = color;
 
-        s_Data.QuadTexture[nullptr].push_back(s_Data.QuadCount);
+        s_Data.QuadTextures[nullptr].push_back(s_Data.QuadCount);
 
         s_Data.QuadCount++;
     }
@@ -223,7 +231,7 @@ namespace Olala {
         s_Data.QuadDataArray[s_Data.QuadCount].Rotation = 0.f;
         s_Data.QuadDataArray[s_Data.QuadCount].Color = color;
 
-        s_Data.QuadTexture[texture].push_back(s_Data.QuadCount);
+        s_Data.QuadTextures[texture].push_back(s_Data.QuadCount);
 
         s_Data.QuadCount++;
     }
@@ -235,7 +243,7 @@ namespace Olala {
         s_Data.QuadDataArray[s_Data.QuadCount].Rotation = rotation;
         s_Data.QuadDataArray[s_Data.QuadCount].Color = color;
 
-        s_Data.QuadTexture[texture].push_back(s_Data.QuadCount);
+        s_Data.QuadTextures[texture].push_back(s_Data.QuadCount);
 
         s_Data.QuadCount++;
     }

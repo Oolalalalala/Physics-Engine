@@ -25,3 +25,18 @@ project "Editor"
 	{
 		"Olala"
 	}
+
+    filter "system:windows"
+		systemversion "latest"
+
+
+	filter "configurations:Debug"
+		defines "DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+
+	filter "configurations:Release"
+		defines "RELEASE"
+		runtime "Release"
+		optimize "on"

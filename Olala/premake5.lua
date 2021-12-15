@@ -47,3 +47,18 @@ project "Olala"
         "glew32s.lib",
         "opengl32.lib"
     }
+
+    filter "system:windows"
+		systemversion "latest"
+
+
+	filter "configurations:Debug"
+		defines "DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+
+	filter "configurations:Release"
+		defines "RELEASE"
+		runtime "Release"
+		optimize "on"

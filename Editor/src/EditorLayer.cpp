@@ -2,7 +2,8 @@
 
 void EditorLayer::OnAttach()
 {
-	m_ExampleTexture = Olala::Texture2D::Create("../Olala/Asset/Planet9.jpg");
+	m_ExampleTextures[0] = Olala::Texture2D::Create("../Olala/Asset/Planet9.jpg");
+	m_ExampleTextures[1] = Olala::Texture2D::Create("../Olala/Asset/Abe.png");
 
 	m_Scene = Olala::CreateRef<Olala::Scene>();
 
@@ -14,11 +15,11 @@ void EditorLayer::OnAttach()
 	cameraComponent.RenderTarget = nullptr;//Olala::Framebuffer::Create(specs);
 
 	// Quad 1
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		Olala::Entity quad = m_Scene->CreateEntity("Quad" + std::to_string(i));
-		quad.AddComponent<Olala::SpriteRendererComponent>(glm::vec2{ 80.f, 45.f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, m_ExampleTexture);
-		quad.GetComponent<Olala::TransformComponent>().Position.x = -300.f + 20.f * i; // doesnt return references
+		quad.AddComponent<Olala::SpriteRendererComponent>(glm::vec2{ 80.f, 45.f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, m_ExampleTextures[i%2]);
+		quad.GetComponent<Olala::TransformComponent>().Position.x = -350.f + 100.f * i; // doesnt return references
 	}
 
 	m_Shader = Olala::Shader::Create("../Olala/Asset/Texture.glsl");

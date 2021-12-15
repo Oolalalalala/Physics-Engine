@@ -17,7 +17,7 @@ private:
 	Olala::Entity m_EditorCamera;
 
 	Olala::Ref<Olala::Shader> m_Shader;
-	Olala::Ref<Olala::Texture2D> m_ExampleTexture;
+	Olala::Ref<Olala::Texture2D> m_ExampleTextures[2];
 
 	float angle = 0.f;
 };
