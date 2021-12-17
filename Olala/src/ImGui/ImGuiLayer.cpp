@@ -5,16 +5,21 @@
 #include "Renderer/RenderCommand.h"
 
 #include "imgui/imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include "Backends/imgui_impl_opengl3.h"
+#include "Backends/imgui_impl_glfw.h"
 
 namespace Olala {
 
 	void ImGuiLayer::OnAttach()
 	{
 		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+		
 		ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow(), true);
-		ImGui_ImplOpenGL3_Init("#version 450");
+		ImGui_ImplOpenGL3_Init("#version 410");
+
 	}
 
 	void ImGuiLayer::OnUpdate(float dt)
@@ -39,6 +44,14 @@ namespace Olala {
 	{
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+		{
+			GLFWwindow* backupCurrentContext = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backupCurrentContext);
+		}
 	}
 
 	void ImGuiLayer::OnEvent(Event& e)

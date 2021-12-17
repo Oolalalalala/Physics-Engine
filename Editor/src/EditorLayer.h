@@ -11,6 +11,7 @@ public:
 	void OnDetach() override;
 	void OnUpdate(float dt) override;
 	void OnEvent(Olala::Event& e) override;
+	void OnImGuiRender() override;
 
 private:
 	Olala::Ref<Olala::Scene> m_Scene;
@@ -20,5 +21,7 @@ private:
 	Olala::Ref<Olala::Texture2D> m_ExampleTextures[2];
 
 	float angle = 0.f;
+
+	bool temp_b = true;
 };
 
