@@ -1,5 +1,10 @@
 #pragma once
+
 #include <Olala.h>
+#include "Panel/SceneViewPanel.h"
+#include "Panel/PropertyPanel.h"
+#include "Panel/SceneHierarchyPanel.h"
+#include "Panel/RuntimeViewPanel.h"
 
 class EditorLayer : public Olala::Layer
 {
@@ -15,13 +20,11 @@ public:
 
 private:
 	Olala::Ref<Olala::Scene> m_Scene;
-	Olala::Entity m_EditorCamera;
 
-	Olala::Ref<Olala::Shader> m_Shader;
-	Olala::Ref<Olala::Texture2D> m_ExampleTextures[2];
-
-	float angle = 0.f;
-
-	bool temp_b = true;
+	// Panels
+	Olala::Ref<SceneViewPanel> m_SceneViewPanel;
+	Olala::Ref<RuntimeViewPanel> m_RuntimeViewPanel;
+	Olala::Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
+	Olala::Ref<PropertyPanel> m_PropertyPanel;
 };
 

@@ -39,9 +39,21 @@ namespace Olala {
 			return m_Scene->m_Registry.has<Args...>(m_EntityID);
 		}
 
+		operator bool() { return m_EntityID != entt::null; }
+
+		bool operator==(const Entity& other)
+		{
+			return m_EntityID == other.m_EntityID && m_Scene == other.m_Scene;
+		}
+
+		bool operator!=(const Entity& other)
+		{
+			return !(*this == other);
+		}
+
 	private:
-		entt::entity m_EntityID;
-		Scene* m_Scene;
+		entt::entity m_EntityID = entt::null;
+		Scene* m_Scene = nullptr;
 	};
 
 }

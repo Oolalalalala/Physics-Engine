@@ -10,4 +10,5 @@ public:
 	~RuntimeViewPanel();
 
 	void OnUpdate() override;
+	void OnImGuiRender() override;
 };

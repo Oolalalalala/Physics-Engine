@@ -2,12 +2,21 @@
 #include <Olala.h>
 
 #include "Panel.h"
+#include "PropertyPanel.h"
 
 class SceneHierarchyPanel : public Panel
 {
 public:
-	SceneHierarchyPanel();
+	SceneHierarchyPanel(Olala::Ref<Olala::Scene>& scene, Olala::Ref<PropertyPanel>& propertyPanel);
 	~SceneHierarchyPanel();
 
 	void OnUpdate() override;
+	void OnImGuiRender() override;
+
+	void SetDisplayingScene(Olala::Ref<Olala::Scene>& scene);
+
+private:
+	Olala::Ref<Olala::Scene> m_Scene;
+	Olala::Ref<PropertyPanel> m_PropertyPanel;
+	Olala::Entity m_SelectedEntity;
 };

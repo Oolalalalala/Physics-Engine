@@ -1,7 +1,8 @@
 #pragma once
 
 #include "entt/entt.hpp"
-#include "Renderer/Texture2D.h"
+
+class SceneHierarchyPanel;
 
 namespace Olala {
 
@@ -20,7 +21,8 @@ namespace Olala {
 	private:
 		entt::registry m_Registry;
 
-		friend Entity;
+		friend class Entity;
+		friend class ::SceneHierarchyPanel;
 	};
 
 }

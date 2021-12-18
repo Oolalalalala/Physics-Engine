@@ -12,3 +12,7 @@ RuntimeViewPanel::~RuntimeViewPanel()
 void RuntimeViewPanel::OnUpdate()
 {
 }
+
+void RuntimeViewPanel::OnImGuiRender()
+{
+}
