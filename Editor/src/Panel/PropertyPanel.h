@@ -15,7 +15,7 @@ public:
 	void SetDisplayedEntity(const Olala::Entity& entity);
 
 private:
-	void DrawProperty();
+	void DrawComponents();
 
 private:
 	Olala::Entity m_DisplayedEntity;

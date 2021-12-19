@@ -54,6 +54,12 @@ namespace Olala {
 		}
 	}
 
+	void Application::Close()
+	{
+		m_Running = false;
+		Renderer2D::ShutDown();
+	}
+
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
@@ -69,8 +75,7 @@ namespace Olala {
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
-		m_Running = false;
-		Renderer2D::ShutDown();
+		Close();
 		return true;
 	}
 

@@ -19,6 +19,9 @@ public:
 	void OnImGuiRender() override;
 
 private:
+	void DrawMenuBar();
+
+private:
 	Olala::Ref<Olala::Scene> m_Scene;
 
 	// Panels

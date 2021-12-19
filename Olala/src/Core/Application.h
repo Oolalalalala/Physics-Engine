@@ -11,8 +11,8 @@ namespace Olala {
 	public:
 		Application(const std::string& name);
 
-		void Init();
 		void Run();
+		void Close();
 
 		void OnEvent(Event& e);
 		bool OnWindowClose(WindowCloseEvent& e);
@@ -24,6 +24,9 @@ namespace Olala {
 	protected:
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
+
+	private:
+		void Init();
 
 	private:
 		bool m_Running;

@@ -26,6 +26,7 @@ namespace Olala {
 			{
 				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 				camera.Camera->SetPosition(transform.Position);
+				camera.Camera->SetDirection(glm::quat(glm::radians(transform.Rotation)) * glm::vec3(0.0f, 0.0f, -1.0f)); // Not sure if correct
 
 				if (camera.IsOn)
 					cameras.emplace_back(entity, this);
@@ -47,7 +48,7 @@ namespace Olala {
 				auto& cameraComponent = camera.GetComponent<CameraComponent>();
 
 				RenderCommand::SetRenderTarget(cameraComponent.RenderTarget);
-				RenderCommand::SetClearColor({ 0.0f, 0.0f, 1.0f, 1.0f });
+				RenderCommand::SetClearColor({ 0.125f, 0.125f, 0.125f, 1.0f });
 				RenderCommand::Clear();
 
 				Renderer2D::BeginScene(*cameraComponent.Camera);

@@ -22,7 +22,7 @@ void SceneViewPanel::OnImGuiRender()
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0.f, 0.f });
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);
 
-		ImGuiWindowFlags_ flags = ImGuiWindowFlags_NoScrollbar;
+		ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar;
 
 		ImGui::Begin(m_Name.c_str(), &m_IsOpen, flags);
 		ImGui::Image((ImTextureID)m_EditorCamera.GetComponent<Olala::CameraComponent>().RenderTarget->GetColorBufferRendererId(),
