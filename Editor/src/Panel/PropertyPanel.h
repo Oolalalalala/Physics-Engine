@@ -16,6 +16,7 @@ public:
 
 private:
 	void DrawComponents();
+	void ComponentFunctionality(bool* remove = nullptr);
 
 private:
 	Olala::Entity m_DisplayedEntity;

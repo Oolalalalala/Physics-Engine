@@ -15,4 +15,5 @@ public:
 	
 private:
 	Olala::Entity m_EditorCamera;
+	ImVec2 m_ViewportSize;
 };

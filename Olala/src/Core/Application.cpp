@@ -81,7 +81,8 @@ namespace Olala {
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
-		RenderCommand::SetViewport(0, 0, e.GetWidth(), e.GetHeight());
+		/// Unneeded because of ImGui, probably should be changed to modify framebuffer and camera aspect ratio
+		//RenderCommand::SetViewport(0, 0, e.GetWidth(), e.GetHeight());
 		return false;
 	}
 

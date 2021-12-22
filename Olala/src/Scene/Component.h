@@ -45,9 +45,9 @@ namespace Olala {
 
 	struct CameraComponent
 	{
-		Ref<Camera> Camera;
-		bool IsMain, IsOn;
-		Ref<Framebuffer> RenderTarget;
+		Ref<Camera> Camera = nullptr;
+		bool IsMain = false, IsOn = true;
+		Ref<Framebuffer> RenderTarget = nullptr;
 
 		CameraComponent() = default;
 		CameraComponent(Ref<::Olala::Camera> camera, bool isMain = true, bool isOn = true)
@@ -56,9 +56,9 @@ namespace Olala {
 
 	struct SpriteRendererComponent
 	{
-		glm::vec2 Size;
-		glm::vec4 Color;
-		Ref<Texture2D> Texture;
+		glm::vec2 Size = glm::vec2(10, 10);
+		glm::vec4 Color = glm::vec4(1.0f);
+		Ref<Texture2D> Texture = nullptr;
 
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(glm::vec2 size, glm::vec4 color, Ref<Texture2D> texture)

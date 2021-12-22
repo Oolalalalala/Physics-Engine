@@ -37,7 +37,8 @@ void EditorLayer::OnDetach()
 
 void EditorLayer::OnUpdate(float dt)
 {
-	m_Scene->OnUpdate();
+    //Moved to OnImGuiRender becuase of framebuffer resizing
+	//m_Scene->OnUpdate();
 }
 
 void EditorLayer::OnImGuiRender()
@@ -92,6 +93,10 @@ void EditorLayer::OnImGuiRender()
     m_PropertyPanel        -> OnImGuiRender();
     m_SceneViewPanel       -> OnImGuiRender();
     m_RuntimeViewPanel     -> OnImGuiRender();
+
+    // On update must be because sceneViewPanel resizes framebuffer
+    m_Scene->OnUpdate();
+
 
     ImGui::End();
 

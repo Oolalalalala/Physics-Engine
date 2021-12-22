@@ -69,18 +69,17 @@ namespace Olala {
 	{
 	private:
 		struct Specs {
-			float Left, Right, Top, Bottom;
+			float Width, Height, NearPlane, FarPlane;
 			bool operator==(const Specs& other) 
 			{
-				return Left == other.Left && Right == other.Right && 
-				       Top == other.Top && Bottom == other.Bottom;
+				return Width == other.Width && Height == other.Height && NearPlane == other.NearPlane && FarPlane == other.FarPlane;
 			}
 			bool operator!=(const Specs& other) { return !(*this == other); }
 		};
 
 	public:
 		OrthographicCamera();
-		OrthographicCamera(float left, float right, float top, float bottom);
+		OrthographicCamera(float width, float height, float nearPlane, float farPlane);
 
 		Specs& GetSpecs() { return m_Specs; }
 

@@ -17,13 +17,17 @@ namespace Olala {
 		void Bind() const;
 		void Unbind() const;
 
+		void Invalidate();
+		void Resize(uint32_t width, uint32_t height);
+
 		uint32_t GetColorBufferRendererId() const { return m_ColorBufferRendererID; }
 
 		static Ref<Framebuffer> Create(FramebufferSpecs specs);
 
 	private:
-		uint32_t m_RendererID;
+		uint32_t m_RendererID = 0;
 		uint32_t m_ColorBufferRendererID;
 		uint32_t m_DepthBufferRendererID;
+		FramebufferSpecs m_Specs;
 	};
 }

@@ -28,7 +28,7 @@ namespace Olala {
 				camera.Camera->SetPosition(transform.Position);
 				camera.Camera->SetDirection(glm::quat(glm::radians(transform.Rotation)) * glm::vec3(0.0f, 0.0f, -1.0f)); // Not sure if correct
 
-				if (camera.IsOn)
+				if (camera.IsOn && camera.RenderTarget != nullptr)
 					cameras.emplace_back(entity, this);
 			}
 		}
@@ -58,7 +58,7 @@ namespace Olala {
 					auto& transform = group.get<TransformComponent>(entity);
 					auto& sprite = group.get<SpriteRendererComponent>(entity);
 
-					Renderer2D::DrawQuad(glm::vec2{ transform.Position.x, transform.Position.y }, sprite.Size * glm::vec2{ transform.Scale.x, transform.Scale.y }, sprite.Texture, sprite.Color);
+					Renderer2D::DrawQuad((glm::vec2)transform.Position, sprite.Size * (glm::vec2)transform.Scale, transform.Rotation.z, sprite.Texture, sprite.Color);
 				}
 
 				Renderer2D::EndScene();
