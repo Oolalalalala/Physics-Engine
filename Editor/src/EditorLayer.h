@@ -23,6 +23,7 @@ private:
 
 private:
 	Olala::Ref<Olala::Scene> m_Scene;
+	Olala::Ref<Olala::AssetManager> m_AssetManager;
 
 	// Panels
 	Olala::Ref<SceneViewPanel> m_SceneViewPanel;

@@ -95,7 +95,7 @@ namespace Olala {
 
         s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(CameraData), 0);
 
-        s_Data.TextureShader = Shader::Create("../Olala/Asset/Texture.glsl");
+        s_Data.TextureShader = Shader::Create("../Olala/Asset/Shader/Texture.glsl");
 
         // Set the texture uniform index
         s_Data.TextureShader->Bind();

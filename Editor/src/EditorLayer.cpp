@@ -4,6 +4,7 @@
 void EditorLayer::OnAttach()
 {
 	m_Scene = Olala::CreateRef<Olala::Scene>();
+    m_AssetManager = Olala::CreateRef<Olala::AssetManager>("..\\Olala\\Asset\\Scene\\Demo");
 
 	// Editor camera
 	Olala::Entity editorCamera = m_Scene->CreateEntity("Editor Camera");
@@ -18,8 +19,8 @@ void EditorLayer::OnAttach()
     m_RuntimeViewPanel = Olala::CreateRef<RuntimeViewPanel>();
 
 	Olala::Ref<Olala::Texture2D> exampleTextures[2];
-	exampleTextures[0] = Olala::Texture2D::Create("../Olala/Asset/Planet9.jpg");
-	exampleTextures[1] = Olala::Texture2D::Create("../Olala/Asset/Abe.png");
+    exampleTextures[0] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Planet9");
+    exampleTextures[1] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Abe");
 
 	// Quads
 	for (int i = 0; i < 8; i++)
