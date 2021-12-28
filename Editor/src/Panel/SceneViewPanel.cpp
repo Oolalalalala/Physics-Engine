@@ -32,7 +32,7 @@ void SceneViewPanel::OnImGuiRender()
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (m_ViewportSize.x != viewportPanelSize.x || m_ViewportSize.y != viewportPanelSize.y)
 		{
-			camera.RenderTarget->Resize(viewportPanelSize.x, viewportPanelSize.y);
+			camera.RenderTarget->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 			if (camera.Camera->GetProjectionType() == Olala::CameraProjectionType::Perspective)
 			{
 				auto& specs = std::static_pointer_cast<Olala::PerspectiveCamera>(camera.Camera)->GetSpecs();

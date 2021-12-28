@@ -39,6 +39,12 @@ namespace Olala {
 			return m_Scene->m_Registry.has<Args...>(m_EntityID);
 		}
 
+		template<typename ... Args>
+		bool HasAnyComponent()
+		{
+			return m_Scene->m_Registry.any<Args...>(m_EntityID);
+		}
+
 		operator bool() { return m_EntityID != entt::null; }
 
 		bool operator==(const Entity& other)

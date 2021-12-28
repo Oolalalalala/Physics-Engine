@@ -22,7 +22,7 @@ namespace Olala {
 			{
 				for (auto texture : std::filesystem::directory_iterator(folder))
 				{
-					m_Pools.Texture.Add(texture.path().stem().string(), Texture2D::Create(texture.path().string()));
+					m_Pools.Texture.Add(texture.path().filename().string(), Texture2D::Create(texture.path().string()));
 				}
 			}
 		}

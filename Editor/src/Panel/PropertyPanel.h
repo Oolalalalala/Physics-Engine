@@ -15,8 +15,7 @@ public:
 	void SetDisplayedEntity(const Olala::Entity& entity);
 
 private:
-	void DrawComponents();
-	void ComponentFunctionality(bool* remove = nullptr);
+	void DrawContext();
 
 private:
 	Olala::Entity m_DisplayedEntity;

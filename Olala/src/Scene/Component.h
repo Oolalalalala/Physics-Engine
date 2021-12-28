@@ -65,4 +65,42 @@ namespace Olala {
 			: Size(size), Color(color), Texture(texture) {}
 	};
 
+	struct Rigidbody2DComponent
+	{
+		float Mass = 1.f;
+		bool ApplyGravity = true;
+		bool ApplyCollision = true;
+
+		Rigidbody2DComponent() = default;
+		Rigidbody2DComponent(float mass, bool applyGravity = true, bool applyCollision = true)
+			: Mass(mass), ApplyGravity(applyGravity), ApplyCollision(applyCollision) {}
+	};
+
+	struct Collider2D
+	{
+		glm::vec2 Center = glm::vec2(0.f, 0.f);
+
+		Collider2D() = default;
+		Collider2D(glm::vec2 center = glm::vec2(0.f, 0.f))
+			: Center(center) {}
+	};
+
+	struct BoxCollider2D : public Collider2D
+	{
+		glm::vec2 Size = glm::vec2(1.f, 1.f);
+
+		BoxCollider2D() : Collider2D(glm::vec2(0.f, 0.f)) {}
+		BoxCollider2D(glm::vec2 size, glm::vec2 center = glm::vec2(0.f, 0.f))
+			: Size(size), Collider2D(center) {}
+	};
+
+	struct CircleCollider2D : public Collider2D
+	{
+		float Radius = 1.f;
+
+		CircleCollider2D() : Collider2D(glm::vec2(0.f, 0.f)) {}
+		CircleCollider2D(float radius, glm::vec2 center = glm::vec2(0.f, 0.f))
+			: Radius(radius), Collider2D(center) {}
+	};
+
 }

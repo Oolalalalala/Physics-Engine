@@ -17,10 +17,11 @@ void EditorLayer::OnAttach()
 	m_PropertyPanel = Olala::CreateRef<PropertyPanel>();
 	m_SceneHierarchyPanel = Olala::CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertyPanel);
     m_RuntimeViewPanel = Olala::CreateRef<RuntimeViewPanel>();
+    m_AssetPanel = Olala::CreateRef<AssetPanel>(m_AssetManager);
 
 	Olala::Ref<Olala::Texture2D> exampleTextures[2];
-    exampleTextures[0] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Planet9");
-    exampleTextures[1] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Abe");
+    exampleTextures[0] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Planet9.jpg");
+    exampleTextures[1] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Abe.png");
 
 	// Quads
 	for (int i = 0; i < 8; i++)
@@ -94,6 +95,7 @@ void EditorLayer::OnImGuiRender()
     m_PropertyPanel        -> OnImGuiRender();
     m_SceneViewPanel       -> OnImGuiRender();
     m_RuntimeViewPanel     -> OnImGuiRender();
+    m_AssetPanel           -> OnImGuiRender();
 
     // On update must be because sceneViewPanel resizes framebuffer
     m_Scene->OnUpdate();

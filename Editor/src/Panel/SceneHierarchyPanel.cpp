@@ -24,7 +24,8 @@ void SceneHierarchyPanel::OnImGuiRender()
 		{
 			Olala::Entity entity(entityID, m_Scene.get());
 
-			ImGuiTreeNodeFlags flags = (m_SelectedEntity == entity ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+			ImGuiTreeNodeFlags flags = (m_SelectedEntity == entity ? ImGuiTreeNodeFlags_Selected : 0) |
+				ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
 			bool opened = ImGui::TreeNodeEx(entity.GetComponent<Olala::TagComponent>().Tag.c_str(), flags);
 
 			if (ImGui::IsItemClicked())
