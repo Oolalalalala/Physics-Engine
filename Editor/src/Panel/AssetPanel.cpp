@@ -37,6 +37,8 @@ void AssetPanel::OnImGuiRender()
 			}
 		}
 
+		m_IsFocused = ImGui::IsWindowFocused();
+
 		ImGui::End();
 	}
 }

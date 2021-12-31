@@ -6,6 +6,7 @@
 #include "Panel/SceneHierarchyPanel.h"
 #include "Panel/RuntimeViewPanel.h"
 #include "Panel/AssetPanel.h"
+#include "Panel/DebugPanel.h"
 
 class EditorLayer : public Olala::Layer
 {
@@ -32,5 +33,10 @@ private:
 	Olala::Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
 	Olala::Ref<PropertyPanel> m_PropertyPanel;
 	Olala::Ref<AssetPanel> m_AssetPanel;
+	Olala::Ref<DebugPanel> m_DebugPanel;
+
+	Olala::Entity m_EditorCamera;
+
+	bool temp = false;
 };
 

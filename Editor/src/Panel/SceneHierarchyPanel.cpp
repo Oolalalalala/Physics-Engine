@@ -38,6 +38,7 @@ void SceneHierarchyPanel::OnImGuiRender()
 				ImGui::TreePop();
 		});
 
+		m_IsFocused = ImGui::IsWindowFocused();
 		ImGui::End();
 	}
 }

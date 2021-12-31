@@ -54,6 +54,20 @@ namespace Olala {
 			: Camera(camera), IsMain(isMain), IsOn(isOn) {}
 	};
 
+	struct EditorCameraControllerComponent
+	{
+		GLenum ForwardKey   = GLFW_KEY_W;
+		GLenum BackKey      = GLFW_KEY_S;
+		GLenum LeftKey      = GLFW_KEY_A;
+		GLenum RightKey     = GLFW_KEY_D;
+		float MovementSpeed = 1.f;
+		bool IsOn = false;
+		
+		EditorCameraControllerComponent() = default;
+		EditorCameraControllerComponent(GLenum forwardKey, GLenum backKey, GLenum leftKey, GLenum rightKey, float movementSpeed)
+			: ForwardKey(forwardKey), BackKey(BackKey), LeftKey(leftKey), RightKey(rightKey), MovementSpeed(movementSpeed) {}
+	};
+
 	struct SpriteRendererComponent
 	{
 		glm::vec2 Size = glm::vec2(10, 10);
@@ -67,6 +81,9 @@ namespace Olala {
 
 	struct Rigidbody2DComponent
 	{
+		glm::vec2 Velocity = glm::vec2(0.f);
+		glm::vec2 Force = glm::vec2(0.f);
+
 		float Mass = 1.f;
 		bool ApplyGravity = true;
 		bool ApplyCollision = true;

@@ -3,23 +3,50 @@
 
 #include "Entity.h"
 #include "Component.h"
+#include "Core/IO.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer2D.h"
+
+#include "Physics/PhysicsWorld.h"
 
 namespace Olala {
 
 	Scene::Scene()
 	{
+		m_PhysicsWorld = CreateRef<PhysicsWorld>(*this);
 	}
 
 	Scene::~Scene()
 	{
 	}
 
-	void Scene::OnUpdate()
+	void Scene::OnUpdate(float dt)
 	{
-		std::vector<Entity> cameras;
+		// Editor Camera Controller
+		{
+			auto group = m_Registry.view<TransformComponent, CameraComponent, EditorCameraControllerComponent>();
+			for (auto entity : group)
+			{
+				auto [transform, camera, cameraController] = group.get<TransformComponent, CameraComponent, EditorCameraControllerComponent>(entity);
+				if (cameraController.IsOn)
+				{
+					if (IO::IsKeyPressed(cameraController.ForwardKey))
+						transform.Position += camera.Camera->GetDirection() * cameraController.MovementSpeed * dt;
+					if (IO::IsKeyPressed(cameraController.BackKey))
+						transform.Position -= camera.Camera->GetDirection() * cameraController.MovementSpeed * dt;
+					if (IO::IsKeyPressed(cameraController.LeftKey))
+						transform.Position -= glm::normalize(glm::cross(camera.Camera->GetDirection(), camera.Camera->GetUpDirection())) * cameraController.MovementSpeed * dt;
+					if (IO::IsKeyPressed(cameraController.RightKey))
+						transform.Position += glm::normalize(glm::cross(camera.Camera->GetDirection(), camera.Camera->GetUpDirection())) * cameraController.MovementSpeed * dt;
+				}
+			}
+		}
 
+		// Physics
+		m_PhysicsWorld->OnUpdate(dt);
+
+		// Get All Camera
+		std::vector<Entity> cameras;
 		{
 			auto view = m_Registry.view<TransformComponent, CameraComponent>();
 			for (auto entity : view)
@@ -35,13 +62,7 @@ namespace Olala {
 
 		// Render the scene to all camera
 		{
-			// Clear default framebuffer
-			RenderCommand::SetRenderTarget(nullptr);
-			RenderCommand::SetClearColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-			RenderCommand::Clear();
-
 			auto group = m_Registry.group<TransformComponent, SpriteRendererComponent>();
-			
 
 			for (Entity& camera : cameras)
 			{

@@ -7,17 +7,19 @@ void EditorLayer::OnAttach()
     m_AssetManager = Olala::CreateRef<Olala::AssetManager>("..\\Olala\\Asset\\Scene\\Demo");
 
 	// Editor camera
-	Olala::Entity editorCamera = m_Scene->CreateEntity("Editor Camera");
-	auto& cameraComponent = editorCamera.AddComponent<Olala::CameraComponent>(Olala::CreateRef<Olala::OrthographicCamera>());
+    m_EditorCamera = m_Scene->CreateEntity("Editor Camera");
+    m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
+	auto& cameraComponent = m_EditorCamera.AddComponent<Olala::CameraComponent>(Olala::CreateRef<Olala::OrthographicCamera>());
 	Olala::FramebufferSpecs specs;
 	specs.Width = 800, specs.Height = 600;
 	cameraComponent.RenderTarget = Olala::Framebuffer::Create(specs);
 
-	m_SceneViewPanel = Olala::CreateRef<SceneViewPanel>(editorCamera);
+	m_SceneViewPanel = Olala::CreateRef<SceneViewPanel>(m_EditorCamera);
 	m_PropertyPanel = Olala::CreateRef<PropertyPanel>();
 	m_SceneHierarchyPanel = Olala::CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertyPanel);
     m_RuntimeViewPanel = Olala::CreateRef<RuntimeViewPanel>();
     m_AssetPanel = Olala::CreateRef<AssetPanel>(m_AssetManager);
+    m_DebugPanel = Olala::CreateRef<DebugPanel>(&temp);
 
 	Olala::Ref<Olala::Texture2D> exampleTextures[2];
     exampleTextures[0] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Planet9.jpg");
@@ -39,8 +41,9 @@ void EditorLayer::OnDetach()
 
 void EditorLayer::OnUpdate(float dt)
 {
-    //Moved to OnImGuiRender becuase of framebuffer resizing
-	//m_Scene->OnUpdate();
+    m_EditorCamera.GetComponent<Olala::EditorCameraControllerComponent>().IsOn = m_SceneViewPanel->GetIsFocused();
+
+	m_Scene->OnUpdate(dt);
 }
 
 void EditorLayer::OnImGuiRender()
@@ -96,9 +99,7 @@ void EditorLayer::OnImGuiRender()
     m_SceneViewPanel       -> OnImGuiRender();
     m_RuntimeViewPanel     -> OnImGuiRender();
     m_AssetPanel           -> OnImGuiRender();
-
-    // On update must be because sceneViewPanel resizes framebuffer
-    m_Scene->OnUpdate();
+    m_DebugPanel           -> OnImGuiRender();
 
 
     ImGui::End();
@@ -130,19 +131,12 @@ void EditorLayer::DrawMenuBar()
 
         if (ImGui::BeginMenu("View"))
         {
-            if (ImGui::BeginMenu("Panel"))
-            {
-                if (ImGui::MenuItem("Entities"))
-                {
-                    m_SceneHierarchyPanel->SetOpen(true);
-                }
-                if (ImGui::MenuItem("Scene"))
-                {
-                    m_SceneViewPanel->SetOpen(true);
-                }
+            if (ImGui::MenuItem("Entities"))   m_SceneHierarchyPanel->SetOpen(true);
+            if (ImGui::MenuItem("Scene"))      m_SceneViewPanel->SetOpen(true);
+            if (ImGui::MenuItem("Property"))   m_PropertyPanel->SetOpen(true);
+            if (ImGui::MenuItem("Asset"))      m_AssetPanel->SetOpen(true);
+            if (ImGui::MenuItem("Debug"))      m_DebugPanel->SetOpen(true);
 
-                ImGui::EndMenu();
-            }
             ImGui::EndMenu();
         }
 		ImGui::EndMenuBar();

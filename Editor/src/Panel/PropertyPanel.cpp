@@ -20,6 +20,8 @@ void PropertyPanel::OnImGuiRender()
 		ImGui::Begin(m_Name.c_str(), &m_IsOpen);
 		if (m_DisplayedEntity)
 			DrawContext();
+
+		m_IsFocused = ImGui::IsWindowFocused();
 		ImGui::End();
 	}
 }
@@ -31,19 +33,17 @@ static void DrawComponent(const std::string& name, Olala::Entity& entity, std::f
 
 	if (entity.HasComponent<T>())
 	{
-		auto& component = entity.GetComponent<T>();
-
 		bool opened = ImGui::CollapsingHeader(name.c_str(), componentFlags);
-
 		bool shouldRemove = false;
-		if (ImGui::BeginPopupContextItem("Component Functionality"))
+
+		if (ImGui::BeginPopupContextItem())
 		{
 			if (ImGui::Selectable("Remove")) shouldRemove = true;
 			ImGui::EndPopup();
 		}
 
-		if (opened) uiFunction(component);
-		if (shouldRemove) entity.RemoveComponent<Olala::SpriteRendererComponent>();
+		if (opened) uiFunction(entity.GetComponent<T>());
+		if (shouldRemove) entity.RemoveComponent<T>();
 	}
 }
 

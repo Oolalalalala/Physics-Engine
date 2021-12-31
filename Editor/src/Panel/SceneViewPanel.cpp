@@ -22,15 +22,21 @@ void SceneViewPanel::OnImGuiRender()
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0.f, 0.f });
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);
 
-		ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollbar;
+		ImGui::Begin(m_Name.c_str(), &m_IsOpen);
+		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 
-		ImGui::Begin(m_Name.c_str(), &m_IsOpen, flags);
-
-		// Resize framebuffer and camera to fit the window
 		auto& camera = m_EditorCamera.GetComponent<Olala::CameraComponent>();
 
-		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (m_ViewportSize.x != viewportPanelSize.x || m_ViewportSize.y != viewportPanelSize.y)
+		ImGui::Image((ImTextureID)camera.RenderTarget->GetColorBufferRendererId(), m_ViewportSize, { 0, 1 }, { 1, 0 });
+
+		m_IsFocused = ImGui::IsWindowFocused();
+
+		ImGui::End();
+		ImGui::PopStyleVar(3);
+
+
+		// Resize framebuffer and camera to fit the window
+		if ((uint32_t)m_ViewportSize.x != (uint32_t)viewportPanelSize.x || (uint32_t)m_ViewportSize.y != (uint32_t)viewportPanelSize.y)
 		{
 			camera.RenderTarget->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 			if (camera.Camera->GetProjectionType() == Olala::CameraProjectionType::Perspective)
@@ -44,14 +50,9 @@ void SceneViewPanel::OnImGuiRender()
 				specs.Width = specs.Height * viewportPanelSize.x / viewportPanelSize.y;
 			}
 			camera.Camera->RecalculateProjectionMatrix();
-
+		
 			m_ViewportSize = viewportPanelSize;
 		}
-
-		ImGui::Image((ImTextureID)camera.RenderTarget->GetColorBufferRendererId(), m_ViewportSize, { 0, 1 }, { 1, 0 });
-		ImGui::End();
-
-		ImGui::PopStyleVar(3);
 	}
 
 }

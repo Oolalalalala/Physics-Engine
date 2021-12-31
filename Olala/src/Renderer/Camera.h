@@ -25,6 +25,8 @@ namespace Olala {
 		void SetDirection(glm::vec3 direction) { m_Direction = direction; }
 		void SetUpDirection(glm::vec3 upDirection) { m_UpDirection = upDirection; }
 
+		const glm::vec3& GetDirection() const { return m_Direction; }
+		const glm::vec3& GetUpDirection() const { return m_UpDirection; }
 		const glm::mat4& GetProjectionMatrix() const { return m_Projection; }
 		const glm::mat4 GetViewMatrix() const { return glm::lookAt(m_Position, m_Position + m_Direction, m_UpDirection); }
 		const glm::mat4 GetViewProjectionMatrix() const { return GetProjectionMatrix() * GetViewMatrix(); }

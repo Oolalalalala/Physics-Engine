@@ -7,6 +7,7 @@ class SceneHierarchyPanel;
 namespace Olala {
 
 	class Entity;
+	class PhysicsWorld;
 
 	class Scene
 	{
@@ -14,14 +15,16 @@ namespace Olala {
 		Scene();
 		~Scene();
 
-		void OnUpdate();
+		void OnUpdate(float dt);
 
 		Entity CreateEntity(const std::string& name);
 
 	private:
 		entt::registry m_Registry;
+		Ref<PhysicsWorld> m_PhysicsWorld;
 
 		friend class Entity;
+		friend class PhysicsWorld;
 		friend class ::SceneHierarchyPanel;
 	};
 
