@@ -110,17 +110,17 @@ void PropertyPanel::DrawContext()
 						}
 						case 3:
 						{
-							if (!m_DisplayedEntity.HasAnyComponent<Olala::BoxCollider2D, Olala::CircleCollider2D>())
+							if (!m_DisplayedEntity.HasAnyComponent<Olala::BoxCollider2DComponent, Olala::CircleCollider2DComponent>())
 							{
-								m_DisplayedEntity.AddComponent<Olala::BoxCollider2D>();
+								m_DisplayedEntity.AddComponent<Olala::BoxCollider2DComponent>();
 							}
 							break;
 						}
 						case 4:
 						{
-							if (!m_DisplayedEntity.HasAnyComponent<Olala::BoxCollider2D, Olala::CircleCollider2D>())
+							if (!m_DisplayedEntity.HasAnyComponent<Olala::BoxCollider2DComponent, Olala::CircleCollider2DComponent>())
 							{
-								m_DisplayedEntity.AddComponent<Olala::CircleCollider2D>();
+								m_DisplayedEntity.AddComponent<Olala::CircleCollider2DComponent>();
 							}
 							break;
 						}
@@ -216,7 +216,7 @@ void PropertyPanel::DrawContext()
 	});
 
 	// Box Collider 2D
-	DrawComponent<Olala::BoxCollider2D>("Box Collider 2D", m_DisplayedEntity, [](auto& boxCollider2d)
+	DrawComponent<Olala::BoxCollider2DComponent>("Box Collider 2D", m_DisplayedEntity, [](auto& boxCollider2d)
 	{
 		ImGui::DragFloat2("Center", (float*)&boxCollider2d.Center);
 		ImGui::DragFloat2("Size", (float*)&boxCollider2d.Size);
@@ -224,7 +224,7 @@ void PropertyPanel::DrawContext()
 	});
 
 	// Circle Collider 2D
-	DrawComponent<Olala::CircleCollider2D>("Circle Collider 2D", m_DisplayedEntity, [](auto& circleCollider2d)
+	DrawComponent<Olala::CircleCollider2DComponent>("Circle Collider 2D", m_DisplayedEntity, [](auto& circleCollider2d)
 	{
 		ImGui::DragFloat2("Center", (float*)&circleCollider2d.Center);
 		ImGui::DragFloat("Radius", &circleCollider2d.Radius);

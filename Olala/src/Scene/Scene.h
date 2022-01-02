@@ -24,7 +24,6 @@ namespace Olala {
 		Ref<PhysicsWorld> m_PhysicsWorld;
 
 		friend class Entity;
-		friend class PhysicsWorld;
 		friend class ::SceneHierarchyPanel;
 	};
 

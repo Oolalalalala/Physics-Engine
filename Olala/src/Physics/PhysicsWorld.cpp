@@ -2,45 +2,56 @@
 #include "PhysicsWorld.h"
 
 #include "Scene/Component.h"
+#include "Scene/Entity.h"
+#include "Collision.h"
+
+#include <random>
 
 namespace Olala {
 
-	PhysicsWorld::PhysicsWorld(Scene& scene)
-		: m_Scene(scene)
-	{
+	static std::random_device s_RandomDevice;
+	static std::mt19937 s_Engine(s_RandomDevice());
+	static std::uniform_int_distribution<uint32_t> s_UniformDistribution;
 
+	PhysicsWorld::PhysicsWorld()
+	{
 	}
 
 	PhysicsWorld::~PhysicsWorld()
 	{
-
 	}
 
 	void PhysicsWorld::OnUpdate(float dt)
 	{
-		// Reset Forces
+		
+		// Update Position
+		for (auto& i : m_PhysicsObjects)
 		{
-			auto view = m_Scene.m_Registry.view<Rigidbody2DComponent>();
-			for (auto entity : view)
-			{
-				auto& rigidbody2d = view.get<Rigidbody2DComponent>(entity);
-				rigidbody2d.Force = rigidbody2d.ApplyGravity ? glm::vec2(0.f, rigidbody2d.Mass * -9.81f) : glm::vec2(0.f);
-			}
+			PhysicsObject& object = i.second;
+			if (object.IsStatic)
+				object.GetPosition() += object.GetVelocity();
 		}
-		///////////////////////////////////////////////////////////////////////////////////////////////
-		////////////                    NEEDS TO TEST COLLISION HERE                      /////////////
-		///////////////////////////////////////////////////////////////////////////////////////////////
-		// Update position
-		{
-			auto view = m_Scene.m_Registry.view<TransformComponent, Rigidbody2DComponent>();
-			for (auto entity : view)
-			{
-				auto [transform, rigidbody2d] = view.get<TransformComponent, Rigidbody2DComponent>(entity);
-				rigidbody2d.Velocity += rigidbody2d.Force / rigidbody2d.Mass * dt;
-				transform.Position.x += rigidbody2d.Velocity.x;
-				transform.Position.y += rigidbody2d.Velocity.y;
-			}
-		}
+	}
+
+	PhysicsID PhysicsWorld::CreatePhysicsObject()
+	{
+		PhysicsID id;
+		do {
+			id = s_UniformDistribution(s_Engine);
+		} while (m_PhysicsObjects.find(id) == m_PhysicsObjects.end());
+
+		return id;
+	}
+
+	void PhysicsWorld::RemovePhysicsObject(PhysicsID id)
+	{
+		m_PhysicsObjects.erase(id);
+	}
+
+	PhysicsObject& PhysicsWorld::GetPhysicsObject(PhysicsID id)
+	{
+		// error when id does not exists
+		return m_PhysicsObjects.at(id);
 	}
 
 }

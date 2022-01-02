@@ -10,6 +10,7 @@
 #include "Renderer/Camera.h"
 #include "Renderer/Texture2D.h"
 #include "Renderer/Framebuffer.h"
+#include "Physics/Collider.h"
 
 #include <string>
 
@@ -93,31 +94,32 @@ namespace Olala {
 			: Mass(mass), ApplyGravity(applyGravity), ApplyCollision(applyCollision) {}
 	};
 
-	struct Collider2D
+	struct Collider2DComponent
 	{
 		glm::vec2 Center = glm::vec2(0.f, 0.f);
 
-		Collider2D() = default;
-		Collider2D(glm::vec2 center = glm::vec2(0.f, 0.f))
+		Collider2DComponent() = default;
+		Collider2DComponent(glm::vec2 center = glm::vec2(0.f, 0.f))
 			: Center(center) {}
 	};
 
-	struct BoxCollider2D : public Collider2D
+	struct BoxCollider2DComponent : public Collider2DComponent
 	{
 		glm::vec2 Size = glm::vec2(1.f, 1.f);
+		float Rotation = 0.f;
 
-		BoxCollider2D() : Collider2D(glm::vec2(0.f, 0.f)) {}
-		BoxCollider2D(glm::vec2 size, glm::vec2 center = glm::vec2(0.f, 0.f))
-			: Size(size), Collider2D(center) {}
+		BoxCollider2DComponent() : Collider2DComponent(glm::vec2(0.f, 0.f)) {}
+		BoxCollider2DComponent(glm::vec2 size, glm::vec2 center = glm::vec2(0.f, 0.f))
+			: Size(size), Collider2DComponent(center) {}
 	};
 
-	struct CircleCollider2D : public Collider2D
+	struct CircleCollider2DComponent : public Collider2DComponent
 	{
 		float Radius = 1.f;
 
-		CircleCollider2D() : Collider2D(glm::vec2(0.f, 0.f)) {}
-		CircleCollider2D(float radius, glm::vec2 center = glm::vec2(0.f, 0.f))
-			: Radius(radius), Collider2D(center) {}
+		CircleCollider2DComponent() : Collider2DComponent(glm::vec2(0.f, 0.f)) {}
+		CircleCollider2DComponent(float radius, glm::vec2 center = glm::vec2(0.f, 0.f))
+			: Radius(radius), Collider2DComponent(center) {}
 	};
 
 }

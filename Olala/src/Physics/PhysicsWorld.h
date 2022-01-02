@@ -1,19 +1,26 @@
 #pragma once
 
-#include "Scene/Scene.h"
+#include "PhysicsObject.h"
 
 namespace Olala {
+
+	typedef uint32_t PhysicsID;
 
 	class PhysicsWorld
 	{
 	public:
-		PhysicsWorld(Scene& scene);
+		PhysicsWorld();
 		~PhysicsWorld();
 
 		void OnUpdate(float dt);
 
+		PhysicsID CreatePhysicsObject();
+		void RemovePhysicsObject(PhysicsID id);
+
+		PhysicsObject& GetPhysicsObject(PhysicsID id);
+
 	private:
-		Scene& m_Scene;
+		std::unordered_map<PhysicsID, PhysicsObject> m_PhysicsObjects;
 	};
 
 }

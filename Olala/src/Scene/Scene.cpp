@@ -13,7 +13,7 @@ namespace Olala {
 
 	Scene::Scene()
 	{
-		m_PhysicsWorld = CreateRef<PhysicsWorld>(*this);
+		m_PhysicsWorld = CreateRef<PhysicsWorld>();
 	}
 
 	Scene::~Scene()
