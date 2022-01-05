@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PhysicsObject.h"
+#include "PhysicsBody.h"
 
 namespace Olala {
 
@@ -14,13 +14,13 @@ namespace Olala {
 
 		void OnUpdate(float dt);
 
-		PhysicsID CreatePhysicsObject();
-		void RemovePhysicsObject(PhysicsID id);
+		PhysicsID CreatePhysicsBody(ColliderType type = ColliderType::None);
+		void RemovePhysicsBody(const PhysicsID& id);
 
-		PhysicsObject& GetPhysicsObject(PhysicsID id);
+		PhysicsBody& GetPhysicsBody(const PhysicsID& id);
 
 	private:
-		std::unordered_map<PhysicsID, PhysicsObject> m_PhysicsObjects;
+		std::unordered_map<PhysicsID, PhysicsBody> m_PhysicsBodies;
 	};
 
 }

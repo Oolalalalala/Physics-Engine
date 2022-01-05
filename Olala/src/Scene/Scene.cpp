@@ -7,8 +7,6 @@
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer2D.h"
 
-#include "Physics/PhysicsWorld.h"
-
 namespace Olala {
 
 	Scene::Scene()
@@ -44,6 +42,18 @@ namespace Olala {
 
 		// Physics
 		m_PhysicsWorld->OnUpdate(dt);
+
+		// Retrieve and Set Data From and To Physics
+		auto view = m_Registry.view<TransformComponent, Rigidbody2DComponent>();
+		for (auto e : view)
+		{
+			auto [transform, rigidbody2d] = view.get<TransformComponent, Rigidbody2DComponent>(e);
+			auto& physicsBody = m_PhysicsWorld->GetPhysicsBody(rigidbody2d.PhysicsHandle);
+			transform.Position.x = physicsBody.Position.x;
+			transform.Position.y = physicsBody.Position.y;
+			transform.Rotation.y = physicsBody.Rotation;
+		}
+		// TODO : Deal with position setting and prevent a object from not moving
 
 		// Get All Camera
 		std::vector<Entity> cameras;

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "PhysicsObject.h"
+#include "PhysicsBody.h"
 
 namespace Olala {
 
 	class Collision
 	{
 	public:
-		static bool TestCollision(const PhysicsObject& a, const PhysicsObject& b);
+		static bool TestCollision(const PhysicsBody& a, const PhysicsBody& b);
 	};
 
 }

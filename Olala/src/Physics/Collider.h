@@ -4,34 +4,26 @@
 
 namespace Olala {
 
-	struct BoundingBox
-	{
-		glm::vec2 Offset = glm::vec2(0.f);
-		float Rotation = 0.f;
-		glm::vec2 Size = glm::vec2(1.f, 1.f);
+	enum class ColliderType {
+		None = 0, BoundingBox, BoundingCircle
 	};
 
-	struct BoundingCircle
+	struct Collider
 	{
 		glm::vec2 Offset = glm::vec2(0.f);
+		ColliderType Type;
+	};
+
+	struct BoundingBox : public Collider
+	{
+		glm::vec2 Size = glm::vec2(1.f, 1.f);
+		float Rotation = 0.f;
+		BoundingBox() { Type = ColliderType::BoundingBox; }
+	};
+
+	struct BoundingCircle : public Collider
+	{
 		float Radius = 1.f;
+		BoundingCircle() { Type = ColliderType::BoundingCircle; }
 	};
-
-	struct Collider // TODO : make it into some inheritance stuff
-	{
-		glm::vec2 Offset = glm::vec2(0.f);
-		float Rotation = 0.f;
-		glm::vec2 Size = glm::vec2(1.f, 1.f);
-
-		enum class ColliderType {
-			BoundingBox = 0, BoundingCircle
-		};
-		ColliderType Type = ColliderType::BoundingBox;
-
-		Collider() = default;
-
-		operator BoundingBox() { return BoundingBox{ Offset, Rotation, Size }; }
-		operator BoundingCircle() { return BoundingCircle{ Offset, Size.x }; }
-	};
-
 }

@@ -49,13 +49,15 @@ static void DrawComponent(const std::string& name, Olala::Entity& entity, std::f
 
 void PropertyPanel::DrawContext()
 {
+	auto& entity = m_DisplayedEntity;
+
 	ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 	constexpr float addButtonWidth = 50.f;
 
 	// Entity Name
-	if (m_DisplayedEntity.HasComponent<Olala::TagComponent>())
+	if (entity.HasComponent<Olala::TagComponent>())
 	{
-		auto& tag = m_DisplayedEntity.GetComponent<Olala::TagComponent>();
+		auto& tag = entity.GetComponent<Olala::TagComponent>();
 		constexpr size_t maxLength = 30;
 		char name[maxLength];
 		strcpy_s(name, tag.Tag.c_str());
@@ -85,42 +87,72 @@ void PropertyPanel::DrawContext()
 					{
 						case 0:
 						{
-							if (!m_DisplayedEntity.HasComponent<Olala::CameraComponent>())
+							if (!entity.HasComponent<Olala::CameraComponent>())
 							{
-								auto& camera = m_DisplayedEntity.AddComponent<Olala::CameraComponent>();
+								auto& camera = entity.AddComponent<Olala::CameraComponent>();
 								camera.Camera = Olala::CreateRef<Olala::PerspectiveCamera>();
 							}
 							break;
 						}
 						case 1:
 						{
-							if (!m_DisplayedEntity.HasComponent<Olala::SpriteRendererComponent>())
+							if (!entity.HasComponent<Olala::SpriteRendererComponent>())
 							{
-								auto& sprite = m_DisplayedEntity.AddComponent<Olala::SpriteRendererComponent>();
+								auto& sprite = entity.AddComponent<Olala::SpriteRendererComponent>();
 							}
 							break;
 						}
 						case 2:
 						{
-							if (!m_DisplayedEntity.HasComponent<Olala::Rigidbody2DComponent>())
+							if (!entity.HasComponent<Olala::Rigidbody2DComponent>())
 							{
-								m_DisplayedEntity.AddComponent<Olala::Rigidbody2DComponent>();
+								auto& rigidbody2d = entity.AddComponent<Olala::Rigidbody2DComponent>();
+								auto physicsWorld = entity.GetPhysicsWorld();
+								rigidbody2d.PhysicsHandle = physicsWorld->CreatePhysicsBody();
+								auto& physicsBody = physicsWorld->GetPhysicsBody(rigidbody2d.PhysicsHandle);
+								auto& transform = entity.GetComponent<Olala::TransformComponent>();
+								physicsBody.Position = (glm::vec2)transform.Position;
+								physicsBody.Rotation = transform.Rotation.y;
 							}
 							break;
 						}
 						case 3:
 						{
-							if (!m_DisplayedEntity.HasAnyComponent<Olala::BoxCollider2DComponent, Olala::CircleCollider2DComponent>())
+							if (!entity.HasAnyComponent<Olala::BoxCollider2DComponent, Olala::CircleCollider2DComponent>())
 							{
-								m_DisplayedEntity.AddComponent<Olala::BoxCollider2DComponent>();
+								if (entity.HasComponent<Olala::Rigidbody2DComponent>())
+								{
+									auto& rigidbody2d = entity.GetComponent<Olala::Rigidbody2DComponent>();
+									auto physicsWorld = entity.GetPhysicsWorld();
+									physicsWorld->GetPhysicsBody(rigidbody2d.PhysicsHandle).SetColliderType(Olala::ColliderType::BoundingBox);
+								}
+								else
+								{
+									auto& rigidbody2d = entity.AddComponent<Olala::Rigidbody2DComponent>();
+									auto physicsWorld = entity.GetPhysicsWorld();
+									rigidbody2d.PhysicsHandle = physicsWorld->CreatePhysicsBody(Olala::ColliderType::BoundingBox);
+								}
+								entity.AddComponent<Olala::BoxCollider2DComponent>();
 							}
 							break;
 						}
 						case 4:
 						{
-							if (!m_DisplayedEntity.HasAnyComponent<Olala::BoxCollider2DComponent, Olala::CircleCollider2DComponent>())
+							if (!entity.HasAnyComponent<Olala::BoxCollider2DComponent, Olala::CircleCollider2DComponent>())
 							{
-								m_DisplayedEntity.AddComponent<Olala::CircleCollider2DComponent>();
+								if (entity.HasComponent<Olala::Rigidbody2DComponent>())
+								{
+									auto& rigidbody2d = entity.GetComponent<Olala::Rigidbody2DComponent>();
+									auto physicsWorld = entity.GetPhysicsWorld();
+									physicsWorld->GetPhysicsBody(rigidbody2d.PhysicsHandle).SetColliderType(Olala::ColliderType::BoundingCircle);
+								}
+								else
+								{
+									auto& rigidbody2d = entity.AddComponent<Olala::Rigidbody2DComponent>();
+									auto physicsWorld = entity.GetPhysicsWorld();
+									rigidbody2d.PhysicsHandle = physicsWorld->CreatePhysicsBody(Olala::ColliderType::BoundingCircle);
+								}
+								entity.AddComponent<Olala::CircleCollider2DComponent>();
 							}
 							break;
 						}
@@ -134,7 +166,7 @@ void PropertyPanel::DrawContext()
 	ImGui::Separator();
 
 	// Transform Component
-	DrawComponent<Olala::TransformComponent>("Transform", m_DisplayedEntity, [](auto& transform)
+	DrawComponent<Olala::TransformComponent>("Transform", entity, [](auto& transform)
 	{
 		ImGui::DragFloat3("Position", (float*)&transform.Position, 2);
 		ImGui::DragFloat3("Rotation", (float*)&transform.Rotation, 2);
@@ -142,7 +174,7 @@ void PropertyPanel::DrawContext()
 	});
 
 	// Camera Component
-	DrawComponent<Olala::CameraComponent>("Camera", m_DisplayedEntity, [](auto& camera)
+	DrawComponent<Olala::CameraComponent>("Camera", entity, [](auto& camera)
 	{
 		constexpr const char* projectionTypes[] = { "Perspective", "Orthographic" };
 		int selectedProjectionType = (int)camera.Camera->GetProjectionType();
@@ -201,22 +233,21 @@ void PropertyPanel::DrawContext()
 	});
 	
 	// Sprite Renderer Component
-	DrawComponent<Olala::SpriteRendererComponent>("Sprite Renderer", m_DisplayedEntity, [](auto& sprite)
+	DrawComponent<Olala::SpriteRendererComponent>("Sprite Renderer", entity, [](auto& sprite)
 	{
 		ImGui::DragFloat2("Size", (float*)&sprite.Size);
 		ImGui::ColorEdit4("Color", (float*)&sprite.Color);
 	});
 
 	// Rigidbody 2D
-	DrawComponent<Olala::Rigidbody2DComponent>("Rigidbody 2D", m_DisplayedEntity, [](auto& rigidbody2d)
+	DrawComponent<Olala::Rigidbody2DComponent>("Rigidbody 2D", entity, [](auto& rigidbody2d)
 	{
 		ImGui::DragFloat("Mass", &rigidbody2d.Mass);
 		ImGui::Checkbox("Gravity", &rigidbody2d.ApplyGravity);
-		ImGui::Checkbox("Collision", &rigidbody2d.ApplyCollision);
 	});
 
 	// Box Collider 2D
-	DrawComponent<Olala::BoxCollider2DComponent>("Box Collider 2D", m_DisplayedEntity, [](auto& boxCollider2d)
+	DrawComponent<Olala::BoxCollider2DComponent>("Box Collider 2D", entity, [](auto& boxCollider2d)
 	{
 		ImGui::DragFloat2("Center", (float*)&boxCollider2d.Center);
 		ImGui::DragFloat2("Size", (float*)&boxCollider2d.Size);
@@ -224,7 +255,7 @@ void PropertyPanel::DrawContext()
 	});
 
 	// Circle Collider 2D
-	DrawComponent<Olala::CircleCollider2DComponent>("Circle Collider 2D", m_DisplayedEntity, [](auto& circleCollider2d)
+	DrawComponent<Olala::CircleCollider2DComponent>("Circle Collider 2D", entity, [](auto& circleCollider2d)
 	{
 		ImGui::DragFloat2("Center", (float*)&circleCollider2d.Center);
 		ImGui::DragFloat("Radius", &circleCollider2d.Radius);

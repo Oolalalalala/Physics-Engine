@@ -2,6 +2,7 @@
 
 #include "entt/entt.hpp"
 #include "Scene.h"
+#include "Component.h"
 
 namespace Olala {
 
@@ -43,6 +44,16 @@ namespace Olala {
 		bool HasAnyComponent()
 		{
 			return m_Scene->m_Registry.any<Args...>(m_EntityID);
+		}
+
+		Ref<PhysicsWorld> GetPhysicsWorld()
+		{
+			return m_Scene->m_PhysicsWorld;
+		}
+
+		PhysicsBody& GetPhysicsBody()
+		{
+			return m_Scene->m_PhysicsWorld->GetPhysicsBody(m_Scene->m_Registry.get<Rigidbody2DComponent>(m_EntityID).PhysicsHandle);
 		}
 
 		operator bool() { return m_EntityID != entt::null; }

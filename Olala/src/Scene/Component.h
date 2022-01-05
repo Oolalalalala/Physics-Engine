@@ -87,11 +87,12 @@ namespace Olala {
 
 		float Mass = 1.f;
 		bool ApplyGravity = true;
-		bool ApplyCollision = true;
+
+		PhysicsID PhysicsHandle = 0;
 
 		Rigidbody2DComponent() = default;
-		Rigidbody2DComponent(float mass, bool applyGravity = true, bool applyCollision = true)
-			: Mass(mass), ApplyGravity(applyGravity), ApplyCollision(applyCollision) {}
+		Rigidbody2DComponent(float mass, bool applyGravity = true)
+			: Mass(mass), ApplyGravity(applyGravity) {}
 	};
 
 	struct Collider2DComponent

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "entt/entt.hpp"
+#include "Physics/PhysicsWorld.h"
 
 class SceneHierarchyPanel;
 
 namespace Olala {
 
 	class Entity;
-	class PhysicsWorld;
 
 	class Scene
 	{

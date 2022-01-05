@@ -23,35 +23,49 @@ namespace Olala {
 
 	void PhysicsWorld::OnUpdate(float dt)
 	{
+		for (auto& i : m_PhysicsBodies)
+		{
+			PhysicsBody& body = i.second;
+			if (!body.IsStatic && body.ApplyGravity)
+				body.Velocity.y -= 9.81f * dt;
+		}
 		
 		// Update Position
-		for (auto& i : m_PhysicsObjects)
+		for (auto& i : m_PhysicsBodies)
 		{
-			PhysicsObject& object = i.second;
-			if (object.IsStatic)
-				object.GetPosition() += object.GetVelocity();
+			PhysicsBody& body = i.second;
+			if (!body.IsStatic)
+				body.Position += body.Velocity;
 		}
 	}
 
-	PhysicsID PhysicsWorld::CreatePhysicsObject()
+	PhysicsID PhysicsWorld::CreatePhysicsBody(ColliderType type)
 	{
 		PhysicsID id;
 		do {
 			id = s_UniformDistribution(s_Engine);
-		} while (m_PhysicsObjects.find(id) == m_PhysicsObjects.end());
+		} while (m_PhysicsBodies.find(id) != m_PhysicsBodies.end() || id == 0);
+
+		switch (type)
+		{
+		case ColliderType::None:            m_PhysicsBodies[id].Collider = nullptr;                      break;
+		case ColliderType::BoundingBox:     m_PhysicsBodies[id].Collider = CreateRef<BoundingBox>();     break;
+		case ColliderType::BoundingCircle:  m_PhysicsBodies[id].Collider = CreateRef<BoundingCircle>();  break;
+		}
 
 		return id;
 	}
 
-	void PhysicsWorld::RemovePhysicsObject(PhysicsID id)
+	void PhysicsWorld::RemovePhysicsBody(const PhysicsID& id)
 	{
-		m_PhysicsObjects.erase(id);
+		m_PhysicsBodies.erase(id);
 	}
 
-	PhysicsObject& PhysicsWorld::GetPhysicsObject(PhysicsID id)
+	PhysicsBody& PhysicsWorld::GetPhysicsBody(const PhysicsID& id)
 	{
+		//if (id == 0) ; // error when id = 0
 		// error when id does not exists
-		return m_PhysicsObjects.at(id);
+		return m_PhysicsBodies.at(id);
 	}
 
 }

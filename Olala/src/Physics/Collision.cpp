@@ -6,7 +6,7 @@
 
 namespace Olala {
 
-	bool Collision::TestCollision(const PhysicsObject& a, const PhysicsObject& b)
+	bool Collision::TestCollision(const PhysicsBody& a, const PhysicsBody& b)
 	{
 		return false;
 	}
