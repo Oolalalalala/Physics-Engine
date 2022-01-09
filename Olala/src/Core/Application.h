@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Window.h"
+#include "Timer.h"
 #include "Event/ApplicationEvent.h"
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
@@ -35,6 +37,7 @@ namespace Olala {
 		ImGuiLayer* m_ImGuiLayer;
 
 		Scope<Window> m_Window;
+		Scope<Timer> m_Timer;
 		Scope<LayerStack> m_LayerStack;
 
 	private:

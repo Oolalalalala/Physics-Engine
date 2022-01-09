@@ -28,9 +28,10 @@ void AssetPanel::OnImGuiRender()
 				if (ImGui::Button("Back")) m_CurrentDirectory = AssetDirectory::Root;
 
 				auto& textures = m_AssetManager->GetPool<Olala::Texture2D>().GetAll();
-				for (auto& texture : textures)
+				for (auto& [name, texture] : textures)
 				{
-					ImGui::Button(texture.first.c_str());
+					ImGui::Button(name.c_str());
+					ImGui::ImageButton((ImTextureID)texture->GetRendererID(), ImVec2(70.f, 70.f), ImVec2(0, 1), ImVec2(1, 0));
 				}
 
 				break;

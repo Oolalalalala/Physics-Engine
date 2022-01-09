@@ -86,13 +86,14 @@ namespace Olala {
 		glm::vec2 Force = glm::vec2(0.f);
 
 		float Mass = 1.f;
+		bool IsStatic = false;
 		bool ApplyGravity = true;
 
 		PhysicsID PhysicsHandle = 0;
 
 		Rigidbody2DComponent() = default;
-		Rigidbody2DComponent(float mass, bool applyGravity = true)
-			: Mass(mass), ApplyGravity(applyGravity) {}
+		Rigidbody2DComponent(float mass, bool applyGravity = true, bool isStatic = false)
+			: Mass(mass), ApplyGravity(applyGravity), IsStatic(isStatic) {}
 	};
 
 	struct Collider2DComponent

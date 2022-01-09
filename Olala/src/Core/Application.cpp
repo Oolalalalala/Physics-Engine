@@ -24,6 +24,8 @@ namespace Olala {
 		m_Window = Window::Create(WindowProps(m_ApplicationName));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
+		m_Timer = CreateScope<Timer>();
+
 		Renderer2D::Init();
 
 		m_LayerStack = CreateScope<LayerStack>();
@@ -37,10 +39,9 @@ namespace Olala {
 	{
 		while (m_Running)
 		{
-			float dt = 0.166f;
 			for (Layer* layer : *m_LayerStack)
 			{
-				layer->OnUpdate(dt);
+				layer->OnUpdate(m_Timer->GetDeltaTime());
 			}
 
 			m_ImGuiLayer->Begin();

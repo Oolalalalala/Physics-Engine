@@ -11,6 +11,7 @@ group "Dependencies"
     include "Olala/vendor/yaml-cpp"
 group ""
 
+include "Physics"
 include "Olala"
 include "Editor"
 include "Sandbox"

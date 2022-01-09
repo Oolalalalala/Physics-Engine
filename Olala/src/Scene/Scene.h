@@ -1,7 +1,7 @@
 #pragma once
 
 #include "entt/entt.hpp"
-#include "Physics/PhysicsWorld.h"
+#include "Physics.h"
 
 class SceneHierarchyPanel;
 

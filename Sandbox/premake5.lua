@@ -15,6 +15,7 @@ project "Sandbox"
 
 	includedirs
 	{
+		"%{wks.location}/Physics/src",
 		"%{wks.location}/Olala/src",
 		"%{wks.location}/Olala/vendor",
         "%{wks.location}/Dependencies/GLFW/include",

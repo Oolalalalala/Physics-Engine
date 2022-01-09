@@ -14,6 +14,7 @@ namespace Olala {
 		void Bind(uint32_t slot = 0) const;
 
 		bool IsLoaded() const { return m_IsLoaded; }
+		uint32_t GetRendererID() const { return m_RendererID; }
 
 		bool operator==(const Texture2D& other)
 		{

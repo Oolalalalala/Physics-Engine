@@ -49,13 +49,13 @@ namespace Olala {
 		{
 			auto [transform, rigidbody2d] = view.get<TransformComponent, Rigidbody2DComponent>(e);
 			auto& physicsBody = m_PhysicsWorld->GetPhysicsBody(rigidbody2d.PhysicsHandle);
-			transform.Position.x = physicsBody.Position.x;
+			transform.Position.x = physicsBody.Position.x;// TODO : set the position to center of mass instead of the raw mass
 			transform.Position.y = physicsBody.Position.y;
 			transform.Rotation.y = physicsBody.Rotation;
+			rigidbody2d.Velocity = physicsBody.Velocity;
 		}
-		// TODO : Deal with position setting and prevent a object from not moving
 
-		// Get All Camera
+		// Get All Cameras
 		std::vector<Entity> cameras;
 		{
 			auto view = m_Registry.view<TransformComponent, CameraComponent>();

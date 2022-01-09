@@ -1,8 +1,5 @@
-#include "pch.h"
 #include "PhysicsWorld.h"
 
-#include "Scene/Component.h"
-#include "Scene/Entity.h"
 #include "Collision.h"
 
 #include <random>
@@ -23,19 +20,17 @@ namespace Olala {
 
 	void PhysicsWorld::OnUpdate(float dt)
 	{
-		for (auto& i : m_PhysicsBodies)
+		for (auto& [id, body] : m_PhysicsBodies)
 		{
-			PhysicsBody& body = i.second;
 			if (!body.IsStatic && body.ApplyGravity)
 				body.Velocity.y -= 9.81f * dt;
 		}
 		
 		// Update Position
-		for (auto& i : m_PhysicsBodies)
+		for (auto& [id, body] : m_PhysicsBodies)
 		{
-			PhysicsBody& body = i.second;
 			if (!body.IsStatic)
-				body.Position += body.Velocity;
+				body.Position += body.Velocity * dt;
 		}
 	}
 
