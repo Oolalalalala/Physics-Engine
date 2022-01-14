@@ -26,6 +26,7 @@ namespace Olala {
 
 		m_Timer = CreateScope<Timer>();
 
+		RenderCommand::Init();
 		Renderer2D::Init();
 
 		m_LayerStack = CreateScope<LayerStack>();

@@ -19,7 +19,7 @@ void EditorLayer::OnAttach()
 	m_SceneHierarchyPanel = Olala::CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertyPanel);
     m_RuntimeViewPanel = Olala::CreateRef<RuntimeViewPanel>();
     m_AssetPanel = Olala::CreateRef<AssetPanel>(m_AssetManager);
-    m_DebugPanel = Olala::CreateRef<DebugPanel>(&temp);
+    m_DebugPanel = Olala::CreateRef<DebugPanel>(&m_DrawColliders);
 
 	Olala::Ref<Olala::Texture2D> exampleTextures[2];
     exampleTextures[0] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Planet9.jpg");
@@ -44,6 +44,8 @@ void EditorLayer::OnUpdate(float dt)
     m_EditorCamera.GetComponent<Olala::EditorCameraControllerComponent>().IsOn = m_SceneViewPanel->GetIsFocused();
 
 	m_Scene->OnUpdate(dt);
+
+    OnOverlayRender();
 }
 
 void EditorLayer::OnImGuiRender()
@@ -142,6 +144,28 @@ void EditorLayer::DrawMenuBar()
 		ImGui::EndMenuBar();
 	}
     
+}
+
+void EditorLayer::OnOverlayRender()
+{
+    if (m_DrawColliders)
+    {
+        Olala::RenderCommand::SetRenderTarget(m_EditorCamera.GetComponent<Olala::CameraComponent>().RenderTarget);
+        Olala::Renderer2D::BeginScene(*m_EditorCamera.GetComponent<Olala::CameraComponent>().Camera);
+
+        auto view = m_Scene->GetAllEntitiesWith<Olala::TransformComponent, Olala::CircleCollider2DComponent>();
+        for (auto e : view)
+        {
+            auto [transform, cc2d] = view.get<Olala::TransformComponent, Olala::CircleCollider2DComponent>(e);
+
+            Olala::Renderer2D::DrawCircle((glm::vec2)transform.Position + cc2d.Center, cc2d.Radius);
+        }
+
+        // TODO : implement box collider visualization
+
+        Olala::Renderer2D::EndScene();
+        Olala::RenderCommand::SetRenderTarget(nullptr);
+    }
 }
 
 void EditorLayer::OnEvent(Olala::Event& e)

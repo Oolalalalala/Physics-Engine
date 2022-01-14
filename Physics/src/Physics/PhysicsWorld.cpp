@@ -1,6 +1,7 @@
 #include "PhysicsWorld.h"
 
 #include "Collision.h"
+#include "glm/gtx/projection.hpp"
 
 #include <random>
 
@@ -31,6 +32,25 @@ namespace Olala {
 		{
 			if (!body.IsStatic)
 				body.Position += body.Velocity * dt;
+		}
+
+		for (auto i = m_PhysicsBodies.begin(); i != m_PhysicsBodies.end(); i++)
+		{
+			for (auto j = std::next(i); j != m_PhysicsBodies.end(); j++)
+			{
+				auto [collided, collisionPos] = Collision::TestCollision(i->second, j->second);
+				if (collided)
+				{
+					auto& bodyA = i->second, & bodyB = j->second;
+					glm::vec2 vA, vB;
+					vA = bodyA.Velocity - (2.f * bodyB.Mass / (bodyA.Mass + bodyB.Mass)) * glm::proj(bodyA.Velocity - bodyB.Velocity, bodyB.Position - bodyA.Position);
+					vB = bodyB.Velocity - (2.f * bodyA.Mass / (bodyA.Mass + bodyB.Mass)) * glm::proj(bodyB.Velocity - bodyA.Velocity, bodyA.Position - bodyB.Position);
+					bodyA.Position -= bodyA.Velocity * dt;
+					bodyB.Position -= bodyB.Velocity * dt;
+					bodyA.Velocity = vA;
+					bodyB.Velocity = vB;
+				}
+			}
 		}
 	}
 

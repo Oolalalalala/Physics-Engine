@@ -22,15 +22,19 @@ namespace Olala {
 		static void DrawQuad(glm::vec2 position, glm::vec2 size, float rotation, Ref<Texture2D> texture, glm::vec4 color);
 
 
-		static void DrawCircle();
+		static void DrawCircle(glm::vec2 position, float radius, float thickness = 0.05f, glm::vec4 color = glm::vec4(1.0f));
 		static void DrawLine();
 
 	private:
-		static bool Batch();
-		static void Flush();
+		static uint32_t BatchQuads();
+		static void FlushQuads(uint32_t indexCount);
+
+		static uint32_t BatchCircles();
+		static void FlushCircles(uint32_t indexCount);
+
 		static void Reset();
 
-		static void WriteQuadDataToBuffer(std::vector<uint32_t>& quadIndices, uint32_t textureIndex);
+		static uint32_t WriteQuadDataToBuffer(std::vector<uint32_t>& quadIndices, uint32_t textureIndex);
 
 	private:
 		struct CameraData

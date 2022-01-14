@@ -23,6 +23,8 @@ public:
 private:
 	void DrawMenuBar();
 
+	void OnOverlayRender();
+
 private:
 	Olala::Ref<Olala::Scene> m_Scene;
 	Olala::Ref<Olala::AssetManager> m_AssetManager;
@@ -37,6 +39,6 @@ private:
 
 	Olala::Entity m_EditorCamera;
 
-	bool temp = false;
+	bool m_DrawColliders;
 };
 

@@ -19,6 +19,12 @@ namespace Olala {
 
 		Entity CreateEntity(const std::string& name);
 
+		template<typename... Components>
+		auto GetAllEntitiesWith()
+		{
+			return m_Registry.view<Components...>();
+		}
+
 	private:
 		entt::registry m_Registry;
 		Ref<PhysicsWorld> m_PhysicsWorld;
