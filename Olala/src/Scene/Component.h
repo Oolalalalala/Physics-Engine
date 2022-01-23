@@ -61,7 +61,7 @@ namespace Olala {
 		GLenum BackKey      = GLFW_KEY_S;
 		GLenum LeftKey      = GLFW_KEY_A;
 		GLenum RightKey     = GLFW_KEY_D;
-		float MovementSpeed = 1.f;
+		float MovementSpeed = 8.f;
 		bool IsOn = false;
 		
 		EditorCameraControllerComponent() = default;

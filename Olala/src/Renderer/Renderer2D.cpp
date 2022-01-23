@@ -43,7 +43,6 @@ namespace Olala {
         QuadVertexData* QuadVertexBufferBase = nullptr;
         QuadVertexData* QuadVertexBufferPtr = nullptr;
 
-        uint32_t QuadBatchingIndexCount = 0;
 
         Ref<Shader> TextureShader;
 
@@ -284,9 +283,10 @@ namespace Olala {
         s_Data.CircleVertexBufferPtr = s_Data.CircleVertexBufferBase;
         uint32_t indexCount = 0;
 
-        constexpr glm::vec2 vertexPositions[] = { {-1.f, 1.f}, {1.f, 1.f}, {1.f, -1.f}, {-1.f, -1.f} };
+        // NOTE : Using 1.2f for extra fading spece
+        constexpr glm::vec2 vertexPositions[] = { {-1.2f, 1.2f}, {1.2f, 1.2f}, {1.2f, -1.2f}, {-1.f, -1.2f} };
 
-        for (int i = 0; i < s_Data.CircleCount; i++)
+        for (uint32_t i = 0; i < s_Data.CircleCount; i++)
         {
             auto& circleData = s_Data.CircleDataArray[i];
             for (int j = 0; j < 4; j++)

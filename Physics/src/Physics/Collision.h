@@ -7,10 +7,17 @@
 
 namespace Olala {
 
+	struct CollisionData
+	{
+		float Depth;
+		glm::vec2 Normal;
+	};
+
 	class Collision
 	{
 	public:
-		static std::pair<bool, glm::vec2> TestCollision(const PhysicsBody& a, const PhysicsBody& b);
+		static bool TestCollision(const PhysicsBody& a, const PhysicsBody& b, CollisionData* data); // Normal pointing from A to B
+		static void SolveCollision(PhysicsBody& a, PhysicsBody& b, float dt);
 	};
 
 }

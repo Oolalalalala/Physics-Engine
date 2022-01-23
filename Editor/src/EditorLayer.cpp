@@ -29,8 +29,14 @@ void EditorLayer::OnAttach()
 	for (int i = 0; i < 8; i++)
 	{
 		Olala::Entity quad = m_Scene->CreateEntity("Quad" + std::to_string(i));
-		quad.AddComponent<Olala::SpriteRendererComponent>(glm::vec2{ 80.f, 45.f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, exampleTextures[i%2]);
 		quad.GetComponent<Olala::TransformComponent>().Position.x = -350.f + 100.f * i;
+		quad.AddComponent<Olala::SpriteRendererComponent>(glm::vec2{ 80.f, 45.f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, exampleTextures[i%2]);
+        auto& rb = quad.AddComponent<Olala::Rigidbody2DComponent>();
+        rb.PhysicsHandle = quad.GetPhysicsWorld()->CreatePhysicsBody(Olala::ColliderType::BoundingBox);
+        quad.GetPhysicsBody().IsStatic = rb.IsStatic = true;
+        quad.GetPhysicsBody().Position = quad.GetComponent<Olala::TransformComponent>().Position;
+        std::static_pointer_cast<Olala::BoundingBox>(quad.GetPhysicsBody().Collider)->SetSize({ 80.f, 45.f });
+        quad.AddComponent<Olala::BoxCollider2DComponent>(glm::vec2{ 80.f, 45.f });
 	}
 
 }
@@ -106,7 +112,7 @@ void EditorLayer::OnImGuiRender()
 
     ImGui::End();
 
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
 }
 
 void EditorLayer::DrawMenuBar()
@@ -158,7 +164,7 @@ void EditorLayer::OnOverlayRender()
         {
             auto [transform, cc2d] = view.get<Olala::TransformComponent, Olala::CircleCollider2DComponent>(e);
 
-            Olala::Renderer2D::DrawCircle((glm::vec2)transform.Position + cc2d.Center, cc2d.Radius);
+            Olala::Renderer2D::DrawCircle((glm::vec2)transform.Position + cc2d.Center, cc2d.Radius, 0.05f, glm::vec4(0.f, 1.f, 0.f, 1.f));
         }
 
         // TODO : implement box collider visualization

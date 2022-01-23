@@ -4,7 +4,7 @@ namespace Olala {
 
 	struct FramebufferSpecs
 	{
-		uint32_t Width, Height;
+		uint32_t Width = 960, Height = 540;
 		GLenum ColorBufferInternalFormat = GL_RGBA8, ColorBufferDataFormat = GL_RGBA;
 	};
 

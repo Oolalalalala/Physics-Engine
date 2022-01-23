@@ -4,6 +4,7 @@
 #include "glm/gtx/projection.hpp"
 
 #include <random>
+#include <iostream>
 
 namespace Olala {
 
@@ -34,21 +35,22 @@ namespace Olala {
 				body.Position += body.Velocity * dt;
 		}
 
-		for (auto i = m_PhysicsBodies.begin(); i != m_PhysicsBodies.end(); i++)
+		CollisionData data;
+		for (auto& i = m_PhysicsBodies.begin(); i != m_PhysicsBodies.end(); i++)
 		{
 			for (auto j = std::next(i); j != m_PhysicsBodies.end(); j++)
 			{
-				auto [collided, collisionPos] = Collision::TestCollision(i->second, j->second);
-				if (collided)
+				auto& bodyA = i->second, & bodyB = j->second;
+				if (bodyA.IsStatic && bodyB.IsStatic) continue;
+
+				if (Collision::TestCollision(bodyA, bodyB, &data))
 				{
-					auto& bodyA = i->second, & bodyB = j->second;
-					glm::vec2 vA, vB;
-					vA = bodyA.Velocity - (2.f * bodyB.Mass / (bodyA.Mass + bodyB.Mass)) * glm::proj(bodyA.Velocity - bodyB.Velocity, bodyB.Position - bodyA.Position);
-					vB = bodyB.Velocity - (2.f * bodyA.Mass / (bodyA.Mass + bodyB.Mass)) * glm::proj(bodyB.Velocity - bodyA.Velocity, bodyA.Position - bodyB.Position);
-					bodyA.Position -= bodyA.Velocity * dt;
-					bodyB.Position -= bodyB.Velocity * dt;
-					bodyA.Velocity = vA;
-					bodyB.Velocity = vB;
+					//if (bodyA.Collider->Type == ColliderType::BoundingBox && bodyB.Collider->Type == ColliderType::BoundingBox)
+					//{
+						bodyA.Position -= data.Normal * data.Depth * 0.5f;
+						bodyB.Position += data.Normal * data.Depth * 0.5f;
+					//}
+					//Collision::SolveCollision(bodyA, bodyB, dt);
 				}
 			}
 		}

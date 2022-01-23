@@ -260,7 +260,7 @@ void PropertyPanel::DrawContext()
 	// Sprite Renderer Component
 	DrawComponent<Olala::SpriteRendererComponent>("Sprite Renderer", entity, [](auto& sprite)
 	{
-		ImGui::DragFloat2("Size", (float*)&sprite.Size, 1.f, 0.001f, 1000.f);
+		ImGui::DragFloat2("Size##Sprite", (float*)&sprite.Size, 1.f, 0.001f, 1000.f);
 		ImGui::ColorEdit4("Color", (float*)&sprite.Color);
 	});
 
@@ -268,17 +268,26 @@ void PropertyPanel::DrawContext()
 	DrawComponent<Olala::Rigidbody2DComponent>("Rigidbody 2D", entity, [&](auto& rigidbody2d)
 	{
 		if (ImGui::DragFloat("Mass", &rigidbody2d.Mass, 1.0f, 0.001f, 1000.f)) entity.GetPhysicsBody().Mass = rigidbody2d.Mass;
-		if (ImGui::DragFloat2("Velocity", (float*)&rigidbody2d.Velocity))      entity.GetPhysicsBody().Velocity = rigidbody2d.Velocity;
-		if (ImGui::Checkbox("Static", &rigidbody2d.IsStatic))                  entity.GetPhysicsBody().IsStatic = rigidbody2d.IsStatic;
-		if (ImGui::Checkbox("Gravity", &rigidbody2d.ApplyGravity))             entity.GetPhysicsBody().ApplyGravity = rigidbody2d.ApplyGravity;
+
+		if (ImGui::DragFloat2("Velocity", (float*)&rigidbody2d.Velocity)) entity.GetPhysicsBody().Velocity = rigidbody2d.Velocity;
+
+		if (ImGui::Checkbox("Static", &rigidbody2d.IsStatic))
+		{
+			auto& physicsBody = entity.GetPhysicsBody();
+			physicsBody.IsStatic = rigidbody2d.IsStatic;
+			if (rigidbody2d.IsStatic)
+				physicsBody.Velocity = glm::vec2(0.f);
+		}
+
+		if (ImGui::Checkbox("Gravity", &rigidbody2d.ApplyGravity)) entity.GetPhysicsBody().ApplyGravity = rigidbody2d.ApplyGravity;
 	});
 
 	// Box Collider 2D
 	DrawComponent<Olala::BoxCollider2DComponent>("Box Collider 2D", entity, [&](auto& boxCollider2d)
 	{
 		ImGui::DragFloat2("Center", (float*)&boxCollider2d.Center);
-		if (ImGui::DragFloat2("Size", (float*)&boxCollider2d.Size, 1.f, 0.001f, 1000.f))
-			std::static_pointer_cast<Olala::BoundingBox>(entity.GetPhysicsBody().Collider)->Size = boxCollider2d.Size;
+		if (ImGui::DragFloat2("Size##bc2d", (float*)&boxCollider2d.Size, 1.f, 0.001f, 1000.f))
+			std::static_pointer_cast<Olala::BoundingBox>(entity.GetPhysicsBody().Collider)->SetSize(boxCollider2d.Size);
 
 	});
 

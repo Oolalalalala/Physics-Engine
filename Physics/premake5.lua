@@ -15,6 +15,7 @@ project "Physics"
 
     includedirs
     {
+        "src",
         "%{wks.location}/Olala/vendor"
     }
 
