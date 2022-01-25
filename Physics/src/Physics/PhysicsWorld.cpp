@@ -24,14 +24,14 @@ namespace Olala {
 	{
 		for (auto& [id, body] : m_PhysicsBodies)
 		{
-			if (!body.IsStatic && body.ApplyGravity)
+			if (body.InvMass != 0.f && body.ApplyGravity)
 				body.Velocity.y -= 9.81f * dt;
 		}
 		
 		// Update Position
 		for (auto& [id, body] : m_PhysicsBodies)
 		{
-			if (!body.IsStatic)
+			if (body.InvMass != 0.f)
 				body.Position += body.Velocity * dt;
 		}
 
@@ -41,16 +41,25 @@ namespace Olala {
 			for (auto j = std::next(i); j != m_PhysicsBodies.end(); j++)
 			{
 				auto& bodyA = i->second, & bodyB = j->second;
-				if (bodyA.IsStatic && bodyB.IsStatic) continue;
+				if (bodyA.InvMass == 0.f && bodyB.InvMass == 0.f) continue;
 
 				if (Collision::TestCollision(bodyA, bodyB, &data))
 				{
-					//if (bodyA.Collider->Type == ColliderType::BoundingBox && bodyB.Collider->Type == ColliderType::BoundingBox)
-					//{
+					if (bodyA.InvMass == 0.f) 
+						bodyB.Position += data.Normal * data.Depth;
+					else if (bodyB.InvMass == 0.f)
+						bodyA.Position -= data.Normal * data.Depth;
+					else
+					{
+						// Inaccurate but hard to notice
 						bodyA.Position -= data.Normal * data.Depth * 0.5f;
 						bodyB.Position += data.Normal * data.Depth * 0.5f;
-					//}
-					//Collision::SolveCollision(bodyA, bodyB, dt);
+					}
+
+					float e = std::min(bodyA.Restitution, bodyB.Restitution); // There are many ways of calculating combined restitution
+					float j = -(1.f + e) * glm::dot(bodyB.Velocity - bodyA.Velocity, data.Normal) / (bodyA.InvMass + bodyB.InvMass); // TODO : implement InvMass
+					bodyA.Velocity -= j * bodyA.InvMass * data.Normal;
+					bodyB.Velocity += j * bodyB.InvMass * data.Normal;
 				}
 			}
 		}
@@ -75,6 +84,8 @@ namespace Olala {
 
 	void PhysicsWorld::RemovePhysicsBody(const PhysicsID& id)
 	{
+		if (id == 0) return;
+
 		m_PhysicsBodies.erase(id);
 	}
 
@@ -82,6 +93,7 @@ namespace Olala {
 	{
 		//if (id == 0) ; // error when id = 0
 		// error when id does not exists
+
 		return m_PhysicsBodies.at(id);
 	}
 

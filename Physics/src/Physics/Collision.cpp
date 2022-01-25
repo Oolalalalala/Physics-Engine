@@ -33,7 +33,7 @@ namespace Olala {
 
 	bool Collision::TestCollision(const PhysicsBody& bodyA, const PhysicsBody& bodyB, CollisionData* data)
 	{
-		if (bodyA.Collider->Type == ColliderType::BoundingCircle && bodyB.Collider->Type == ColliderType::BoundingCircle)
+		if (bodyA.Collider->GetColliderType() == ColliderType::BoundingCircle && bodyB.Collider->GetColliderType() == ColliderType::BoundingCircle)
 		{
 			float collideDistance = std::static_pointer_cast<BoundingCircle>(bodyA.Collider)->Radius +
 			                        std::static_pointer_cast<BoundingCircle>(bodyB.Collider)->Radius;
@@ -46,7 +46,7 @@ namespace Olala {
 
 			return true;
 		}
-		else if (bodyA.Collider->Type == ColliderType::BoundingBox && bodyB.Collider->Type == ColliderType::BoundingBox)
+		else if (bodyA.Collider->GetColliderType() == ColliderType::BoundingBox && bodyB.Collider->GetColliderType() == ColliderType::BoundingBox)
 		{
 			auto boxA = std::static_pointer_cast<BoundingBox>(bodyA.Collider);
 			auto boxB = std::static_pointer_cast<BoundingBox>(bodyB.Collider);
@@ -92,7 +92,7 @@ namespace Olala {
 
 			return true;
 		}
-		else if (bodyA.Collider->Type == ColliderType::BoundingBox && bodyB.Collider->Type == ColliderType::BoundingCircle)
+		else if (bodyA.Collider->GetColliderType() == ColliderType::BoundingBox && bodyB.Collider->GetColliderType() == ColliderType::BoundingCircle)
 		{
 			auto box = std::static_pointer_cast<BoundingBox>(bodyA.Collider);
 			auto circle = std::static_pointer_cast<BoundingCircle>(bodyB.Collider);
@@ -155,7 +155,7 @@ namespace Olala {
 
 			return true;
 		}
-		else if (bodyA.Collider->Type == ColliderType::BoundingCircle && bodyB.Collider->Type == ColliderType::BoundingBox)
+		else if (bodyA.Collider->GetColliderType() == ColliderType::BoundingCircle && bodyB.Collider->GetColliderType() == ColliderType::BoundingBox)
 		{
 			auto circle = std::static_pointer_cast<BoundingCircle>(bodyA.Collider);
 			auto box = std::static_pointer_cast<BoundingBox>(bodyB.Collider);
@@ -219,7 +219,7 @@ namespace Olala {
 			return true;
 		}
 		// Separate Axis Theorem
-		else if (bodyA.Collider->Type == ColliderType::BoundingPolygon && bodyB.Collider->Type == ColliderType::BoundingPolygon)
+		else if (bodyA.Collider->GetColliderType() == ColliderType::BoundingPolygon && bodyB.Collider->GetColliderType() == ColliderType::BoundingPolygon)
 		{
 			auto polygonA = std::static_pointer_cast<BoundingPolygon>(bodyA.Collider);
 			auto polygonB = std::static_pointer_cast<BoundingPolygon>(bodyB.Collider);
@@ -278,46 +278,6 @@ namespace Olala {
 		}
 
 		return false;
-	}
-
-
-	// TODO : move resolver to elsewhere
-	void Collision::SolveCollision(PhysicsBody& bodyA, PhysicsBody& bodyB, float dt)
-	{
-		if (bodyA.Collider->Type == ColliderType::BoundingCircle && bodyB.Collider->Type == ColliderType::BoundingCircle)
-		{
-			if (!bodyA.IsStatic && !bodyB.IsStatic)
-			{
-				glm::vec2 vA, vB;
-				vA = bodyA.Velocity - (2.f * bodyB.Mass / (bodyA.Mass + bodyB.Mass)) * glm::proj(bodyA.Velocity - bodyB.Velocity, bodyB.Position - bodyA.Position);
-				vB = bodyB.Velocity - (2.f * bodyA.Mass / (bodyA.Mass + bodyB.Mass)) * glm::proj(bodyB.Velocity - bodyA.Velocity, bodyA.Position - bodyB.Position);
-				bodyA.Position -= bodyA.Velocity * dt;
-				bodyB.Position -= bodyB.Velocity * dt;
-				bodyA.Velocity = vA;
-				bodyB.Velocity = vB;
-			}
-			else if (!bodyA.IsStatic && bodyB.IsStatic)
-			{
-				glm::vec2 vA = bodyA.Velocity - 2.f * glm::proj(bodyA.Velocity, bodyB.Position - bodyA.Position);
-				bodyA.Position -= bodyA.Velocity * dt;
-				bodyA.Velocity = vA;
-			}
-			else//(!bodyB.IsStatic && bodyA.IsStatic)
-			{
-				glm::vec2 vB = bodyB.Velocity - 2.f * glm::proj(bodyB.Velocity, bodyA.Position - bodyB.Position);
-				bodyB.Position -= bodyA.Velocity * dt;
-				bodyB.Velocity = vB;
-			}
-		}
-		else if (bodyA.Collider->Type == ColliderType::BoundingBox && bodyB.Collider->Type == ColliderType::BoundingBox)
-		{
-		}
-		else if (bodyA.Collider->Type == ColliderType::BoundingBox && bodyB.Collider->Type == ColliderType::BoundingCircle)
-		{
-		}
-		else if (bodyA.Collider->Type == ColliderType::BoundingCircle && bodyB.Collider->Type == ColliderType::BoundingBox)
-		{
-		}
 	}
 
 }

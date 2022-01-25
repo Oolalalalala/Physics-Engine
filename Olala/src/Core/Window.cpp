@@ -48,7 +48,6 @@ namespace Olala {
 		}
 
 		glfwSetWindowUserPointer(m_GLFWwindow, &m_Data);
-		SetVSync(true);
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_GLFWwindow, [](GLFWwindow* window, int width, int height)

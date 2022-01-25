@@ -13,19 +13,22 @@ namespace Olala {
 	struct Collider
 	{
 		glm::vec2 Offset = glm::vec2(0.f);
-		ColliderType Type = ColliderType::None;
+
+		virtual ColliderType GetColliderType() = 0;
 	};
 
 	struct BoundingCircle : public Collider
 	{
 		float Radius = 1.f;
-		BoundingCircle() { Type = ColliderType::BoundingCircle; }
+
+		ColliderType GetColliderType() override { return ColliderType::BoundingCircle; }
 	};
 
 	struct BoundingBox : public Collider
 	{
 		glm::vec2 Points[4] = {}; // Three points can represent a rectangle
-		BoundingBox() { Type = ColliderType::BoundingBox; }
+
+		ColliderType GetColliderType() override { return ColliderType::BoundingBox; }
 
 		void SetSize(glm::vec2 size)
 		{
@@ -39,7 +42,8 @@ namespace Olala {
 	struct BoundingPolygon : public Collider
 	{
 		std::vector<glm::vec2> Points;
-		BoundingPolygon() { Type = ColliderType::BoundingPolygon; }
+
+		ColliderType GetColliderType() override { return ColliderType::BoundingPolygon; }
 	};
 
 }

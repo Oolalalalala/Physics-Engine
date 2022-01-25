@@ -23,10 +23,12 @@ public:
 private:
 	void DrawMenuBar();
 
-	void OnOverlayRender();
+	void OnRuntimeBegin();
+	void OnRuntimeEnd();
 
 private:
 	Olala::Ref<Olala::Scene> m_Scene;
+	Olala::Ref<Olala::Scene> m_RuntimeScene;
 	Olala::Ref<Olala::AssetManager> m_AssetManager;
 
 	// Panels
@@ -39,6 +41,7 @@ private:
 
 	Olala::Entity m_EditorCamera;
 
-	bool m_DrawColliders;
+	bool m_IsRuntime = false;
+	bool m_IsPausing = false;
 };
 

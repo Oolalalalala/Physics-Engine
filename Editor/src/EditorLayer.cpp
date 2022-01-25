@@ -14,31 +14,40 @@ void EditorLayer::OnAttach()
 	specs.Width = 800, specs.Height = 600;
 	cameraComponent.RenderTarget = Olala::Framebuffer::Create(specs);
 
-	m_SceneViewPanel = Olala::CreateRef<SceneViewPanel>(m_EditorCamera);
+	m_SceneViewPanel = Olala::CreateRef<SceneViewPanel>(m_Scene, m_EditorCamera);
 	m_PropertyPanel = Olala::CreateRef<PropertyPanel>();
 	m_SceneHierarchyPanel = Olala::CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertyPanel);
     m_RuntimeViewPanel = Olala::CreateRef<RuntimeViewPanel>();
     m_AssetPanel = Olala::CreateRef<AssetPanel>(m_AssetManager);
-    m_DebugPanel = Olala::CreateRef<DebugPanel>(&m_DrawColliders);
+    m_DebugPanel = Olala::CreateRef<DebugPanel>(m_SceneViewPanel);
 
 	Olala::Ref<Olala::Texture2D> exampleTextures[2];
     exampleTextures[0] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Planet9.jpg");
     exampleTextures[1] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Abe.png");
 
-	// Quads
-	for (int i = 0; i < 8; i++)
+	// Entities
+	for (int i = 0; i < 4; i++)
 	{
 		Olala::Entity quad = m_Scene->CreateEntity("Quad" + std::to_string(i));
 		quad.GetComponent<Olala::TransformComponent>().Position.x = -350.f + 100.f * i;
 		quad.AddComponent<Olala::SpriteRendererComponent>(glm::vec2{ 80.f, 45.f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, exampleTextures[i%2]);
         auto& rb = quad.AddComponent<Olala::Rigidbody2DComponent>();
-        rb.PhysicsHandle = quad.GetPhysicsWorld()->CreatePhysicsBody(Olala::ColliderType::BoundingBox);
-        quad.GetPhysicsBody().IsStatic = rb.IsStatic = true;
-        quad.GetPhysicsBody().Position = quad.GetComponent<Olala::TransformComponent>().Position;
-        std::static_pointer_cast<Olala::BoundingBox>(quad.GetPhysicsBody().Collider)->SetSize({ 80.f, 45.f });
+        rb.ApplyGravity = rb.IsStatic = false;
         quad.AddComponent<Olala::BoxCollider2DComponent>(glm::vec2{ 80.f, 45.f });
 	}
-
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            Olala::Entity ball = m_Scene->CreateEntity("Ball" + std::to_string(i) + "," + std::to_string(j));
+            ball.GetComponent<Olala::TransformComponent>().Position = glm::vec3(-200.f + i * 40.f, -200.f + j * 40.f, 0.f);
+            //ball.AddComponent<Olala::SpriteRendererComponent>(glm::vec2{ 2.f, 2.f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, nullptr);
+            auto& rb = ball.AddComponent<Olala::Rigidbody2DComponent>();
+            rb.ApplyGravity = rb.IsStatic = false;
+            ball.AddComponent<Olala::CircleCollider2DComponent>(10.f);
+        }
+    }
+    m_Scene->InitializePhysics();
 }
 
 void EditorLayer::OnDetach()
@@ -49,9 +58,18 @@ void EditorLayer::OnUpdate(float dt)
 {
     m_EditorCamera.GetComponent<Olala::EditorCameraControllerComponent>().IsOn = m_SceneViewPanel->GetIsFocused();
 
-	m_Scene->OnUpdate(dt);
+    if (m_IsRuntime)
+        m_RuntimeScene->OnRuntimeUpdate(dt);
+    else
+        m_Scene->OnUpdate(dt);
 
-    OnOverlayRender();
+
+    m_SceneHierarchyPanel   ->  OnUpdate(dt);
+    m_PropertyPanel         ->  OnUpdate(dt);
+    m_SceneViewPanel        ->  OnUpdate(dt);
+    m_RuntimeViewPanel      ->  OnUpdate(dt);
+    m_AssetPanel            ->  OnUpdate(dt);
+    m_DebugPanel            ->  OnUpdate(dt);
 }
 
 void EditorLayer::OnImGuiRender()
@@ -101,6 +119,7 @@ void EditorLayer::OnImGuiRender()
     // Menu bar
     DrawMenuBar();
 
+
     // Panels
     m_SceneHierarchyPanel  -> OnImGuiRender();
     m_PropertyPanel        -> OnImGuiRender();
@@ -147,31 +166,68 @@ void EditorLayer::DrawMenuBar()
 
             ImGui::EndMenu();
         }
+
+        if (ImGui::BeginMenu("Program"))
+        {
+            if (ImGui::MenuItem(m_IsRuntime ? "Stop" : "Start", "a"))
+            {
+                m_IsRuntime = !m_IsRuntime;
+                if (m_IsRuntime)
+                    OnRuntimeBegin();
+                else
+                    OnRuntimeEnd();
+            }
+            if (ImGui::MenuItem("Pause"))
+            {
+                m_IsPausing = true;
+            }
+            ImGui::EndMenu();
+        }
+
 		ImGui::EndMenuBar();
 	}
     
 }
 
-void EditorLayer::OnOverlayRender()
+void EditorLayer::OnRuntimeBegin()
 {
-    if (m_DrawColliders)
+    m_RuntimeScene = Olala::Scene::Copy(m_Scene);
+    m_RuntimeScene->InitializePhysics();
+
+    m_SceneViewPanel->SetScene(m_RuntimeScene);
+    m_SceneHierarchyPanel->SetDisplayingScene(m_RuntimeScene);
+
+    auto cameraView = m_RuntimeScene->GetAllEntitiesWith<Olala::TagComponent, Olala::CameraComponent>();
+    for (auto e : cameraView)
     {
-        Olala::RenderCommand::SetRenderTarget(m_EditorCamera.GetComponent<Olala::CameraComponent>().RenderTarget);
-        Olala::Renderer2D::BeginScene(*m_EditorCamera.GetComponent<Olala::CameraComponent>().Camera);
-
-        auto view = m_Scene->GetAllEntitiesWith<Olala::TransformComponent, Olala::CircleCollider2DComponent>();
-        for (auto e : view)
+        if (cameraView.get<Olala::TagComponent>(e).Tag == "Editor Camera")
         {
-            auto [transform, cc2d] = view.get<Olala::TransformComponent, Olala::CircleCollider2DComponent>(e);
-
-            Olala::Renderer2D::DrawCircle((glm::vec2)transform.Position + cc2d.Center, cc2d.Radius, 0.05f, glm::vec4(0.f, 1.f, 0.f, 1.f));
+            m_SceneViewPanel->SetCamera(Olala::Entity(e, m_RuntimeScene.get()));
+            break;
         }
-
-        // TODO : implement box collider visualization
-
-        Olala::Renderer2D::EndScene();
-        Olala::RenderCommand::SetRenderTarget(nullptr);
     }
+
+    m_PropertyPanel->SetDisplayedEntity(Olala::Entity());
+}
+
+void EditorLayer::OnRuntimeEnd()
+{
+    m_SceneViewPanel->SetScene(m_Scene);
+    m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
+
+    auto cameraView = m_Scene->GetAllEntitiesWith<Olala::TagComponent, Olala::CameraComponent>();
+    for (auto e : cameraView)
+    {
+        if (cameraView.get<Olala::TagComponent>(e).Tag == "Editor Camera")
+        {
+            m_SceneViewPanel->SetCamera(Olala::Entity(e, m_Scene.get()));
+            break;
+        }
+    }
+
+    m_PropertyPanel->SetDisplayedEntity(Olala::Entity());
+
+    m_RuntimeScene = nullptr;
 }
 
 void EditorLayer::OnEvent(Olala::Event& e)

@@ -9,6 +9,6 @@ public:
 	RuntimeViewPanel();
 	~RuntimeViewPanel();
 
-	void OnUpdate() override;
+	void OnUpdate(float dt) override;
 	void OnImGuiRender() override;
 };

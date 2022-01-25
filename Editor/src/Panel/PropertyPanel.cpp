@@ -9,7 +9,7 @@ PropertyPanel::~PropertyPanel()
 {
 }
 
-void PropertyPanel::OnUpdate()
+void PropertyPanel::OnUpdate(float dt)
 {
 }
 
@@ -186,7 +186,7 @@ void PropertyPanel::DrawContext()
 
 	ImGui::Separator();
 
-	// Transform Component
+	// Transform Component // TODO : transform should be undestroyable
 	DrawComponent<Olala::TransformComponent>("Transform", entity, [&](auto& transform)
 	{
 		if (ImGui::DragFloat3("Position", (float*)&transform.Position, 2))
@@ -267,16 +267,20 @@ void PropertyPanel::DrawContext()
 	// Rigidbody 2D
 	DrawComponent<Olala::Rigidbody2DComponent>("Rigidbody 2D", entity, [&](auto& rigidbody2d)
 	{
-		if (ImGui::DragFloat("Mass", &rigidbody2d.Mass, 1.0f, 0.001f, 1000.f)) entity.GetPhysicsBody().Mass = rigidbody2d.Mass;
+		if (ImGui::DragFloat("Mass", &rigidbody2d.Mass, 1.0f, 0.001f, 1000.f)) entity.GetPhysicsBody().InvMass = 1.f / rigidbody2d.Mass;
 
 		if (ImGui::DragFloat2("Velocity", (float*)&rigidbody2d.Velocity)) entity.GetPhysicsBody().Velocity = rigidbody2d.Velocity;
 
 		if (ImGui::Checkbox("Static", &rigidbody2d.IsStatic))
 		{
 			auto& physicsBody = entity.GetPhysicsBody();
-			physicsBody.IsStatic = rigidbody2d.IsStatic;
 			if (rigidbody2d.IsStatic)
+			{
+				physicsBody.InvMass = 0.f;
 				physicsBody.Velocity = glm::vec2(0.f);
+			}
+			else
+				physicsBody.InvMass = 1 / rigidbody2d.Mass;
 		}
 
 		if (ImGui::Checkbox("Gravity", &rigidbody2d.ApplyGravity)) entity.GetPhysicsBody().ApplyGravity = rigidbody2d.ApplyGravity;
@@ -288,7 +292,6 @@ void PropertyPanel::DrawContext()
 		ImGui::DragFloat2("Center", (float*)&boxCollider2d.Center);
 		if (ImGui::DragFloat2("Size##bc2d", (float*)&boxCollider2d.Size, 1.f, 0.001f, 1000.f))
 			std::static_pointer_cast<Olala::BoundingBox>(entity.GetPhysicsBody().Collider)->SetSize(boxCollider2d.Size);
-
 	});
 
 	// Circle Collider 2D

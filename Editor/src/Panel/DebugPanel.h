@@ -3,16 +3,23 @@
 #include <Olala.h>
 #include "Panel.h"
 
+#include "SceneViewPanel.h"
+
 class DebugPanel : public Panel
 {
 public:
-	DebugPanel(bool* drawColliderBorder);
+	DebugPanel(Olala::Ref<SceneViewPanel> sceneViewPanel);
 	~DebugPanel();
 
 
-	void OnUpdate() override;
+	void OnUpdate(float dt) override;
 	void OnImGuiRender() override;
 
 private:
-	bool* m_DrawColliderBorder;
+	Olala::Ref<SceneViewPanel> m_SceneViewPanel;
+
+	bool m_DrawColliderBorder = false;
+
+	float m_FrameRate = 0.f;
+	float m_AccumulatedFrametime = 0.f;
 };

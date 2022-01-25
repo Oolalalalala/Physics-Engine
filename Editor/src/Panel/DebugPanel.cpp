@@ -1,18 +1,27 @@
 #include "pch.h"
 #include "DebugPanel.h"
 
-DebugPanel::DebugPanel(bool* drawColliderBorder)
+DebugPanel::DebugPanel(Olala::Ref<SceneViewPanel> sceneViewPanel)
 	: Panel("Debug")
 {
-	m_DrawColliderBorder = drawColliderBorder;
+	m_SceneViewPanel = sceneViewPanel;
 }
 
 DebugPanel::~DebugPanel()
 {
 }
 
-void DebugPanel::OnUpdate()
+void DebugPanel::OnUpdate(float dt)
 {
+	constexpr float updateInterval = .5f;
+
+	m_AccumulatedFrametime += dt;
+
+	if (m_AccumulatedFrametime > updateInterval)
+	{
+		m_FrameRate = 1.f / dt;
+		m_AccumulatedFrametime -= updateInterval;
+	}
 }
 
 void DebugPanel::OnImGuiRender()
@@ -20,8 +29,10 @@ void DebugPanel::OnImGuiRender()
 	if (m_IsOpen)
 	{
 		ImGui::Begin(m_Name.c_str(), &m_IsOpen);
-		ImGui::Checkbox("Show collider border", m_DrawColliderBorder);
 
+		ImGui::Text("FPS : %d", (int)m_FrameRate);
+		if (ImGui::Checkbox("Show collider border", &m_DrawColliderBorder)) m_SceneViewPanel->SetDrawCollider(m_DrawColliderBorder);
+		
 		m_IsFocused = ImGui::IsWindowFocused();
 		ImGui::End();
 	}

@@ -9,7 +9,7 @@ public:
 	PropertyPanel();
 	~PropertyPanel();
 
-	void OnUpdate();
+	void OnUpdate(float dt);
 	void OnImGuiRender() override;
 
 	void SetDisplayedEntity(const Olala::Entity& entity);

@@ -21,7 +21,7 @@ namespace Olala {
 	{
 		Log::Init();
 
-		m_Window = Window::Create(WindowProps(m_ApplicationName));
+		m_Window = Window::Create(WindowProps(m_ApplicationName, 1600, 900, false));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
 		m_Timer = CreateScope<Timer>();

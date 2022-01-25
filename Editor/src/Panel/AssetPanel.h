@@ -11,7 +11,7 @@ public:
 
 	void SetAssetManager(Olala::Ref<Olala::AssetManager> assetManager);
 
-	void OnUpdate() override {}
+	void OnUpdate(float dt) override {}
 	void OnImGuiRender() override;
 
 private:

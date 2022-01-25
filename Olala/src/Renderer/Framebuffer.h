@@ -20,6 +20,8 @@ namespace Olala {
 		void Invalidate();
 		void Resize(uint32_t width, uint32_t height);
 
+		const FramebufferSpecs& GetSpecs() { return m_Specs; }
+
 		uint32_t GetColorBufferRendererId() const { return m_ColorBufferRendererID; }
 
 		static Ref<Framebuffer> Create(FramebufferSpecs specs);

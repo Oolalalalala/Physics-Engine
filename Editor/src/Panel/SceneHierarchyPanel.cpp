@@ -10,7 +10,7 @@ SceneHierarchyPanel::~SceneHierarchyPanel()
 {
 }
 
-void SceneHierarchyPanel::OnUpdate()
+void SceneHierarchyPanel::OnUpdate(float dt)
 {
 }
 

@@ -9,7 +9,7 @@ RuntimeViewPanel::~RuntimeViewPanel()
 {
 }
 
-void RuntimeViewPanel::OnUpdate()
+void RuntimeViewPanel::OnUpdate(float dt)
 {
 }
 

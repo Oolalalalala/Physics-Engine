@@ -1,0 +1,192 @@
+Scene: Untitled
+Entities:
+  - Entity: Ball3
+    TransformComponent:
+      Position: [210, 100, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 50
+  - Entity: Ball2
+    TransformComponent:
+      Position: [70, 100, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 50
+  - Entity: Ball1
+    TransformComponent:
+      Position: [-70, 100, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 50
+  - Entity: Ball0
+    TransformComponent:
+      Position: [-210, 100, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 50
+  - Entity: Quad5
+    TransformComponent:
+      Position: [150, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [80, 45]
+  - Entity: Quad4
+    TransformComponent:
+      Position: [50, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [80, 45]
+  - Entity: Quad3
+    TransformComponent:
+      Position: [-50, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [80, 45]
+  - Entity: Quad2
+    TransformComponent:
+      Position: [-150, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [80, 45]
+  - Entity: Quad1
+    TransformComponent:
+      Position: [-250, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [80, 45]
+  - Entity: Quad0
+    TransformComponent:
+      Position: [-350, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 45]
+      Color: [1, 1, 1, 1]
+      TextureID: -1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [80, 45]
+  - Entity: Editor Camera
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        NearPlane: -1
+        FarPlane: 1
+        Width: 800
+        Height: 600
+      IsMain: true
+      IsOn: true

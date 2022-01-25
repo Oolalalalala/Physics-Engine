@@ -11,7 +11,7 @@ public:
 	void SetOpen(bool isOpen) { m_IsOpen = isOpen; }
 	bool GetIsFocused() { return m_IsFocused; }
 
-	virtual void OnUpdate() = 0;
+	virtual void OnUpdate(float dt) = 0;
 	virtual void OnImGuiRender() = 0;
 
 protected:

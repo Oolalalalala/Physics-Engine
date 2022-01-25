@@ -10,7 +10,7 @@ public:
 	SceneHierarchyPanel(Olala::Ref<Olala::Scene>& scene, Olala::Ref<PropertyPanel>& propertyPanel);
 	~SceneHierarchyPanel();
 
-	void OnUpdate() override;
+	void OnUpdate(float dt) override;
 	void OnImGuiRender() override;
 
 	void SetDisplayingScene(Olala::Ref<Olala::Scene>& scene);

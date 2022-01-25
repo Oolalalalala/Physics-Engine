@@ -13,10 +13,10 @@ namespace Olala {
 		glm::vec2 Position = glm::vec2(0.f);
 		glm::vec2 Velocity = glm::vec2(0.f);
 		float Rotation = 0.f;
-		float Mass = 1.f;
+		float InvMass = 1.f; // Value of zero means static
+		float Restitution = 1.f;
 		Ref<Collider> Collider;
 
-		bool IsStatic = false;
 		bool ApplyGravity = true;
 
 		void SetColliderType(ColliderType type)
