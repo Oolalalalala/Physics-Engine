@@ -11,7 +11,8 @@ namespace Olala {
 
 	Scene::Scene()
 	{
-		m_PhysicsWorld = CreateRef<PhysicsWorld>();
+		m_AssetManager = CreateRef<AssetManager>();
+		//m_AssetManager->Load("..\\Olala\\Asset\\Scene\\Demo"); // temp TODO : remove
 	}
 
 	Scene::~Scene()
@@ -183,6 +184,8 @@ namespace Olala {
 
 	void Scene::InitializePhysics()
 	{
+		m_PhysicsWorld = CreateRef<PhysicsWorld>();
+
 		auto view = m_Registry.view<TransformComponent, Rigidbody2DComponent>();
 		for (auto e : view)
 		{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entt/entt.hpp"
+#include "AssetManager.h"
 #include "Physics.h"
 
 class SceneHierarchyPanel;
@@ -29,10 +30,14 @@ namespace Olala {
 			return m_Registry.view<Components...>();
 		}
 
+		Ref<AssetManager> GetAssetManager() { return m_AssetManager; }
+		Ref<PhysicsWorld> GetPhysicsWorld() { return m_PhysicsWorld; }
+
 		static Ref<Scene> Copy(Ref<Scene> source);
 
 	private:
 		entt::registry m_Registry;
+		Ref<AssetManager> m_AssetManager;
 		Ref<PhysicsWorld> m_PhysicsWorld;
 
 		std::string m_Name = "Untitled";

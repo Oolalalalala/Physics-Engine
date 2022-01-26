@@ -4,50 +4,26 @@
 void EditorLayer::OnAttach()
 {
 	m_Scene = Olala::CreateRef<Olala::Scene>();
-    m_AssetManager = Olala::CreateRef<Olala::AssetManager>("..\\Olala\\Asset\\Scene\\Demo");
+    m_SceneSerializer = Olala::CreateRef<Olala::SceneSerializer>(m_Scene);
+    m_SceneSerializer->Deserialize("../Olala/Asset/Scene/Demo/TestScene.Olala");
 
-	// Editor camera
-    m_EditorCamera = m_Scene->CreateEntity("Editor Camera");
+    // Editor Camera
+    auto cameraView = m_Scene->GetAllEntitiesWith<Olala::TagComponent, Olala::CameraComponent>();
+    for (auto e : cameraView)
+    {
+        if (cameraView.get<Olala::TagComponent>(e).Tag == "Editor Camera") 
+            m_EditorCamera = { e, m_Scene.get() };
+    }
     m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
-	auto& cameraComponent = m_EditorCamera.AddComponent<Olala::CameraComponent>(Olala::CreateRef<Olala::OrthographicCamera>());
-	Olala::FramebufferSpecs specs;
-	specs.Width = 800, specs.Height = 600;
-	cameraComponent.RenderTarget = Olala::Framebuffer::Create(specs);
 
+
+    // Panels
 	m_SceneViewPanel = Olala::CreateRef<SceneViewPanel>(m_Scene, m_EditorCamera);
 	m_PropertyPanel = Olala::CreateRef<PropertyPanel>();
 	m_SceneHierarchyPanel = Olala::CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertyPanel);
     m_RuntimeViewPanel = Olala::CreateRef<RuntimeViewPanel>();
-    m_AssetPanel = Olala::CreateRef<AssetPanel>(m_AssetManager);
+    m_AssetPanel = Olala::CreateRef<AssetPanel>(m_Scene->GetAssetManager());
     m_DebugPanel = Olala::CreateRef<DebugPanel>(m_SceneViewPanel);
-
-	Olala::Ref<Olala::Texture2D> exampleTextures[2];
-    exampleTextures[0] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Planet9.jpg");
-    exampleTextures[1] = m_AssetManager->GetPool<Olala::Texture2D>().Get("Abe.png");
-
-	// Entities
-	for (int i = 0; i < 4; i++)
-	{
-		Olala::Entity quad = m_Scene->CreateEntity("Quad" + std::to_string(i));
-		quad.GetComponent<Olala::TransformComponent>().Position.x = -350.f + 100.f * i;
-		quad.AddComponent<Olala::SpriteRendererComponent>(glm::vec2{ 80.f, 45.f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, exampleTextures[i%2]);
-        auto& rb = quad.AddComponent<Olala::Rigidbody2DComponent>();
-        rb.ApplyGravity = rb.IsStatic = false;
-        quad.AddComponent<Olala::BoxCollider2DComponent>(glm::vec2{ 80.f, 45.f });
-	}
-    for (int i = 0; i < 10; i++)
-    {
-        for (int j = 0; j < 10; j++)
-        {
-            Olala::Entity ball = m_Scene->CreateEntity("Ball" + std::to_string(i) + "," + std::to_string(j));
-            ball.GetComponent<Olala::TransformComponent>().Position = glm::vec3(-200.f + i * 40.f, -200.f + j * 40.f, 0.f);
-            //ball.AddComponent<Olala::SpriteRendererComponent>(glm::vec2{ 2.f, 2.f }, glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, nullptr);
-            auto& rb = ball.AddComponent<Olala::Rigidbody2DComponent>();
-            rb.ApplyGravity = rb.IsStatic = false;
-            ball.AddComponent<Olala::CircleCollider2DComponent>(10.f);
-        }
-    }
-    m_Scene->InitializePhysics();
 }
 
 void EditorLayer::OnDetach()
@@ -56,7 +32,8 @@ void EditorLayer::OnDetach()
 
 void EditorLayer::OnUpdate(float dt)
 {
-    m_EditorCamera.GetComponent<Olala::EditorCameraControllerComponent>().IsOn = m_SceneViewPanel->GetIsFocused();
+    if (m_EditorCamera.HasComponent<Olala::EditorCameraControllerComponent>())
+        m_EditorCamera.GetComponent<Olala::EditorCameraControllerComponent>().IsOn = m_SceneViewPanel->GetIsFocused();
 
     if (m_IsRuntime)
         m_RuntimeScene->OnRuntimeUpdate(dt);
@@ -169,7 +146,7 @@ void EditorLayer::DrawMenuBar()
 
         if (ImGui::BeginMenu("Program"))
         {
-            if (ImGui::MenuItem(m_IsRuntime ? "Stop" : "Start", "a"))
+            if (ImGui::MenuItem(m_IsRuntime ? "Stop" : "Start", "F5"))
             {
                 m_IsRuntime = !m_IsRuntime;
                 if (m_IsRuntime)
@@ -208,6 +185,7 @@ void EditorLayer::OnRuntimeBegin()
     }
 
     m_PropertyPanel->SetDisplayedEntity(Olala::Entity());
+    m_PropertyPanel->SetIsRuntime(true);
 }
 
 void EditorLayer::OnRuntimeEnd()
@@ -226,6 +204,7 @@ void EditorLayer::OnRuntimeEnd()
     }
 
     m_PropertyPanel->SetDisplayedEntity(Olala::Entity());
+    m_PropertyPanel->SetIsRuntime(false);
 
     m_RuntimeScene = nullptr;
 }

@@ -107,12 +107,12 @@ namespace Olala {
 	{
 	}
 
-	static void SerializeEntity(YAML::Emitter& out, Entity entity)
+	static void SerializeEntity(YAML::Emitter& out, Entity entity, std::unordered_map<Ref<Texture2D>, uint32_t>& textureMap)
 	{
 		out << YAML::BeginMap;
 
 		auto& tag = entity.GetComponent<TagComponent>();
-		out << YAML::Key << "Entity" << YAML::Value << tag.Tag;
+		out << YAML::Key << "Name" << YAML::Value << tag.Tag;
 
 		if (entity.HasComponent<TransformComponent>())
 		{
@@ -159,7 +159,7 @@ namespace Olala {
 
 			out << YAML::EndMap;
 		}
-		// TODO : add texture id || scene should own asset manager
+
 		if (entity.HasComponent<SpriteRendererComponent>())
 		{
 			out << YAML::Key << "SpriteRendererComponent";
@@ -168,7 +168,7 @@ namespace Olala {
 			auto& sprite = entity.GetComponent<SpriteRendererComponent>();
 			out << YAML::Key << "Size" << YAML::Value << sprite.Size;
 			out << YAML::Key << "Color" << YAML::Value << sprite.Color;
-			out << YAML::Key << "TextureID" << YAML::Value << -1; // Texture id here
+			out << YAML::Key << "Texture" << YAML::Value << textureMap[sprite.Texture];
 
 			out << YAML::EndMap;
 		}
@@ -220,6 +220,28 @@ namespace Olala {
 		YAML::Emitter out;
 		out << YAML::BeginMap;
 		out << YAML::Key << "Scene" << YAML::Value << m_Scene->m_Name;
+
+
+
+		// Textures
+		out << YAML::Key << "Textures" << YAML::Value << YAML::BeginMap;
+
+		std::unordered_map<Ref<Texture2D>, uint32_t> textureMap;
+		textureMap[nullptr] = 0;
+		uint32_t idx = 1;
+
+		auto& texturePool = m_Scene->m_AssetManager->GetPool<Texture2D>();
+		for (auto [textureName, texture] : texturePool.GetAll())
+		{
+			out << YAML::Key << textureName << YAML::Value << idx;
+			if (textureMap.find(texture) == textureMap.end())
+				textureMap[texture] = idx++;
+		}
+
+		out << YAML::EndMap;
+
+
+		// Entities
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 		m_Scene->m_Registry.each([&](auto entityID)
 		{
@@ -227,7 +249,7 @@ namespace Olala {
 			if (!entity)
 				return;
 
-			SerializeEntity(out, entity);
+			SerializeEntity(out, entity, textureMap);
 		});
 		YAML::EndSeq;
 		YAML::EndMap;
@@ -246,12 +268,26 @@ namespace Olala {
 
 		std::string sceneName = data["Scene"].as<std::string>();
 
-		// TODO : Load texture here
+
+		// Load Textures
+		m_Scene->m_AssetManager->Load(std::filesystem::path(filepath).parent_path().string());
+		auto& texturePool = m_Scene->m_AssetManager->GetPool<Texture2D>();
+
+		std::unordered_map<uint32_t, Ref<Texture2D>> textureMap;
+		textureMap[0] = nullptr;
+
+
+		auto textures = data["Textures"];
+		for (auto texture : textures)
+		{
+			textureMap[texture.second.as<uint32_t>()] = texturePool.Get(texture.first.as<std::string>());
+		}
+
 
 		auto entities = data["Entities"];
 		for (auto entity : entities)
 		{
-			std::string name = entity["Entity"].as<std::string>();
+			std::string name = entity["Name"].as<std::string>();
 			Entity deserializedEntity = m_Scene->CreateEntity(name);
 
 			if (auto transformComponent = entity["TransformComponent"])
@@ -279,8 +315,9 @@ namespace Olala {
 					{
 						float nearPlane =  cameraComponent["Camera"]["NearPlane"].as<float>();
 						float farPlane  =  cameraComponent["Camera"]["FarPlane"].as<float>();
-						glm::vec2 size  =  cameraComponent["Camera"]["Size"].as<glm::vec2>();
-						camera.Camera = CreateRef<OrthographicCamera>(size.x, size.y, nearPlane, farPlane);
+						float width     =  cameraComponent["Camera"]["Width"].as<float>();
+						float height    =  cameraComponent["Camera"]["Height"].as<float>();
+						camera.Camera = CreateRef<OrthographicCamera>(width, height, nearPlane, farPlane);
 					}
 				}
 
@@ -296,32 +333,31 @@ namespace Olala {
 				auto& sprite = deserializedEntity.AddComponent<SpriteRendererComponent>();
 				sprite.Size = spriteRendererComponent["Size"].as<glm::vec2>();
 				sprite.Color = spriteRendererComponent["Color"].as<glm::vec4>();
-				//sprite.Texture = // TODO : implement texture things in front of texture in yaml file
+				sprite.Texture = textureMap[spriteRendererComponent["Texture"].as<uint32_t>()];
 			}
 			if (auto rigidbody2DComponent = entity["Rigidbody2DComponent"])
 			{
 				auto& rb2d = deserializedEntity.AddComponent<Rigidbody2DComponent>();
 				rb2d.Mass = rigidbody2DComponent["Mass"].as<float>();
-				// Invmass should be calculated when play button's pressed //////       TODO :
 				rb2d.Velocity = rigidbody2DComponent["Velocity"].as<glm::vec2>();
 				rb2d.IsStatic = rigidbody2DComponent["Static"].as<bool>(); 
 				rb2d.ApplyGravity = rigidbody2DComponent["Gravity"].as<bool>();
 			}
 			if (auto boxCollider2DComponent = entity["BoxCollider2DComponent"])
 			{
-				auto bc2d = deserializedEntity.AddComponent<BoxCollider2DComponent>();
+				auto& bc2d = deserializedEntity.AddComponent<BoxCollider2DComponent>();
 				bc2d.Center = boxCollider2DComponent["Center"].as<glm::vec2>();
 				bc2d.Rotation = boxCollider2DComponent["Rotation"].as<float>();
 				bc2d.Size = boxCollider2DComponent["Size"].as<glm::vec2>();
-				// TODO : set size should be done when play button is pressed
 			}
 			if (auto circleCollider2DComponent = entity["CircleCollider2DComponent"])
 			{
-				auto cc2d = deserializedEntity.AddComponent<CircleCollider2DComponent>();
+				auto& cc2d = deserializedEntity.AddComponent<CircleCollider2DComponent>();
 				cc2d.Center = circleCollider2DComponent["Center"].as<glm::vec2>();
 				cc2d.Radius = circleCollider2DComponent["Radius"].as<float>();
 			}
 		}
+
 
 
 		m_Scene->m_Name = sceneName;
