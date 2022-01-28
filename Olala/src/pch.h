@@ -19,6 +19,7 @@
 #include <fstream>
 
 #include <string>
+#include <sstream>
 #include <stack>
 #include <queue>
 #include <vector>

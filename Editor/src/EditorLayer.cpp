@@ -1,28 +1,25 @@
 #include "EditorLayer.h"
 
+namespace fs = std::filesystem;
+
+static Olala::Entity GetEditorCamera(Olala::Ref<Olala::Scene> scene)
+{
+    auto cameraView = scene->GetAllEntitiesWith<Olala::TagComponent, Olala::CameraComponent>();
+    for (auto e : cameraView)
+    {
+        if (cameraView.get<Olala::TagComponent>(e).Tag == "Editor Camera")
+            return Olala::Entity(e, scene.get());
+    }
+    return Olala::Entity();
+}
 
 void EditorLayer::OnAttach()
 {
-	m_Scene = Olala::CreateRef<Olala::Scene>();
-    m_SceneSerializer = Olala::CreateRef<Olala::SceneSerializer>(m_Scene);
-    m_SceneSerializer->Deserialize("../Olala/Asset/Scene/Demo/TestScene.Olala");
-
-    // Editor Camera
-    auto cameraView = m_Scene->GetAllEntitiesWith<Olala::TagComponent, Olala::CameraComponent>();
-    for (auto e : cameraView)
-    {
-        if (cameraView.get<Olala::TagComponent>(e).Tag == "Editor Camera") 
-            m_EditorCamera = { e, m_Scene.get() };
-    }
-    m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
-
-
     // Panels
 	m_SceneViewPanel = Olala::CreateRef<SceneViewPanel>(m_Scene, m_EditorCamera);
 	m_PropertyPanel = Olala::CreateRef<PropertyPanel>();
 	m_SceneHierarchyPanel = Olala::CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertyPanel);
-    m_RuntimeViewPanel = Olala::CreateRef<RuntimeViewPanel>();
-    m_AssetPanel = Olala::CreateRef<AssetPanel>(m_Scene->GetAssetManager());
+    m_AssetPanel = Olala::CreateRef<AssetPanel>(nullptr);
     m_DebugPanel = Olala::CreateRef<DebugPanel>(m_SceneViewPanel);
 }
 
@@ -32,19 +29,20 @@ void EditorLayer::OnDetach()
 
 void EditorLayer::OnUpdate(float dt)
 {
-    if (m_EditorCamera.HasComponent<Olala::EditorCameraControllerComponent>())
+    if (m_EditorCamera && m_EditorCamera.HasComponent<Olala::EditorCameraControllerComponent>())
         m_EditorCamera.GetComponent<Olala::EditorCameraControllerComponent>().IsOn = m_SceneViewPanel->GetIsFocused();
 
-    if (m_IsRuntime)
-        m_RuntimeScene->OnRuntimeUpdate(dt);
-    else
-        m_Scene->OnUpdate(dt);
-
+    if (m_Scene)
+    {
+        if (m_IsRuntime)
+            m_RuntimeScene->OnRuntimeUpdate(dt);
+        else
+            m_Scene->OnUpdate(dt);
+    }
 
     m_SceneHierarchyPanel   ->  OnUpdate(dt);
     m_PropertyPanel         ->  OnUpdate(dt);
     m_SceneViewPanel        ->  OnUpdate(dt);
-    m_RuntimeViewPanel      ->  OnUpdate(dt);
     m_AssetPanel            ->  OnUpdate(dt);
     m_DebugPanel            ->  OnUpdate(dt);
 }
@@ -101,7 +99,6 @@ void EditorLayer::OnImGuiRender()
     m_SceneHierarchyPanel  -> OnImGuiRender();
     m_PropertyPanel        -> OnImGuiRender();
     m_SceneViewPanel       -> OnImGuiRender();
-    m_RuntimeViewPanel     -> OnImGuiRender();
     m_AssetPanel           -> OnImGuiRender();
     m_DebugPanel           -> OnImGuiRender();
 
@@ -117,16 +114,83 @@ void EditorLayer::DrawMenuBar()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Open"))
-			{
+            if (ImGui::MenuItem("New Scene"))
+            {
+                // TODO : save check here
 
+                fs::path selectedFolder = Olala::FileDialog::SelectFolder("Select Folder");
+                if (!selectedFolder.empty())
+                {
+                    m_Scene = Olala::CreateRef<Olala::Scene>();
+
+                    m_EditorCamera = m_Scene->CreateEntity("Editor Camera");
+                    m_EditorCamera.AddComponent<Olala::CameraComponent>(Olala::CreateRef<Olala::OrthographicCamera>(), Olala::Framebuffer::Create(Olala::FramebufferSpecs()));
+                    m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
+
+                    Olala::SceneSerializer::CraeteDirectory(selectedFolder, m_Scene);
+                    m_SceneSerializer = Olala::CreateRef<Olala::SceneSerializer>(m_Scene, selectedFolder / m_Scene->GetName() / (m_Scene->GetName() + ".olala"));
+
+                    m_SceneViewPanel->SetScene(m_Scene);
+                    m_SceneViewPanel->SetCamera(m_EditorCamera);
+                    m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
+                    m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
+                }
+            }
+			if (ImGui::MenuItem("Open Scene"))
+			{
+                fs::path filepath = Olala::FileDialog::OpenFile("Select File", { "Scene File (.olala)", "*.olala" });
+
+                if (!filepath.empty())
+                {
+                    m_Scene = Olala::CreateRef<Olala::Scene>();
+                    m_SceneSerializer = Olala::CreateRef<Olala::SceneSerializer>(m_Scene, filepath);
+                    m_SceneSerializer->Deserialize();
+
+                    m_EditorCamera = GetEditorCamera(m_Scene);
+                    if (m_EditorCamera)
+                        m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
+
+                    m_SceneViewPanel->SetScene(m_Scene);
+                    m_SceneViewPanel->SetCamera(m_EditorCamera);
+                    m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
+                    m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
+                }
 			}
-			if (ImGui::MenuItem("Save"))
-			{
-
+            if (ImGui::MenuItem("Close Scene"))
+            {
+                // TODO : save check
+                m_Scene = nullptr;
+                m_SceneSerializer = nullptr;
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Save", "Ctrl+S"))
+            {
+                m_SceneSerializer->Serialize();
+            }
+            if (ImGui::MenuItem("Save As"))
+            {
+                fs::path folderPath = Olala::FileDialog::SelectFolder("Select Folder");
+                if (!folderPath.empty())
+                {
+                    Olala::SceneSerializer::CraeteDirectory(folderPath, m_Scene);
+                    Olala::SceneSerializer(m_Scene, folderPath / m_Scene->GetName() / (m_Scene->GetName() + ".olala")).Serialize();
+                }
 			}
             ImGui::Separator();
-            if (ImGui::MenuItem("Close"))
+            if (ImGui::MenuItem("Import"))
+            {
+                std::string filepath = Olala::FileDialog::OpenFile("Select Asset", 
+                {   
+                    "All Files", "*",
+                    "Image (.jpg, .png, .jpeg, .bmp, .gif)", "*.jpg *.png *.jpeg *.bmp *.gif" 
+                });
+                if (!filepath.empty())
+                {
+                    m_SceneSerializer->Import<Olala::Texture2D>(filepath);
+                }
+            }
+            ImGui::Separator();
+            if (ImGui::MenuItem("Exit"))
             {
                 Olala::Application::Get().Close();
             }
@@ -179,7 +243,8 @@ void EditorLayer::OnRuntimeBegin()
     {
         if (cameraView.get<Olala::TagComponent>(e).Tag == "Editor Camera")
         {
-            m_SceneViewPanel->SetCamera(Olala::Entity(e, m_RuntimeScene.get()));
+            m_EditorCamera = Olala::Entity(e, m_RuntimeScene.get());
+            m_SceneViewPanel->SetCamera(m_EditorCamera);
             break;
         }
     }
@@ -198,7 +263,8 @@ void EditorLayer::OnRuntimeEnd()
     {
         if (cameraView.get<Olala::TagComponent>(e).Tag == "Editor Camera")
         {
-            m_SceneViewPanel->SetCamera(Olala::Entity(e, m_Scene.get()));
+            m_EditorCamera = Olala::Entity(e, m_Scene.get());
+            m_SceneViewPanel->SetCamera(m_EditorCamera);
             break;
         }
     }

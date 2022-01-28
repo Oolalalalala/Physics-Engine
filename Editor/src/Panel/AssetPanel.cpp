@@ -16,28 +16,30 @@ void AssetPanel::OnImGuiRender()
 	{
 		ImGui::Begin(m_Name.c_str(), &m_IsOpen);
 
-		switch (m_CurrentDirectory)
+		if (m_AssetManager)
 		{
-			case AssetDirectory::Root:
+			switch (m_CurrentDirectory)
 			{
-				if (ImGui::Button("Texture")) m_CurrentDirectory = AssetDirectory::Texture;
-				break;
-			}
-			case AssetDirectory::Texture:
-			{
-				if (ImGui::Button("Back")) m_CurrentDirectory = AssetDirectory::Root;
-
-				auto& textures = m_AssetManager->GetPool<Olala::Texture2D>().GetAll();
-				for (auto& [name, texture] : textures)
+				case AssetDirectory::Root:
 				{
-					ImGui::Button(name.c_str());
-					ImGui::ImageButton((ImTextureID)texture->GetRendererID(), ImVec2(70.f, 70.f), ImVec2(0, 1), ImVec2(1, 0));
+					if (ImGui::Button("Texture")) m_CurrentDirectory = AssetDirectory::Texture;
+					break;
 				}
+				case AssetDirectory::Texture:
+				{
+					if (ImGui::Button("Back")) m_CurrentDirectory = AssetDirectory::Root;
 
-				break;
+					auto& textures = m_AssetManager->GetPool<Olala::Texture2D>().GetAll();
+					for (auto& [name, texture] : textures)
+					{
+						ImGui::Button(name.c_str());
+						ImGui::ImageButton((ImTextureID)texture->GetRendererID(), ImVec2(70.f, 70.f), ImVec2(0, 1), ImVec2(1, 0));
+					}
+
+					break;
+				}
 			}
 		}
-
 		m_IsFocused = ImGui::IsWindowFocused();
 
 		ImGui::End();

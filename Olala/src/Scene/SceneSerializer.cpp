@@ -102,9 +102,11 @@ namespace Olala {
 	}
 
 
-	SceneSerializer::SceneSerializer(const Ref<Scene>& scene)
+	SceneSerializer::SceneSerializer(const Ref<Scene>& scene, const fs::path& filepath)
 		: m_Scene(scene)
 	{
+		m_SceneFilePath = filepath;
+		m_DirectoryPath = filepath.parent_path();
 	}
 
 	static void SerializeEntity(YAML::Emitter& out, Entity entity, std::unordered_map<Ref<Texture2D>, uint32_t>& textureMap)
@@ -193,7 +195,7 @@ namespace Olala {
 			out << YAML::BeginMap;
 
 			auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
-			out << YAML::Key << "Center" << bc2d.Center;
+			out << YAML::Key << "Center" << YAML::Value << bc2d.Center;
 			out << YAML::Key << "Rotation" << YAML::Value << bc2d.Rotation;
 			out << YAML::Key << "Size" << YAML::Value << bc2d.Size;
 
@@ -206,7 +208,7 @@ namespace Olala {
 			out << YAML::BeginMap;
 
 			auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
-			out << YAML::Key << "Center" << cc2d.Center;
+			out << YAML::Key << "Center" << YAML::Value << cc2d.Center;
 			out << YAML::Key << "Radius" << YAML::Value << cc2d.Radius;
 
 			out << YAML::EndMap;
@@ -215,12 +217,11 @@ namespace Olala {
 		out << YAML::EndMap;
 	}
 
-	void SceneSerializer::Serialize(const std::string& filepath)
+	void SceneSerializer::Serialize()
 	{
 		YAML::Emitter out;
 		out << YAML::BeginMap;
 		out << YAML::Key << "Scene" << YAML::Value << m_Scene->m_Name;
-
 
 
 		// Textures
@@ -231,7 +232,7 @@ namespace Olala {
 		uint32_t idx = 1;
 
 		auto& texturePool = m_Scene->m_AssetManager->GetPool<Texture2D>();
-		for (auto [textureName, texture] : texturePool.GetAll())
+		for (const auto& [textureName, texture] : texturePool.GetAll())
 		{
 			out << YAML::Key << textureName << YAML::Value << idx;
 			if (textureMap.find(texture) == textureMap.end())
@@ -254,13 +255,13 @@ namespace Olala {
 		YAML::EndSeq;
 		YAML::EndMap;
 
-		std::ofstream fout(filepath);
+		std::ofstream fout(m_SceneFilePath);
 		fout << out.c_str();
 	}
 
-	bool SceneSerializer::Deserialize(const std::string& filepath)
+	bool SceneSerializer::Deserialize()
 	{
-		std::ifstream stream(filepath);
+		std::ifstream stream(m_SceneFilePath);
 		YAML::Node data = YAML::Load(stream);
 
 		if (!data["Scene"])
@@ -270,7 +271,7 @@ namespace Olala {
 
 
 		// Load Textures
-		m_Scene->m_AssetManager->Load(std::filesystem::path(filepath).parent_path().string());
+		m_Scene->m_AssetManager->Load(m_DirectoryPath);
 		auto& texturePool = m_Scene->m_AssetManager->GetPool<Texture2D>();
 
 		std::unordered_map<uint32_t, Ref<Texture2D>> textureMap;
@@ -361,6 +362,43 @@ namespace Olala {
 
 
 		m_Scene->m_Name = sceneName;
+
+		return true;
+	}
+
+	void SceneSerializer::SetFilePath(const fs::path& filepath)
+	{
+		m_SceneFilePath = filepath;
+		m_DirectoryPath = filepath.parent_path();
+	}
+
+	bool SceneSerializer::CraeteDirectory(const fs::path& path, Ref<Scene> scene)
+	{
+		const std::string& sceneName = scene->GetName();
+
+		bool success = true;
+		success &= fs::create_directory(path / sceneName);
+		success &= fs::create_directory(path / sceneName / "Texture");
+		SceneSerializer(scene, path / sceneName / (sceneName + ".olala")).Serialize();
+
+		return success;
+	}
+
+	template<typename T>
+	bool SceneSerializer::Import(const fs::path& filepath)
+	{
+		static_assert(false);
+	}
+	template<>
+	bool SceneSerializer::Import<Texture2D>(const fs::path& filepath)
+	{
+		fs::path newPath = m_DirectoryPath / "Texture" / filepath.filename();
+		bool success = fs::copy_file(filepath, newPath);
+
+		if (!success)
+			return false;
+
+		m_Scene->GetAssetManager()->GetPool<Texture2D>().Add(filepath.filename().string(), Texture2D::Create(newPath.string()));
 
 		return true;
 	}

@@ -19,7 +19,8 @@ project "Olala"
         "vendor/spdlog/**.h",
         "vendor/entt/entt.hpp",
         "vendor/stb_image/**.h",
-        "vendor/stb_image/**.cpp"
+        "vendor/stb_image/**.cpp",
+        "vendor/portable_file_dialogs/**.h"
     }
 
     defines

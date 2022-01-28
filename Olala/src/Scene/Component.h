@@ -51,8 +51,8 @@ namespace Olala {
 		Ref<Framebuffer> RenderTarget = nullptr;
 
 		CameraComponent() = default;
-		CameraComponent(Ref<::Olala::Camera> camera, bool isMain = true, bool isOn = true)
-			: Camera(camera), IsMain(isMain), IsOn(isOn) {}
+		CameraComponent(Ref<::Olala::Camera> camera, Ref<Framebuffer> renderTarget = nullptr, bool isMain = true, bool isOn = true)
+			: Camera(camera), RenderTarget(renderTarget), IsMain(isMain), IsOn(isOn) {}
 	};
 
 	struct EditorCameraControllerComponent
@@ -66,7 +66,7 @@ namespace Olala {
 		
 		EditorCameraControllerComponent() = default;
 		EditorCameraControllerComponent(GLenum forwardKey, GLenum backKey, GLenum leftKey, GLenum rightKey, float movementSpeed)
-			: ForwardKey(forwardKey), BackKey(BackKey), LeftKey(leftKey), RightKey(rightKey), MovementSpeed(movementSpeed) {}
+			: ForwardKey(forwardKey), BackKey(backKey), LeftKey(leftKey), RightKey(rightKey), MovementSpeed(movementSpeed) {}
 	};
 
 	struct SpriteRendererComponent

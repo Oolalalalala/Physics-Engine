@@ -66,7 +66,6 @@ namespace Olala {
 	{
 		EventDispatcher dispatcher(e);
 		if (dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose))) CORE_LOG_TRACE("Window Close Event");
-		if (dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize))) CORE_LOG_TRACE("Window Resize Event");
 
 		for (auto it = m_LayerStack->rbegin(); it != m_LayerStack->rend(); it++)
 		{

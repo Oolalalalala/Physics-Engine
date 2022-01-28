@@ -8,26 +8,27 @@
 
 namespace Olala {
 
+	namespace fs = std::filesystem;
+
+	class Scene;
+
 	class AssetManager
 	{
 	public:
 		AssetManager() = default;
-		AssetManager(const std::string& folderPath);
+		AssetManager(const fs::path& directoryPath);
 		~AssetManager();
 
-		void Load(const std::string& folderPath);
+		void Load(const fs::path& directoryPath);
 		void Unload();
 
 		template<typename T>
 		AssetPool<T>& GetPool();
 
 	private:
-		std::filesystem::path m_FolderPath;
-		
 		struct Pools
 		{
 			AssetPool<Texture2D> Texture;
-			AssetPool<Shader> Shader;
 		};
 		Pools m_Pools;
 	};

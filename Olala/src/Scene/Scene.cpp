@@ -12,7 +12,6 @@ namespace Olala {
 	Scene::Scene()
 	{
 		m_AssetManager = CreateRef<AssetManager>();
-		//m_AssetManager->Load("..\\Olala\\Asset\\Scene\\Demo"); // temp TODO : remove
 	}
 
 	Scene::~Scene()
@@ -221,6 +220,14 @@ namespace Olala {
 		}
 	}
 
+	void Scene::Reset()
+	{
+		m_Name = "Untitled";
+		m_Registry.clear();
+		m_PhysicsWorld = nullptr;
+		m_AssetManager = CreateRef<AssetManager>();
+	}
+
 	Ref<Scene> Scene::Copy(Ref<Scene> source)
 	{
 		Ref<Scene> newScene = CreateRef<Scene>();
@@ -237,6 +244,8 @@ namespace Olala {
 			if (oldEntity.HasComponent<SpriteRendererComponent>())   newEntity.AddComponent<SpriteRendererComponent>()   = oldEntity.GetComponent<SpriteRendererComponent>();
 			if (oldEntity.HasComponent<CircleCollider2DComponent>()) newEntity.AddComponent<CircleCollider2DComponent>() = oldEntity.GetComponent<CircleCollider2DComponent>();
 			if (oldEntity.HasComponent<BoxCollider2DComponent>())    newEntity.AddComponent<BoxCollider2DComponent>()    = oldEntity.GetComponent<BoxCollider2DComponent>();
+			if (oldEntity.HasComponent<EditorCameraControllerComponent>())
+				newEntity.AddComponent<EditorCameraControllerComponent>() = oldEntity.GetComponent<EditorCameraControllerComponent>();
 
 			if (oldEntity.HasComponent<CameraComponent>())
 			{

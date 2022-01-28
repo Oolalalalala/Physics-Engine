@@ -18,9 +18,12 @@ namespace Olala {
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		io.ConfigWindowsMoveFromTitleBarOnly = true;
 		
+
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("../Olala/Asset/Fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 18.f);
+
+
 		ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow(), true);
 		ImGui_ImplOpenGL3_Init("#version 410");
-
 	}
 
 	void ImGuiLayer::OnUpdate(float dt)
