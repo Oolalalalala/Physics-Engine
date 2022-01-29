@@ -1,8 +1,8 @@
 #include "SceneHierarchyPanel.h"
-#include "../../Olala/src/Scene/Scene.h"
+
 
 SceneHierarchyPanel::SceneHierarchyPanel(Olala::Ref<Olala::Scene>& scene, Olala::Ref<PropertyPanel>& propertyPanel)
-	: Panel("Entities"), m_Scene(scene), m_PropertyPanel(propertyPanel)
+	: Panel("Entities"), m_Scene(scene), m_PropertyPanel(propertyPanel), m_SearchResult("")
 {
 }
 
@@ -18,34 +18,61 @@ void SceneHierarchyPanel::OnImGuiRender()
 {
 	if (m_IsOpen)
 	{
-		ImGui::Begin(m_Name.c_str(), &m_IsOpen);
-
 		if (m_Scene)
 		{
-			m_Scene->m_Registry.each([&](auto entityID)
+			ImGui::Begin(m_Name.c_str(), &m_IsOpen, ImGuiWindowFlags_MenuBar);
+
+			
+			ImGui::BeginMenuBar();
+			ImGui::SetCursorPosX(0.f);
+			ImGui::PushItemWidth(ImGui::GetWindowSize().x);
+			ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.125f, 0.125f, 0.125f, 1.f));
+			ImGui::InputTextWithHint("##SearchBar", "Search", m_SearchResult, 25);
+			ImGui::PopStyleColor();
+			ImGui::PopItemWidth();
+			ImGui::EndMenuBar();
+			
+			if (ImGui::TreeNodeEx(m_Scene->GetName().c_str(), (m_SceneSelected ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow
+				                                              | ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_DefaultOpen))
 			{
-				Olala::Entity entity(entityID, m_Scene.get());
-
-				ImGuiTreeNodeFlags flags = (m_SelectedEntity == entity ? ImGuiTreeNodeFlags_Selected : 0) |
-					ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
-				bool opened = ImGui::TreeNodeEx(entity.GetComponent<Olala::TagComponent>().Tag.c_str(), flags);
-
 				if (ImGui::IsItemClicked())
 				{
-					m_SelectedEntity = entity;
-					m_PropertyPanel->SetDisplayedEntity(entity);
+					m_SceneSelected = true;
+					m_SelectedEntity = Olala::Entity();
+					m_PropertyPanel->DisplayScene(m_Scene);
 				}
 
-				if (opened)
-					ImGui::TreePop();
-			});
+				m_Scene->m_Registry.each([&](auto entityID)
+				{
+					Olala::Entity entity(entityID, m_Scene.get());
+
+					ImGuiTreeNodeFlags flags = (m_SelectedEntity == entity ? ImGuiTreeNodeFlags_Selected : 0) |
+						ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
+					bool opened = ImGui::TreeNodeEx(entity.GetComponent<Olala::TagComponent>().Tag.c_str(), flags);
+
+					if (ImGui::IsItemClicked())
+					{
+						m_SceneSelected = false;
+						m_SelectedEntity = entity;
+						m_PropertyPanel->DisplayEntity(entity);
+					}
+
+					if (opened)
+						ImGui::TreePop();
+				});
+
+				ImGui::TreePop();
+			}
 		}
+		else
+			ImGui::Begin(m_Name.c_str(), &m_IsOpen);
+
 		m_IsFocused = ImGui::IsWindowFocused();
 		ImGui::End();
 	}
 }
 
-void SceneHierarchyPanel::SetDisplayingScene(Olala::Ref<Olala::Scene>& scene)
+void SceneHierarchyPanel::SetDisplayingScene(Olala::Ref<Olala::Scene> scene)
 {
 	m_Scene = scene;
 }

@@ -19,7 +19,11 @@ namespace Olala {
 		template<typename T>
 		bool Import(const fs::path& filepath);
 
+		const fs::path& GetDirectoryPath() { return m_DirectoryPath; }
+		const fs::path& GetSceneFilePath() { return m_SceneFilePath; }
+
 		static bool CraeteDirectory(const fs::path& path, Ref<Scene> scene);
+		static void CopyAssets(const fs::path& srcDirectory, const fs::path& dstDirectory);
 
 	private:
 		Ref<Scene> m_Scene;

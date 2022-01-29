@@ -13,10 +13,13 @@ public:
 	void OnUpdate(float dt) override;
 	void OnImGuiRender() override;
 
-	void SetDisplayingScene(Olala::Ref<Olala::Scene>& scene);
+	void SetDisplayingScene(Olala::Ref<Olala::Scene> scene);
 
 private:
 	Olala::Ref<Olala::Scene> m_Scene;
 	Olala::Ref<PropertyPanel> m_PropertyPanel;
 	Olala::Entity m_SelectedEntity;
+	bool m_SceneSelected = true;
+
+	char m_SearchResult[25];
 };

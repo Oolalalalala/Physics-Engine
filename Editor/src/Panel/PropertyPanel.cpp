@@ -18,12 +18,15 @@ void PropertyPanel::OnImGuiRender()
 	if (m_IsOpen)
 	{
 		ImGui::Begin(m_Name.c_str(), &m_IsOpen);
-		if (m_DisplayedEntity)
+
+		if (m_DisplayedScene)
+			DrawSceneContext();
+		else if (m_DisplayedEntity)
 		{
 			if (m_IsRuntime)
-				DrawContextRuntime();
+				DrawEntityContextRuntime();
 			else
-				DrawContext();
+				DrawEntityContext();
 		}
 
 		m_IsFocused = ImGui::IsWindowFocused();
@@ -98,7 +101,7 @@ static void AddComponent<Olala::CircleCollider2DComponent>(Olala::Entity& entity
 	entity.GetPhysicsBody().SetColliderType(Olala::ColliderType::BoundingCircle);
 }
 
-void PropertyPanel::DrawContext()
+void PropertyPanel::DrawEntityContext()
 {
 	auto& entity = m_DisplayedEntity;
 
@@ -281,7 +284,7 @@ void PropertyPanel::DrawContext()
 	});
 }
 
-void PropertyPanel::DrawContextRuntime()
+void PropertyPanel::DrawEntityContextRuntime()
 {
 	auto& entity = m_DisplayedEntity;
 
@@ -491,12 +494,35 @@ void PropertyPanel::DrawContextRuntime()
 		});
 }
 
+void PropertyPanel::DrawSceneContext()
+{
+	constexpr ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanFullWidth;
+
+	if (ImGui::CollapsingHeader("Scene", flags))
+	{
+		char sceneName[25];
+		strcpy_s(sceneName, m_DisplayedScene->GetName().c_str());
+		if (ImGui::InputText("Name", sceneName, 25))
+		{
+			if (strlen(sceneName))
+				m_DisplayedScene->GetName() = sceneName;
+		}
+	}
+	
+}
+
 void PropertyPanel::SetIsRuntime(bool isRuntime)
 {
 	m_IsRuntime = isRuntime;
 }
 
-void PropertyPanel::SetDisplayedEntity(const Olala::Entity& entity)
+void PropertyPanel::DisplayEntity(const Olala::Entity& entity)
 {
 	m_DisplayedEntity = entity;
+	m_DisplayedScene = nullptr;
+}
+
+void PropertyPanel::DisplayScene(Olala::Ref<Olala::Scene> scene)
+{
+	m_DisplayedScene = scene;
 }

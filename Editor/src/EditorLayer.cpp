@@ -105,7 +105,7 @@ void EditorLayer::OnImGuiRender()
 
     ImGui::End();
 
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
 }
 
 void EditorLayer::DrawMenuBar()
@@ -153,6 +153,7 @@ void EditorLayer::DrawMenuBar()
                     m_SceneViewPanel->SetScene(m_Scene);
                     m_SceneViewPanel->SetCamera(m_EditorCamera);
                     m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
+                    m_PropertyPanel->DisplayEntity(Olala::Entity());
                     m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
                 }
 			}
@@ -161,18 +162,25 @@ void EditorLayer::DrawMenuBar()
                 // TODO : save check
                 m_Scene = nullptr;
                 m_SceneSerializer = nullptr;
+                m_SceneViewPanel->SetScene(nullptr);
+                m_SceneViewPanel->SetCamera(Olala::Entity());
+                m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
+                m_PropertyPanel->DisplayEntity(Olala::Entity());
+                m_AssetPanel->SetAssetManager(nullptr);
+                m_EditorCamera = Olala::Entity();
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Save", "Ctrl+S"))
+            if (ImGui::MenuItem("Save", "Ctrl+S") && m_Scene)
             {
                 m_SceneSerializer->Serialize();
             }
-            if (ImGui::MenuItem("Save As"))
+            if (ImGui::MenuItem("Save As") && m_Scene)
             {
                 fs::path folderPath = Olala::FileDialog::SelectFolder("Select Folder");
                 if (!folderPath.empty())
                 {
                     Olala::SceneSerializer::CraeteDirectory(folderPath, m_Scene);
+                    Olala::SceneSerializer::CopyAssets(m_SceneSerializer->GetDirectoryPath(), folderPath / m_Scene->GetName());
                     Olala::SceneSerializer(m_Scene, folderPath / m_Scene->GetName() / (m_Scene->GetName() + ".olala")).Serialize();
                 }
 			}
@@ -249,7 +257,7 @@ void EditorLayer::OnRuntimeBegin()
         }
     }
 
-    m_PropertyPanel->SetDisplayedEntity(Olala::Entity());
+    m_PropertyPanel->DisplayEntity(Olala::Entity());
     m_PropertyPanel->SetIsRuntime(true);
 }
 
@@ -269,7 +277,7 @@ void EditorLayer::OnRuntimeEnd()
         }
     }
 
-    m_PropertyPanel->SetDisplayedEntity(Olala::Entity());
+    m_PropertyPanel->DisplayEntity(Olala::Entity());
     m_PropertyPanel->SetIsRuntime(false);
 
     m_RuntimeScene = nullptr;

@@ -13,13 +13,16 @@ public:
 	void OnImGuiRender() override;
 
 	void SetIsRuntime(bool isRuntime);
-	void SetDisplayedEntity(const Olala::Entity& entity);
+	void DisplayEntity(const Olala::Entity& entity);
+	void DisplayScene(Olala::Ref<Olala::Scene> scene);
 
 private:
-	void DrawContext();
-	void DrawContextRuntime(); // Properties in physics engine is updated instantly
+	void DrawEntityContext();
+	void DrawEntityContextRuntime(); // Properties in physics engine is updated instantly
+	void DrawSceneContext();
 
 private:
 	Olala::Entity m_DisplayedEntity;
+	Olala::Ref<Olala::Scene> m_DisplayedScene;
 	bool m_IsRuntime = false;
 };

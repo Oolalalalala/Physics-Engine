@@ -384,6 +384,11 @@ namespace Olala {
 		return success;
 	}
 
+	void SceneSerializer::CopyAssets(const fs::path& srcDirectory, const fs::path& dstDirectory)
+	{
+		fs::copy(srcDirectory / "Texture", dstDirectory / "Texture");
+	}
+
 	template<typename T>
 	bool SceneSerializer::Import(const fs::path& filepath)
 	{
