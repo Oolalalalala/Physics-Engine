@@ -24,6 +24,9 @@ namespace Olala {
 
 		ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow(), true);
 		ImGui_ImplOpenGL3_Init("#version 410");
+
+
+		ImGui::StyleColorsClassic();
 	}
 
 	void ImGuiLayer::OnUpdate(float dt)

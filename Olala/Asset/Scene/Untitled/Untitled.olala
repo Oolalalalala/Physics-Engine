@@ -1,0 +1,72 @@
+Scene: Untitled
+Textures:
+  {}
+Entities:
+  - Name: Editor Camera
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        NearPlane: -1
+        FarPlane: 1
+        Width: 1068.60645
+        Height: 600
+      IsMain: true
+      IsOn: true
+  - Name: Box1
+    TransformComponent:
+      Position: [-326, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [100, 100]
+      Color: [0.864864886, 0.762934029, 0.470833778, 1]
+      Texture: 0
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [41, 0]
+      Static: true
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [100, 100]
+  - Name: Box2
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [50, 50]
+      Color: [0.861003876, 0.359028667, 0.359028667, 1]
+      Texture: 0
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      Static: false
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [50, 50]
+  - Name: Box3
+    TransformComponent:
+      Position: [146, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [80, 80]
+      Color: [0.80472362, 0.945945919, 0.536888242, 1]
+      Texture: 0
+    Rigidbody2DComponent:
+      Mass: 100
+      Velocity: [20, 0]
+      Static: false
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      Rotation: 0
+      Size: [80, 80]

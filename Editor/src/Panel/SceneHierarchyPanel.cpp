@@ -22,10 +22,16 @@ void SceneHierarchyPanel::OnImGuiRender()
 		{
 			ImGui::Begin(m_Name.c_str(), &m_IsOpen, ImGuiWindowFlags_MenuBar);
 
-			
 			ImGui::BeginMenuBar();
-			ImGui::SetCursorPosX(0.f);
-			ImGui::PushItemWidth(ImGui::GetWindowSize().x);
+
+			// Add Button
+			float paddingX = 5.f, addButtonWidth = 50.f;
+			ImGui::SetCursorPosX(paddingX);
+			if (ImGui::Button("Add", ImVec2(addButtonWidth, 0.f)))
+				m_PropertyPanel->DisplayEntity(m_Scene->CreateEntity("Entity"));
+			
+			ImGui::SetCursorPosX(paddingX * 2 + addButtonWidth);
+			ImGui::PushItemWidth(ImGui::GetWindowSize().x - paddingX * 3 - addButtonWidth);
 			ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.125f, 0.125f, 0.125f, 1.f));
 			ImGui::InputTextWithHint("##SearchBar", "Search", m_SearchResult, 25);
 			ImGui::PopStyleColor();
