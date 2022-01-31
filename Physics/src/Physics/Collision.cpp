@@ -3,6 +3,7 @@
 #include "Collider.h"
 #include "glm/gtx/norm.hpp"
 #include "glm/gtx/projection.hpp"
+#include "glm/gtx/rotate_vector.hpp"
 #include <limits>
 
 namespace Olala {
@@ -51,8 +52,15 @@ namespace Olala {
 			auto boxA = std::static_pointer_cast<BoundingBox>(bodyA.Collider);
 			auto boxB = std::static_pointer_cast<BoundingBox>(bodyB.Collider);
 
-			glm::vec2 axises[] = { glm::normalize(boxA->Points[1] - boxA->Points[0]), glm::normalize(boxA->Points[2] - boxA->Points[1]),
-								   glm::normalize(boxB->Points[1] - boxB->Points[0]), glm::normalize(boxB->Points[2] - boxB->Points[1]) };
+			glm::vec2 pA[4], pB[4];
+			for (int i = 0; i < 4; i++)
+			{
+				pA[i] = bodyA.Position + boxA->Offset + glm::rotate(boxA->Points[i], glm::radians(bodyA.Rotation));
+				pB[i] = bodyB.Position + boxB->Offset + glm::rotate(boxB->Points[i], glm::radians(bodyB.Rotation));
+			}
+
+			glm::vec2 axises[] = { glm::normalize(pA[1] - pA[0]), glm::normalize(pA[2] - pA[1]),
+								   glm::normalize(pB[1] - pB[0]), glm::normalize(pB[2] - pB[1]) };
 
 			float minDepth = FLT_MAX, depth, proj;
 			glm::vec2 normal(0.f);
@@ -64,14 +72,14 @@ namespace Olala {
 				// TODO : apply rotation
 				for (int j = 0; j < 4; j++)
 				{
-					proj = glm::dot(axises[i], bodyA.Position +boxA->Offset + boxA->Points[j]);
+					proj = glm::dot(axises[i], pA[j]);
 					minA = std::min(minA, proj);
 					maxA = std::max(maxA, proj);
 				}
 
 				for (int j = 0; j < 4; j++)
 				{
-					proj = glm::dot(axises[i], bodyB.Position + boxB->Offset + boxB->Points[j]);
+					proj = glm::dot(axises[i], pB[j]);
 					minB = std::min(minB, proj);
 					maxB = std::max(maxB, proj);
 				}

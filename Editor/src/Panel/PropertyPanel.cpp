@@ -265,6 +265,7 @@ void PropertyPanel::DrawEntityContext()
 	{
 		ImGui::DragFloat("Mass", &rigidbody2d.Mass, 1.0f, 0.001f, 1000.f);
 		ImGui::DragFloat2("Velocity", (float*)&rigidbody2d.Velocity);
+		ImGui::DragFloat("Angular Velocity", &rigidbody2d.AngularVelocity);
 		ImGui::Checkbox("Static", &rigidbody2d.IsStatic);
 		ImGui::Checkbox("Gravity", &rigidbody2d.ApplyGravity);
 	});
@@ -505,7 +506,10 @@ void PropertyPanel::DrawSceneContext()
 		if (ImGui::InputText("Name", sceneName, 25))
 		{
 			if (strlen(sceneName))
+			{
 				m_DisplayedScene->GetName() = sceneName;
+
+			}
 		}
 	}
 	

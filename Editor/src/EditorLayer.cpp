@@ -117,6 +117,11 @@ void EditorLayer::DrawMenuBar()
             if (ImGui::MenuItem("New Scene"))
             {
                 // TODO : save check here
+                if (m_IsRuntime)
+                {
+                    OnRuntimeEnd();
+                    m_IsRuntime = false;
+                }
 
                 fs::path selectedFolder = Olala::FileDialog::SelectFolder("Select Folder");
                 if (!selectedFolder.empty())
@@ -134,10 +139,20 @@ void EditorLayer::DrawMenuBar()
                     m_SceneViewPanel->SetCamera(m_EditorCamera);
                     m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
                     m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
+
+                    m_IsSceneLoaded = true;
+                    m_IsSceneSaved = true;
                 }
             }
 			if (ImGui::MenuItem("Open Scene"))
 			{
+                // TODO : save check
+                if (m_IsRuntime)
+                {
+                    OnRuntimeEnd();
+                    m_IsRuntime = false;
+                }
+
                 fs::path filepath = Olala::FileDialog::OpenFile("Select File", { "Scene File (.olala)", "*.olala" });
 
                 if (!filepath.empty())
@@ -155,24 +170,55 @@ void EditorLayer::DrawMenuBar()
                     m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
                     m_PropertyPanel->DisplayEntity(Olala::Entity());
                     m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
+
+                    m_IsSceneLoaded = true;
+                    m_IsSceneSaved = true;
                 }
 			}
-            if (ImGui::MenuItem("Close Scene"))
+            if (ImGui::MenuItem("Close Scene") && m_IsSceneLoaded)
             {
-                // TODO : save check
-                m_Scene = nullptr;
-                m_SceneSerializer = nullptr;
-                m_SceneViewPanel->SetScene(nullptr);
-                m_SceneViewPanel->SetCamera(Olala::Entity());
-                m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
-                m_PropertyPanel->DisplayEntity(Olala::Entity());
-                m_AssetPanel->SetAssetManager(nullptr);
-                m_EditorCamera = Olala::Entity();
+                // Save check
+                if (!m_IsSceneSaved)
+                {
+                    auto result = Olala::FileDialog::MessageYesNoCancel("Message", "Save changes?");
+                    if (result == Olala::FileDialog::Result::yes)
+                        m_SceneSerializer->Serialize();
+                    if (result != Olala::FileDialog::Result::cancel)
+                    {
+                        // Reset
+                        m_Scene = nullptr;
+                        m_SceneSerializer = nullptr;
+                        m_SceneViewPanel->SetScene(nullptr);
+                        m_SceneViewPanel->SetCamera(Olala::Entity());
+                        m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
+                        m_PropertyPanel->DisplayEntity(Olala::Entity());
+                        m_AssetPanel->SetAssetManager(nullptr);
+                        m_EditorCamera = Olala::Entity();
+
+                        m_IsSceneLoaded = false;
+                    }
+                }
+                else
+                {
+                    // Reset
+                    m_Scene = nullptr;
+                    m_SceneSerializer = nullptr;
+                    m_SceneViewPanel->SetScene(nullptr);
+                    m_SceneViewPanel->SetCamera(Olala::Entity());
+                    m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
+                    m_PropertyPanel->DisplayEntity(Olala::Entity());
+                    m_AssetPanel->SetAssetManager(nullptr);
+                    m_EditorCamera = Olala::Entity();
+
+                    m_IsSceneLoaded = false;
+                }
+
             }
             ImGui::Separator();
             if (ImGui::MenuItem("Save", "Ctrl+S") && m_Scene)
             {
                 m_SceneSerializer->Serialize();
+                m_IsSceneSaved = true;
             }
             if (ImGui::MenuItem("Save As") && m_Scene)
             {

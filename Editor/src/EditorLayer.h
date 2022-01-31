@@ -41,5 +41,7 @@ private:
 
 	bool m_IsRuntime = false;
 	bool m_IsPausing = false;
+	bool m_IsSceneLoaded = false;
+	bool m_IsSceneSaved = false;
 };
 

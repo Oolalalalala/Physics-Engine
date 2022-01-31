@@ -196,7 +196,7 @@ namespace Olala {
 
 			auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
 			out << YAML::Key << "Center" << YAML::Value << bc2d.Center;
-			out << YAML::Key << "Rotation" << YAML::Value << bc2d.Rotation;
+			out << YAML::Key << "AngularOffset" << YAML::Value << bc2d.AngularOffset;
 			out << YAML::Key << "Size" << YAML::Value << bc2d.Size;
 
 			out << YAML::EndMap;
@@ -219,6 +219,17 @@ namespace Olala {
 
 	void SceneSerializer::Serialize()
 	{
+		// Rename
+		if (m_DirectoryPath.filename() != m_Scene->GetName())
+		{
+			fs::rename(m_SceneFilePath, m_DirectoryPath / (m_Scene->m_Name + ".olala"));
+			fs::rename(m_DirectoryPath, m_DirectoryPath.parent_path() / m_Scene->m_Name);
+			m_DirectoryPath = m_DirectoryPath.parent_path() / m_Scene->m_Name;
+			m_SceneFilePath = m_DirectoryPath / (m_Scene->m_Name + ".olala");
+		}
+
+
+
 		YAML::Emitter out;
 		out << YAML::BeginMap;
 		out << YAML::Key << "Scene" << YAML::Value << m_Scene->m_Name;
@@ -348,7 +359,7 @@ namespace Olala {
 			{
 				auto& bc2d = deserializedEntity.AddComponent<BoxCollider2DComponent>();
 				bc2d.Center = boxCollider2DComponent["Center"].as<glm::vec2>();
-				bc2d.Rotation = boxCollider2DComponent["Rotation"].as<float>();
+				bc2d.AngularOffset = boxCollider2DComponent["AngularOffset"].as<float>();
 				bc2d.Size = boxCollider2DComponent["Size"].as<glm::vec2>();
 			}
 			if (auto circleCollider2DComponent = entity["CircleCollider2DComponent"])

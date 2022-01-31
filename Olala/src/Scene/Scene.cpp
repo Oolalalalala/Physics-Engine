@@ -214,6 +214,7 @@ namespace Olala {
 			physicsBody.Position = transform.Position;
 			physicsBody.Rotation = transform.Rotation.z;
 			physicsBody.Velocity = rb2d.IsStatic ? glm::vec2(0.f) : rb2d.Velocity;
+			physicsBody.AngularVelocity = rb2d.IsStatic ? 0.f : rb2d.AngularVelocity;
 			physicsBody.InvMass = rb2d.IsStatic ?  0.f : 1.f / rb2d.Mass;
 			physicsBody.ApplyGravity = rb2d.ApplyGravity;
 			physicsBody.Restitution = 1.f;

@@ -26,7 +26,7 @@ namespace Olala {
 
 	struct BoundingBox : public Collider
 	{
-		glm::vec2 Points[4] = {}; // Three points can represent a rectangle
+		glm::vec2 Points[4] = {};
 
 		ColliderType GetColliderType() override { return ColliderType::BoundingBox; }
 

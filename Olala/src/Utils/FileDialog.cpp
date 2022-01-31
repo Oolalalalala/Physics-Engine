@@ -25,9 +25,22 @@ namespace Olala {
 		return pfd::select_folder(title).result();
 	}
 
-	void FileDialog::Message(const std::string& title, const std::string& message)
+	FileDialog::Result FileDialog::MessageOK(const std::string& title, const std::string& message)
 	{
 		auto result = pfd::message(title, message, pfd::choice::ok).result();
+		return (FileDialog::Result)result;
+	}
+
+	FileDialog::Result FileDialog::MessageYesNo(const std::string& title, const std::string& message)
+	{
+		auto result = pfd::message(title, message, pfd::choice::yes_no).result();
+		return (FileDialog::Result)result;
+	}
+
+	FileDialog::Result FileDialog::MessageYesNoCancel(const std::string& title, const std::string& message)
+	{
+		auto result = pfd::message(title, message, pfd::choice::yes_no_cancel).result();
+		return (FileDialog::Result)result;
 	}
 
 }

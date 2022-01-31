@@ -1319,7 +1319,7 @@ Entities:
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
-      Rotation: 0
+      AngularOffset: 0
       Size: [1000, 50]
   - Name: Quad2
     TransformComponent:
@@ -1337,7 +1337,7 @@ Entities:
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
-      Rotation: 0
+      AngularOffset: 0
       Size: [1000, 50]
   - Name: Quad1
     TransformComponent:
@@ -1355,7 +1355,7 @@ Entities:
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
-      Rotation: 0
+      AngularOffset: 0
       Size: [50, 700]
   - Name: Quad0
     TransformComponent:
@@ -1373,7 +1373,7 @@ Entities:
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
-      Rotation: 0
+      AngularOffset: 0
       Size: [50, 700]
   - Name: Editor Camera
     TransformComponent:

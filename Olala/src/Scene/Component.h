@@ -84,6 +84,7 @@ namespace Olala {
 	{
 		glm::vec2 Velocity = glm::vec2(0.f);
 		glm::vec2 Force = glm::vec2(0.f);
+		float AngularVelocity = 0.f;
 
 		float Mass = 1.f;
 		bool IsStatic = false;
@@ -107,8 +108,8 @@ namespace Olala {
 
 	struct BoxCollider2DComponent : public Collider2DComponent
 	{
-		glm::vec2 Size = glm::vec2(1.f, 1.f);
-		float Rotation = 0.f;
+		glm::vec2 Size = glm::vec2(10.f, 10.f);
+		float AngularOffset = 0.f;
 
 		BoxCollider2DComponent() : Collider2DComponent(glm::vec2(0.f, 0.f)) {}
 		BoxCollider2DComponent(glm::vec2 size, glm::vec2 center = glm::vec2(0.f, 0.f))

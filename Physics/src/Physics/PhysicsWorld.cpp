@@ -32,7 +32,10 @@ namespace Olala {
 		for (auto& [id, body] : m_PhysicsBodies)
 		{
 			if (body.InvMass != 0.f)
+			{
 				body.Position += body.Velocity * dt;
+				body.Rotation += body.AngularVelocity * dt;
+			}
 		}
 
 		CollisionData data;

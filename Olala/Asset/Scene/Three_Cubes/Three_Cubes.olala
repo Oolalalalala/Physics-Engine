@@ -1,4 +1,4 @@
-Scene: Untitled
+Scene: Three_Cubes
 Textures:
   {}
 Entities:
@@ -12,7 +12,7 @@ Entities:
         ProjectionType: 1
         NearPlane: -1
         FarPlane: 1
-        Width: 1068.60645
+        Width: 1046.17688
         Height: 600
       IsMain: true
       IsOn: true
@@ -32,7 +32,7 @@ Entities:
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
-      Rotation: 0
+      AngularOffset: 0
       Size: [100, 100]
   - Name: Box2
     TransformComponent:
@@ -50,7 +50,7 @@ Entities:
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
-      Rotation: 0
+      AngularOffset: 0
       Size: [50, 50]
   - Name: Box3
     TransformComponent:
@@ -63,10 +63,10 @@ Entities:
       Texture: 0
     Rigidbody2DComponent:
       Mass: 100
-      Velocity: [20, 0]
+      Velocity: [-25, 0]
       Static: false
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
-      Rotation: 0
+      AngularOffset: 0
       Size: [80, 80]

@@ -17,7 +17,6 @@ namespace Olala {
 	{
 	public:
 		static bool TestCollision(const PhysicsBody& a, const PhysicsBody& b, CollisionData* data); // Normal pointing from A to B
-		static void SolveCollision(PhysicsBody& a, PhysicsBody& b, float dt);
 	};
 
 }
