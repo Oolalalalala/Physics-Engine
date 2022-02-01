@@ -16,6 +16,7 @@ namespace Olala {
 	class Collision
 	{
 	public:
+		template<typename A, typename B>
 		static bool TestCollision(const PhysicsBody& a, const PhysicsBody& b, CollisionData* data); // Normal pointing from A to B
 	};
 

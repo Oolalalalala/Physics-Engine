@@ -183,6 +183,7 @@ namespace Olala {
 			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
 			out << YAML::Key << "Mass" << YAML::Value << rb2d.Mass;
 			out << YAML::Key << "Velocity" << YAML::Value << rb2d.Velocity;
+			out << YAML::Key << "AngularVelocity" << YAML::Value << rb2d.AngularVelocity;
 			out << YAML::Key << "Static" << YAML::Value << rb2d.IsStatic;
 			out << YAML::Key << "Gravity" << YAML::Value << rb2d.ApplyGravity;
 
@@ -352,6 +353,7 @@ namespace Olala {
 				auto& rb2d = deserializedEntity.AddComponent<Rigidbody2DComponent>();
 				rb2d.Mass = rigidbody2DComponent["Mass"].as<float>();
 				rb2d.Velocity = rigidbody2DComponent["Velocity"].as<glm::vec2>();
+				rb2d.AngularVelocity = rigidbody2DComponent["AngularVelocity"].as<float>();
 				rb2d.IsStatic = rigidbody2DComponent["Static"].as<bool>(); 
 				rb2d.ApplyGravity = rigidbody2DComponent["Gravity"].as<bool>();
 			}

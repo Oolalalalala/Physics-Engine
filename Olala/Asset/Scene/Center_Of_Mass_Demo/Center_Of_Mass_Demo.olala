@@ -1,4 +1,4 @@
-Scene: Three_Cubes
+Scene: Center_Of_Mass_Demo
 Textures:
   {}
 Entities:
@@ -12,7 +12,7 @@ Entities:
         ProjectionType: 1
         NearPlane: -1
         FarPlane: 1
-        Width: 1046.17688
+        Width: 996.857117
         Height: 600
       IsMain: true
       IsOn: true
@@ -22,7 +22,7 @@ Entities:
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Size: [100, 100]
+      Size: [125, 125]
       Color: [0.864864886, 0.762934029, 0.470833778, 1]
       Texture: 0
     Rigidbody2DComponent:
@@ -34,42 +34,41 @@ Entities:
     BoxCollider2DComponent:
       Center: [0, 0]
       AngularOffset: 0
-      Size: [100, 100]
+      Size: [125, 125]
   - Name: Box2
     TransformComponent:
       Position: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Size: [50, 50]
+      Size: [10, 10]
       Color: [0.861003876, 0.359028667, 0.359028667, 1]
       Texture: 0
     Rigidbody2DComponent:
       Mass: 1
-      Velocity: [0, 0]
-      AngularVelocity: 0
+      Velocity: [122, 0]
+      AngularVelocity: 96
       Static: false
       Gravity: false
-    BoxCollider2DComponent:
-      Center: [0, 0]
-      AngularOffset: 0
-      Size: [50, 50]
+    CircleCollider2DComponent:
+      Center: [0, 28]
+      Radius: 45.0009995
   - Name: Box3
     TransformComponent:
-      Position: [146, 0, 0]
+      Position: [290, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Size: [80, 80]
+      Size: [125, 125]
       Color: [0.80472362, 0.945945919, 0.536888242, 1]
       Texture: 0
     Rigidbody2DComponent:
       Mass: 100
-      Velocity: [-25, 0]
+      Velocity: [0, 0]
       AngularVelocity: 0
-      Static: false
+      Static: true
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
       AngularOffset: 0
-      Size: [80, 80]
+      Size: [125, 125]

@@ -6,6 +6,7 @@
 #include "Core/IO.h"
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer2D.h"
+#include "glm/gtx/rotate_vector.hpp"
 
 namespace Olala {
 
@@ -113,12 +114,13 @@ namespace Olala {
 		auto view = m_Registry.view<TransformComponent, Rigidbody2DComponent>();
 		for (auto e : view)
 		{
-			auto [transform, rigidbody2d] = view.get<TransformComponent, Rigidbody2DComponent>(e);
-			auto& physicsBody = m_PhysicsWorld->GetPhysicsBody(rigidbody2d.PhysicsHandle);
-			transform.Position.x = physicsBody.Position.x;// TODO : set the position to center of mass instead of the raw mass
-			transform.Position.y = physicsBody.Position.y;
+			auto [transform, rb2d] = view.get<TransformComponent, Rigidbody2DComponent>(e);
+			auto& physicsBody = m_PhysicsWorld->GetPhysicsBody(rb2d.PhysicsHandle);
+			glm::vec2 newPos = physicsBody.Position - glm::rotate(rb2d.CenterOfMass, glm::radians(physicsBody.Rotation));
+			transform.Position.x = newPos.x;
+			transform.Position.y = newPos.y;
 			transform.Rotation.z = physicsBody.Rotation;
-			rigidbody2d.Velocity = physicsBody.Velocity;
+			rb2d.Velocity = physicsBody.Velocity;
 		}
 
 		// Get All Cameras
@@ -197,7 +199,7 @@ namespace Olala {
 				auto& circleCollider = entity.GetComponent<CircleCollider2DComponent>();
 				auto boundingCircle = std::static_pointer_cast<BoundingCircle>(entity.GetPhysicsBody().Collider);
 				boundingCircle->Radius = circleCollider.Radius;
-				boundingCircle->Offset = circleCollider.Center;
+				boundingCircle->Offset = -rb2d.CenterOfMass + circleCollider.Center;
 			}
 			else if (entity.HasComponent<BoxCollider2DComponent>())
 			{
@@ -205,13 +207,13 @@ namespace Olala {
 				auto& boxCollider = entity.GetComponent<BoxCollider2DComponent>();
 				auto boundingBox = std::static_pointer_cast<BoundingBox>(entity.GetPhysicsBody().Collider);
 				boundingBox->SetSize(boxCollider.Size);
-				boundingBox->Offset = boxCollider.Center;
+				boundingBox->Offset = -rb2d.CenterOfMass + boxCollider.Center;
 			}
 			else
 				rb2d.PhysicsHandle = m_PhysicsWorld->CreatePhysicsBody();
 			
 			auto& physicsBody = entity.GetPhysicsBody();
-			physicsBody.Position = transform.Position;
+			physicsBody.Position = (glm::vec2)transform.Position + glm::rotate(rb2d.CenterOfMass, transform.Rotation.z);
 			physicsBody.Rotation = transform.Rotation.z;
 			physicsBody.Velocity = rb2d.IsStatic ? glm::vec2(0.f) : rb2d.Velocity;
 			physicsBody.AngularVelocity = rb2d.IsStatic ? 0.f : rb2d.AngularVelocity;

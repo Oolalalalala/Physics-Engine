@@ -1,5 +1,7 @@
 #include "SceneViewPanel.h"
 
+#include "glm/gtx/rotate_vector.hpp"
+
 SceneViewPanel::SceneViewPanel(Olala::Ref<Olala::Scene> scene, Olala::Entity camera)
 	: Panel("Scene"), m_Scene(scene), m_EditorCamera(camera)
 {
@@ -73,7 +75,8 @@ void SceneViewPanel::OnOverlayRender()
 		{
 			auto [transform, cc2d] = view.get<Olala::TransformComponent, Olala::CircleCollider2DComponent>(e);
 
-			Olala::Renderer2D::DrawCircle((glm::vec2)transform.Position + cc2d.Center, cc2d.Radius, 0.05f, glm::vec4(0.f, 1.f, 0.f, 1.f));
+			Olala::Renderer2D::DrawCircle((glm::vec2)transform.Position + glm::rotate(cc2d.Center, glm::radians(transform.Rotation.z)),
+				cc2d.Radius, 0.05f, glm::vec4(0.f, 1.f, 0.f, 1.f));
 		}
 
 		// TODO : implement box collider visualization

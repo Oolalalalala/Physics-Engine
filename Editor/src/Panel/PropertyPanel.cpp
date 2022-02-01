@@ -266,6 +266,7 @@ void PropertyPanel::DrawEntityContext()
 		ImGui::DragFloat("Mass", &rigidbody2d.Mass, 1.0f, 0.001f, 1000.f);
 		ImGui::DragFloat2("Velocity", (float*)&rigidbody2d.Velocity);
 		ImGui::DragFloat("Angular Velocity", &rigidbody2d.AngularVelocity);
+		ImGui::DragFloat2("Center Of Mass", (float*)&rigidbody2d.CenterOfMass);
 		ImGui::Checkbox("Static", &rigidbody2d.IsStatic);
 		ImGui::Checkbox("Gravity", &rigidbody2d.ApplyGravity);
 	});
@@ -380,23 +381,24 @@ void PropertyPanel::DrawEntityContextRuntime()
 
 	// Transform Component // TODO : transform should be undestroyable
 	DrawComponent<Olala::TransformComponent>("Transform", entity, [&](auto& transform)
+	{
+		if (ImGui::DragFloat3("Position", (float*)&transform.Position, 2))
 		{
-			if (ImGui::DragFloat3("Position", (float*)&transform.Position, 2))
+			if (entity.HasComponent<Olala::Rigidbody2DComponent>())
 			{
-				if (entity.HasComponent<Olala::Rigidbody2DComponent>())
-				{
-					auto& physicsBody = entity.GetPhysicsBody();
-					physicsBody.Position = transform.Position;
-					physicsBody.Velocity = glm::vec2(0.f);
-				}
+				auto& physicsBody = entity.GetPhysicsBody();
+				auto& rb2d = entity.GetComponent<Olala::Rigidbody2DComponent>();
+				physicsBody.Position = (glm::vec2)transform.Position + rb2d.CenterOfMass;
+				physicsBody.Velocity = glm::vec2(0.f);
 			}
-			if (ImGui::DragFloat3("Rotation", (float*)&transform.Rotation, 2))
-			{
-				if (entity.HasComponent<Olala::Rigidbody2DComponent>())
-					entity.GetPhysicsBody().Rotation = transform.Rotation.z;
-			}
-			ImGui::DragFloat3("Scale", (float*)&transform.Scale, 2);
-		});
+		}
+		if (ImGui::DragFloat3("Rotation", (float*)&transform.Rotation, 2))
+		{
+			if (entity.HasComponent<Olala::Rigidbody2DComponent>())
+				entity.GetPhysicsBody().Rotation = transform.Rotation.z;
+		}
+		ImGui::DragFloat3("Scale", (float*)&transform.Scale, 2);
+	});
 
 	// Camera Component
 	DrawComponent<Olala::CameraComponent>("Camera", entity, [](auto& camera)
@@ -458,30 +460,45 @@ void PropertyPanel::DrawEntityContextRuntime()
 
 	// Rigidbody 2D
 	DrawComponent<Olala::Rigidbody2DComponent>("Rigidbody 2D", entity, [&](auto& rigidbody2d)
+	{
+		if (ImGui::DragFloat("Mass", &rigidbody2d.Mass, 1.0f, 0.001f, 1000.f)) entity.GetPhysicsBody().InvMass = 1.f / rigidbody2d.Mass;
+
+		if (ImGui::DragFloat2("Velocity", (float*)&rigidbody2d.Velocity)) entity.GetPhysicsBody().Velocity = rigidbody2d.Velocity;
+
+		if (ImGui::Checkbox("Static", &rigidbody2d.IsStatic))
 		{
-			if (ImGui::DragFloat("Mass", &rigidbody2d.Mass, 1.0f, 0.001f, 1000.f)) entity.GetPhysicsBody().InvMass = 1.f / rigidbody2d.Mass;
-
-			if (ImGui::DragFloat2("Velocity", (float*)&rigidbody2d.Velocity)) entity.GetPhysicsBody().Velocity = rigidbody2d.Velocity;
-
-			if (ImGui::Checkbox("Static", &rigidbody2d.IsStatic))
+			auto& physicsBody = entity.GetPhysicsBody();
+			if (rigidbody2d.IsStatic)
 			{
-				auto& physicsBody = entity.GetPhysicsBody();
-				if (rigidbody2d.IsStatic)
-				{
-					physicsBody.InvMass = 0.f;
-					physicsBody.Velocity = glm::vec2(0.f);
-				}
-				else
-					physicsBody.InvMass = 1 / rigidbody2d.Mass;
+				physicsBody.InvMass = 0.f;
+				physicsBody.Velocity = glm::vec2(0.f);
 			}
+			else
+				physicsBody.InvMass = 1 / rigidbody2d.Mass;
+		}
 
-			if (ImGui::Checkbox("Gravity", &rigidbody2d.ApplyGravity)) entity.GetPhysicsBody().ApplyGravity = rigidbody2d.ApplyGravity;
-		});
+		if (ImGui::DragFloat2("Center Of Mass", (float*)&rigidbody2d.CenterOfMass))
+		{
+			auto& physicsBody = entity.GetPhysicsBody();
+			auto& transform = entity.GetComponent<Olala::TransformComponent>();
+			physicsBody.Position = (glm::vec2)transform.Position + rigidbody2d.CenterOfMass;
+			if (entity.HasComponent<Olala::BoxCollider2DComponent>())
+				physicsBody.Collider->Offset = -rigidbody2d.CenterOfMass + entity.GetComponent<Olala::BoxCollider2DComponent>().Center;
+			if (entity.HasComponent<Olala::CircleCollider2DComponent>())
+				physicsBody.Collider->Offset = -rigidbody2d.CenterOfMass + entity.GetComponent<Olala::CircleCollider2DComponent>().Center;
+		}
+
+		if (ImGui::Checkbox("Gravity", &rigidbody2d.ApplyGravity)) entity.GetPhysicsBody().ApplyGravity = rigidbody2d.ApplyGravity;
+	});
 
 	// Box Collider 2D
 	DrawComponent<Olala::BoxCollider2DComponent>("Box Collider 2D", entity, [&](auto& boxCollider2d)
 		{
-			ImGui::DragFloat2("Center", (float*)&boxCollider2d.Center);
+			if (ImGui::DragFloat2("Center", (float*)&boxCollider2d.Center))
+			{
+				entity.GetPhysicsBody().Collider->Offset = -entity.GetComponent<Olala::Rigidbody2DComponent>().CenterOfMass + boxCollider2d.Center;
+			}
+
 			if (ImGui::DragFloat2("Size##bc2d", (float*)&boxCollider2d.Size, 1.f, 0.001f, 1000.f))
 				std::static_pointer_cast<Olala::BoundingBox>(entity.GetPhysicsBody().Collider)->SetSize(boxCollider2d.Size);
 		});
@@ -489,7 +506,11 @@ void PropertyPanel::DrawEntityContextRuntime()
 	// Circle Collider 2D
 	DrawComponent<Olala::CircleCollider2DComponent>("Circle Collider 2D", entity, [&](auto& circleCollider2d)
 		{
-			ImGui::DragFloat2("Center", (float*)&circleCollider2d.Center);
+			if (ImGui::DragFloat2("Center", (float*)&circleCollider2d.Center))
+			{
+				entity.GetPhysicsBody().Collider->Offset = -entity.GetComponent<Olala::Rigidbody2DComponent>().CenterOfMass + circleCollider2d.Center;
+			}
+
 			if (ImGui::DragFloat("Radius", &circleCollider2d.Radius, 1.f, 0.001f, 1000.f))
 				std::static_pointer_cast<Olala::BoundingCircle>(entity.GetPhysicsBody().Collider)->Radius = circleCollider2d.Radius;
 		});

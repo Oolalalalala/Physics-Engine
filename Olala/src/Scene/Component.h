@@ -83,7 +83,7 @@ namespace Olala {
 	struct Rigidbody2DComponent
 	{
 		glm::vec2 Velocity = glm::vec2(0.f);
-		glm::vec2 Force = glm::vec2(0.f);
+		glm::vec2 CenterOfMass = glm::vec2(0.f);
 		float AngularVelocity = 0.f;
 
 		float Mass = 1.f;

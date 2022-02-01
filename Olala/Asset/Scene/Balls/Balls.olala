@@ -3,1275 +3,105 @@ Textures:
   Abe.png: 1
   Planet9.jpg: 2
 Entities:
-  - Name: Ball9,9
-    TransformComponent:
-      Position: [160, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,8
-    TransformComponent:
-      Position: [160, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,7
-    TransformComponent:
-      Position: [160, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,6
-    TransformComponent:
-      Position: [160, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,5
-    TransformComponent:
-      Position: [160, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,4
-    TransformComponent:
-      Position: [160, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,3
-    TransformComponent:
-      Position: [160, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,2
-    TransformComponent:
-      Position: [160, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,1
-    TransformComponent:
-      Position: [160, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball9,0
-    TransformComponent:
-      Position: [160, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,9
-    TransformComponent:
-      Position: [120, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,8
-    TransformComponent:
-      Position: [120, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,7
-    TransformComponent:
-      Position: [120, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,6
-    TransformComponent:
-      Position: [120, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,5
-    TransformComponent:
-      Position: [120, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,4
-    TransformComponent:
-      Position: [120, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,3
-    TransformComponent:
-      Position: [120, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,2
-    TransformComponent:
-      Position: [120, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,1
-    TransformComponent:
-      Position: [120, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball8,0
-    TransformComponent:
-      Position: [120, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,9
-    TransformComponent:
-      Position: [80, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,8
-    TransformComponent:
-      Position: [80, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,7
-    TransformComponent:
-      Position: [80, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,6
-    TransformComponent:
-      Position: [80, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,5
-    TransformComponent:
-      Position: [80, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,4
-    TransformComponent:
-      Position: [80, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,3
-    TransformComponent:
-      Position: [80, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,2
-    TransformComponent:
-      Position: [80, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,1
-    TransformComponent:
-      Position: [80, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball7,0
-    TransformComponent:
-      Position: [80, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,9
-    TransformComponent:
-      Position: [40, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,8
-    TransformComponent:
-      Position: [40, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,7
-    TransformComponent:
-      Position: [40, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,6
-    TransformComponent:
-      Position: [40, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,5
-    TransformComponent:
-      Position: [40, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,4
-    TransformComponent:
-      Position: [40, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,3
-    TransformComponent:
-      Position: [40, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,2
-    TransformComponent:
-      Position: [40, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,1
-    TransformComponent:
-      Position: [40, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball6,0
-    TransformComponent:
-      Position: [40, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,9
-    TransformComponent:
-      Position: [0, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,8
-    TransformComponent:
-      Position: [0, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,7
-    TransformComponent:
-      Position: [0, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,6
-    TransformComponent:
-      Position: [0, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,5
+  - Name: Editor Camera
     TransformComponent:
       Position: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        NearPlane: -1
+        FarPlane: 1
+        Width: 1004.02875
+        Height: 600
+      IsMain: true
+      IsOn: true
+  - Name: Quad0
+    TransformComponent:
+      Position: [-450, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [50, 700]
+      Color: [1, 1, 1, 1]
+      Texture: 2
     Rigidbody2DComponent:
       Mass: 1
       Velocity: [0, 0]
-      Static: false
+      AngularVelocity: 0
+      Static: true
       Gravity: false
-    CircleCollider2DComponent:
+    BoxCollider2DComponent:
       Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,4
+      AngularOffset: 0
+      Size: [50, 700]
+  - Name: Quad1
     TransformComponent:
-      Position: [0, -40, 0]
+      Position: [450, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [50, 700]
+      Color: [1, 1, 1, 1]
+      Texture: 1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: true
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      AngularOffset: 0
+      Size: [50, 700]
+  - Name: Quad2
+    TransformComponent:
+      Position: [0, 300, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [1000, 50]
+      Color: [1, 1, 1, 1]
+      Texture: 2
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: true
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      AngularOffset: 0
+      Size: [1000, 50]
+  - Name: Quad3
+    TransformComponent:
+      Position: [0, -300, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Size: [1000, 50]
+      Color: [1, 1, 1, 1]
+      Texture: 1
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: true
+      Gravity: false
+    BoxCollider2DComponent:
+      Center: [0, 0]
+      AngularOffset: 0
+      Size: [1000, 50]
+  - Name: Ball0,0
+    TransformComponent:
+      Position: [-200, -200, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,3
-    TransformComponent:
-      Position: [0, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,2
-    TransformComponent:
-      Position: [0, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,1
-    TransformComponent:
-      Position: [0, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball5,0
-    TransformComponent:
-      Position: [0, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,9
-    TransformComponent:
-      Position: [-40, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,8
-    TransformComponent:
-      Position: [-40, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,7
-    TransformComponent:
-      Position: [-40, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,6
-    TransformComponent:
-      Position: [-40, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,5
-    TransformComponent:
-      Position: [-40, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,4
-    TransformComponent:
-      Position: [-40, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,3
-    TransformComponent:
-      Position: [-40, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,2
-    TransformComponent:
-      Position: [-40, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,1
-    TransformComponent:
-      Position: [-40, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball4,0
-    TransformComponent:
-      Position: [-40, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,9
-    TransformComponent:
-      Position: [-80, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,8
-    TransformComponent:
-      Position: [-80, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,7
-    TransformComponent:
-      Position: [-80, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,6
-    TransformComponent:
-      Position: [-80, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,5
-    TransformComponent:
-      Position: [-80, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,4
-    TransformComponent:
-      Position: [-80, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,3
-    TransformComponent:
-      Position: [-80, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,2
-    TransformComponent:
-      Position: [-80, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,1
-    TransformComponent:
-      Position: [-80, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball3,0
-    TransformComponent:
-      Position: [-80, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,9
-    TransformComponent:
-      Position: [-120, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,8
-    TransformComponent:
-      Position: [-120, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,7
-    TransformComponent:
-      Position: [-120, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,6
-    TransformComponent:
-      Position: [-120, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,5
-    TransformComponent:
-      Position: [-120, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,4
-    TransformComponent:
-      Position: [-120, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,3
-    TransformComponent:
-      Position: [-120, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,2
-    TransformComponent:
-      Position: [-120, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,1
-    TransformComponent:
-      Position: [-120, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball2,0
-    TransformComponent:
-      Position: [-120, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,9
-    TransformComponent:
-      Position: [-160, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,8
-    TransformComponent:
-      Position: [-160, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,7
-    TransformComponent:
-      Position: [-160, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,6
-    TransformComponent:
-      Position: [-160, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,5
-    TransformComponent:
-      Position: [-160, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,4
-    TransformComponent:
-      Position: [-160, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,3
-    TransformComponent:
-      Position: [-160, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,2
-    TransformComponent:
-      Position: [-160, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,1
-    TransformComponent:
-      Position: [-160, -160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball1,0
-    TransformComponent:
-      Position: [-160, -200, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball0,9
-    TransformComponent:
-      Position: [-200, 160, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball0,8
-    TransformComponent:
-      Position: [-200, 120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball0,7
-    TransformComponent:
-      Position: [-200, 80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball0,6
-    TransformComponent:
-      Position: [-200, 40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball0,5
-    TransformComponent:
-      Position: [-200, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball0,4
-    TransformComponent:
-      Position: [-200, -40, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball0,3
-    TransformComponent:
-      Position: [-200, -80, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
-      Static: false
-      Gravity: false
-    CircleCollider2DComponent:
-      Center: [0, 0]
-      Radius: 10
-  - Name: Ball0,2
-    TransformComponent:
-      Position: [-200, -120, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [0, 0]
+      Mass: 31
+      Velocity: [833, 605]
+      AngularVelocity: 0
       Static: false
       Gravity: false
     CircleCollider2DComponent:
@@ -1285,107 +115,1381 @@ Entities:
     Rigidbody2DComponent:
       Mass: 1
       Velocity: [0, 0]
+      AngularVelocity: 0
       Static: false
       Gravity: false
     CircleCollider2DComponent:
       Center: [0, 0]
       Radius: 10
-  - Name: Ball0,0
+  - Name: Ball0,2
     TransformComponent:
-      Position: [-200, -200, 0]
+      Position: [-200, -120, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     Rigidbody2DComponent:
-      Mass: 2
+      Mass: 1
       Velocity: [0, 0]
+      AngularVelocity: 0
       Static: false
       Gravity: false
     CircleCollider2DComponent:
       Center: [0, 0]
       Radius: 10
-  - Name: Quad3
+  - Name: Ball0,3
     TransformComponent:
-      Position: [0, -300, 0]
+      Position: [-200, -80, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Size: [1000, 50]
-      Color: [1, 1, 1, 1]
-      Texture: 1
     Rigidbody2DComponent:
       Mass: 1
       Velocity: [0, 0]
-      Static: true
+      AngularVelocity: 0
+      Static: false
       Gravity: false
-    BoxCollider2DComponent:
+    CircleCollider2DComponent:
       Center: [0, 0]
-      AngularOffset: 0
-      Size: [1000, 50]
-  - Name: Quad2
+      Radius: 10
+  - Name: Ball0,4
     TransformComponent:
-      Position: [0, 300, 0]
+      Position: [-200, -40, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Size: [1000, 50]
-      Color: [1, 1, 1, 1]
-      Texture: 2
     Rigidbody2DComponent:
       Mass: 1
       Velocity: [0, 0]
-      Static: true
+      AngularVelocity: 0
+      Static: false
       Gravity: false
-    BoxCollider2DComponent:
+    CircleCollider2DComponent:
       Center: [0, 0]
-      AngularOffset: 0
-      Size: [1000, 50]
-  - Name: Quad1
+      Radius: 10
+  - Name: Ball0,5
     TransformComponent:
-      Position: [450, 0, 0]
+      Position: [-200, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Size: [50, 700]
-      Color: [1, 1, 1, 1]
-      Texture: 1
     Rigidbody2DComponent:
       Mass: 1
       Velocity: [0, 0]
-      Static: true
+      AngularVelocity: 0
+      Static: false
       Gravity: false
-    BoxCollider2DComponent:
+    CircleCollider2DComponent:
       Center: [0, 0]
-      AngularOffset: 0
-      Size: [50, 700]
-  - Name: Quad0
+      Radius: 10
+  - Name: Ball0,6
     TransformComponent:
-      Position: [-450, 0, 0]
+      Position: [-200, 40, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Size: [50, 700]
-      Color: [1, 1, 1, 1]
-      Texture: 2
     Rigidbody2DComponent:
       Mass: 1
       Velocity: [0, 0]
-      Static: true
+      AngularVelocity: 0
+      Static: false
       Gravity: false
-    BoxCollider2DComponent:
+    CircleCollider2DComponent:
       Center: [0, 0]
-      AngularOffset: 0
-      Size: [50, 700]
-  - Name: Editor Camera
+      Radius: 10
+  - Name: Ball0,7
+    TransformComponent:
+      Position: [-200, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball0,8
+    TransformComponent:
+      Position: [-200, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball0,9
+    TransformComponent:
+      Position: [-200, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,0
+    TransformComponent:
+      Position: [-160, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,1
+    TransformComponent:
+      Position: [-160, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,2
+    TransformComponent:
+      Position: [-160, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,3
+    TransformComponent:
+      Position: [-160, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,4
+    TransformComponent:
+      Position: [-160, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,5
+    TransformComponent:
+      Position: [-160, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,6
+    TransformComponent:
+      Position: [-160, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,7
+    TransformComponent:
+      Position: [-160, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,8
+    TransformComponent:
+      Position: [-160, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball1,9
+    TransformComponent:
+      Position: [-160, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,0
+    TransformComponent:
+      Position: [-120, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,1
+    TransformComponent:
+      Position: [-120, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,2
+    TransformComponent:
+      Position: [-120, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,3
+    TransformComponent:
+      Position: [-120, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,4
+    TransformComponent:
+      Position: [-120, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,5
+    TransformComponent:
+      Position: [-120, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,6
+    TransformComponent:
+      Position: [-120, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,7
+    TransformComponent:
+      Position: [-120, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,8
+    TransformComponent:
+      Position: [-120, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball2,9
+    TransformComponent:
+      Position: [-120, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,0
+    TransformComponent:
+      Position: [-80, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,1
+    TransformComponent:
+      Position: [-80, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,2
+    TransformComponent:
+      Position: [-80, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,3
+    TransformComponent:
+      Position: [-80, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,4
+    TransformComponent:
+      Position: [-80, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,5
+    TransformComponent:
+      Position: [-80, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,6
+    TransformComponent:
+      Position: [-80, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,7
+    TransformComponent:
+      Position: [-80, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,8
+    TransformComponent:
+      Position: [-80, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball3,9
+    TransformComponent:
+      Position: [-80, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,0
+    TransformComponent:
+      Position: [-40, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,1
+    TransformComponent:
+      Position: [-40, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,2
+    TransformComponent:
+      Position: [-40, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,3
+    TransformComponent:
+      Position: [-40, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,4
+    TransformComponent:
+      Position: [-40, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,5
+    TransformComponent:
+      Position: [-40, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,6
+    TransformComponent:
+      Position: [-40, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,7
+    TransformComponent:
+      Position: [-40, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,8
+    TransformComponent:
+      Position: [-40, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball4,9
+    TransformComponent:
+      Position: [-40, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,0
+    TransformComponent:
+      Position: [0, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,1
+    TransformComponent:
+      Position: [0, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,2
+    TransformComponent:
+      Position: [0, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,3
+    TransformComponent:
+      Position: [0, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,4
+    TransformComponent:
+      Position: [0, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,5
     TransformComponent:
       Position: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    CameraComponent:
-      Camera:
-        ProjectionType: 1
-        NearPlane: -1
-        FarPlane: 1
-        Width: 1405.81934
-        Height: 600
-      IsMain: true
-      IsOn: true
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,6
+    TransformComponent:
+      Position: [0, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,7
+    TransformComponent:
+      Position: [0, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,8
+    TransformComponent:
+      Position: [0, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball5,9
+    TransformComponent:
+      Position: [0, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,0
+    TransformComponent:
+      Position: [40, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,1
+    TransformComponent:
+      Position: [40, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,2
+    TransformComponent:
+      Position: [40, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,3
+    TransformComponent:
+      Position: [40, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,4
+    TransformComponent:
+      Position: [40, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,5
+    TransformComponent:
+      Position: [40, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,6
+    TransformComponent:
+      Position: [40, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,7
+    TransformComponent:
+      Position: [40, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,8
+    TransformComponent:
+      Position: [40, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball6,9
+    TransformComponent:
+      Position: [40, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,0
+    TransformComponent:
+      Position: [80, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,1
+    TransformComponent:
+      Position: [80, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,2
+    TransformComponent:
+      Position: [80, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,3
+    TransformComponent:
+      Position: [80, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,4
+    TransformComponent:
+      Position: [80, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,5
+    TransformComponent:
+      Position: [80, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,6
+    TransformComponent:
+      Position: [80, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,7
+    TransformComponent:
+      Position: [80, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,8
+    TransformComponent:
+      Position: [80, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball7,9
+    TransformComponent:
+      Position: [80, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,0
+    TransformComponent:
+      Position: [120, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,1
+    TransformComponent:
+      Position: [120, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,2
+    TransformComponent:
+      Position: [120, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,3
+    TransformComponent:
+      Position: [120, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,4
+    TransformComponent:
+      Position: [120, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,5
+    TransformComponent:
+      Position: [120, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,6
+    TransformComponent:
+      Position: [120, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,7
+    TransformComponent:
+      Position: [120, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,8
+    TransformComponent:
+      Position: [120, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball8,9
+    TransformComponent:
+      Position: [120, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,0
+    TransformComponent:
+      Position: [160, -200, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,1
+    TransformComponent:
+      Position: [160, -160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,2
+    TransformComponent:
+      Position: [160, -120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,3
+    TransformComponent:
+      Position: [160, -80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,4
+    TransformComponent:
+      Position: [160, -40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,5
+    TransformComponent:
+      Position: [160, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,6
+    TransformComponent:
+      Position: [160, 40, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,7
+    TransformComponent:
+      Position: [160, 80, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,8
+    TransformComponent:
+      Position: [160, 120, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10
+  - Name: Ball9,9
+    TransformComponent:
+      Position: [160, 160, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    Rigidbody2DComponent:
+      Mass: 1
+      Velocity: [0, 0]
+      AngularVelocity: 0
+      Static: false
+      Gravity: false
+    CircleCollider2DComponent:
+      Center: [0, 0]
+      Radius: 10

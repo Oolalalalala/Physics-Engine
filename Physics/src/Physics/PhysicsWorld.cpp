@@ -46,7 +46,18 @@ namespace Olala {
 				auto& bodyA = i->second, & bodyB = j->second;
 				if (bodyA.InvMass == 0.f && bodyB.InvMass == 0.f) continue;
 
-				if (Collision::TestCollision(bodyA, bodyB, &data))
+				bool collided = false;
+				
+				if (bodyA.Collider->GetColliderType() == ColliderType::BoundingCircle && bodyB.Collider->GetColliderType() == ColliderType::BoundingCircle)
+					collided = Collision::TestCollision<BoundingCircle, BoundingCircle>(bodyA, bodyB, &data);
+				else if (bodyA.Collider->GetColliderType() == ColliderType::BoundingBox && bodyB.Collider->GetColliderType() == ColliderType::BoundingBox)
+					collided = Collision::TestCollision<BoundingBox, BoundingBox>(bodyA, bodyB, &data);
+				else if (bodyA.Collider->GetColliderType() == ColliderType::BoundingBox && bodyB.Collider->GetColliderType() == ColliderType::BoundingCircle)
+					collided = Collision::TestCollision<BoundingBox, BoundingCircle>(bodyA, bodyB, &data);
+				else if (bodyA.Collider->GetColliderType() == ColliderType::BoundingCircle && bodyB.Collider->GetColliderType() == ColliderType::BoundingBox)
+					collided = Collision::TestCollision<BoundingCircle, BoundingBox>(bodyA, bodyB, &data);
+				
+				if (collided)
 				{
 					if (bodyA.InvMass == 0.f) 
 						bodyB.Position += data.Normal * data.Depth;
@@ -60,7 +71,7 @@ namespace Olala {
 					}
 
 					float e = std::min(bodyA.Restitution, bodyB.Restitution); // There are many ways of calculating combined restitution
-					float j = -(1.f + e) * glm::dot(bodyB.Velocity - bodyA.Velocity, data.Normal) / (bodyA.InvMass + bodyB.InvMass); // TODO : implement InvMass
+					float j = -(1.f + e) * glm::dot(bodyB.Velocity - bodyA.Velocity, data.Normal) / (bodyA.InvMass + bodyB.InvMass);
 					bodyA.Velocity -= j * bodyA.InvMass * data.Normal;
 					bodyB.Velocity += j * bodyB.InvMass * data.Normal;
 				}

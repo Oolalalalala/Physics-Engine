@@ -215,7 +215,7 @@ void EditorLayer::DrawMenuBar()
 
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Save", "Ctrl+S") && m_Scene)
+            if (ImGui::MenuItem("Save", "Ctrl+S") && m_IsSceneLoaded)
             {
                 m_SceneSerializer->Serialize();
                 m_IsSceneSaved = true;
