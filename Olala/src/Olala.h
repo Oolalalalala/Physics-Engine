@@ -7,6 +7,7 @@
 #include "Core/Base.h"
 #include "Core/Log.h"
 #include "Core/Layer.h"
+#include "Core/IO.h"
 
 // Renderer
 #include "Renderer/VertexArray.h"

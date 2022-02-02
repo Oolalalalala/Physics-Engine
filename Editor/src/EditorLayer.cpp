@@ -32,6 +32,14 @@ void EditorLayer::OnUpdate(float dt)
     if (m_EditorCamera && m_EditorCamera.HasComponent<Olala::EditorCameraControllerComponent>())
         m_EditorCamera.GetComponent<Olala::EditorCameraControllerComponent>().IsOn = m_SceneViewPanel->GetIsFocused();
 
+    // Panels
+    m_SceneViewPanel        ->  OnUpdate(dt);
+    m_SceneHierarchyPanel   ->  OnUpdate(dt);
+    m_PropertyPanel         ->  OnUpdate(dt);
+    m_AssetPanel            ->  OnUpdate(dt);
+    m_DebugPanel            ->  OnUpdate(dt);
+
+
     if (m_Scene)
     {
         if (m_IsRuntime)
@@ -40,11 +48,6 @@ void EditorLayer::OnUpdate(float dt)
             m_Scene->OnUpdate(dt);
     }
 
-    m_SceneHierarchyPanel   ->  OnUpdate(dt);
-    m_PropertyPanel         ->  OnUpdate(dt);
-    m_SceneViewPanel        ->  OnUpdate(dt);
-    m_AssetPanel            ->  OnUpdate(dt);
-    m_DebugPanel            ->  OnUpdate(dt);
 }
 
 void EditorLayer::OnImGuiRender()
@@ -142,6 +145,8 @@ void EditorLayer::DrawMenuBar()
 
                     m_IsSceneLoaded = true;
                     m_IsSceneSaved = true;
+
+                    LOG_INFO("New scene create");
                 }
             }
 			if (ImGui::MenuItem("Open Scene"))
@@ -173,6 +178,8 @@ void EditorLayer::DrawMenuBar()
 
                     m_IsSceneLoaded = true;
                     m_IsSceneSaved = true;
+
+                    LOG_INFO("Scene opened, filepath = \"{0}\"", filepath.string());
                 }
 			}
             if (ImGui::MenuItem("Close Scene") && m_IsSceneLoaded)
@@ -196,6 +203,8 @@ void EditorLayer::DrawMenuBar()
                         m_EditorCamera = Olala::Entity();
 
                         m_IsSceneLoaded = false;
+
+                        LOG_INFO("Scene closed");
                     }
                 }
                 else
@@ -211,12 +220,17 @@ void EditorLayer::DrawMenuBar()
                     m_EditorCamera = Olala::Entity();
 
                     m_IsSceneLoaded = false;
+
+                    LOG_INFO("Scene closed");
                 }
 
             }
             ImGui::Separator();
-            if (ImGui::MenuItem("Save", "Ctrl+S") && m_IsSceneLoaded)
+            if ((ImGui::MenuItem("Save", "Ctrl+S") ||
+                ((Olala::IO::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || Olala::IO::IsKeyPressed(GLFW_KEY_RIGHT_CONTROL)) && Olala::IO::IsKeyPressed(GLFW_KEY_S)))
+                && m_IsSceneLoaded)
             {
+                LOG_INFO("Scene saved");
                 m_SceneSerializer->Serialize();
                 m_IsSceneSaved = true;
             }
@@ -305,6 +319,8 @@ void EditorLayer::OnRuntimeBegin()
 
     m_PropertyPanel->DisplayEntity(Olala::Entity());
     m_PropertyPanel->SetIsRuntime(true);
+
+    LOG_INFO("Runtime begins");
 }
 
 void EditorLayer::OnRuntimeEnd()
@@ -327,6 +343,8 @@ void EditorLayer::OnRuntimeEnd()
     m_PropertyPanel->SetIsRuntime(false);
 
     m_RuntimeScene = nullptr;
+
+    LOG_INFO("Runtime ends");
 }
 
 void EditorLayer::OnEvent(Olala::Event& e)
