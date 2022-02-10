@@ -85,7 +85,7 @@ namespace Olala {
 		}
 	}
 
-	void Scene::OnRuntimeUpdate(float dt)
+	void Scene::OnUpdateRuntime(float dt)
 	{
 		// Editor Camera Controller
 		{
@@ -108,19 +108,40 @@ namespace Olala {
 		}
 
 		// Physics
-		m_PhysicsWorld->OnUpdate(dt);
-
-		// Retrieve and Set Data From and To Physics
-		auto view = m_Registry.view<TransformComponent, Rigidbody2DComponent>();
-		for (auto e : view)
 		{
-			auto [transform, rb2d] = view.get<TransformComponent, Rigidbody2DComponent>(e);
-			auto& physicsBody = m_PhysicsWorld->GetPhysicsBody(rb2d.PhysicsHandle);
-			glm::vec2 newPos = physicsBody.Position - glm::rotate(rb2d.CenterOfMass, glm::radians(physicsBody.Rotation));
-			transform.Position.x = newPos.x;
-			transform.Position.y = newPos.y;
-			transform.Rotation.z = physicsBody.Rotation;
-			rb2d.Velocity = physicsBody.Velocity;
+#ifdef USE_BOX2D
+			m_PhysicsWorld->Step(dt, 6, 2);
+
+			auto view = m_Registry.view<TransformComponent, Rigidbody2DComponent>();
+			for (auto e : view)
+			{
+				auto [transform, rb2d] = view.get<TransformComponent, Rigidbody2DComponent>(e);
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				
+				transform.Position.x = body->GetPosition().x;
+				transform.Position.y = body->GetPosition().y;
+				transform.Rotation.z = glm::degrees(body->GetAngle());
+				rb2d.Velocity.x = body->GetLinearVelocity().x;
+				rb2d.Velocity.y = body->GetLinearVelocity().y;
+				rb2d.AngularVelocity = glm::degrees(body->GetAngularVelocity());
+			}
+
+#else
+			m_PhysicsWorld->OnUpdate(dt);
+
+			// Retrieve and Set Data From and To Physics
+			auto view = m_Registry.view<TransformComponent, Rigidbody2DComponent>();
+			for (auto e : view)
+			{
+				auto [transform, rb2d] = view.get<TransformComponent, Rigidbody2DComponent>(e);
+				auto& physicsBody = m_PhysicsWorld->GetPhysicsBody(rb2d.PhysicsHandle);
+				glm::vec2 newPos = physicsBody.Position - glm::rotate(rb2d.CenterOfMass, glm::radians(physicsBody.Rotation));
+				transform.Position.x = newPos.x;
+				transform.Position.y = newPos.y;
+				transform.Rotation.z = physicsBody.Rotation;
+				rb2d.Velocity = physicsBody.Velocity;
+			}
+#endif
 		}
 
 		// Get All Cameras
@@ -177,14 +198,78 @@ namespace Olala {
 
 	void Scene::DestroyEntity(Entity entity)
 	{
-		if (entity.HasComponent<Rigidbody2DComponent>())
-			m_PhysicsWorld->RemovePhysicsBody(entity.GetComponent<Rigidbody2DComponent>().PhysicsHandle);
+#ifdef USE_BOX2D
+			if (m_PhysicsWorld && entity.HasComponent<Rigidbody2DComponent>())
+				m_PhysicsWorld->DestroyBody((b2Body*)entity.GetComponent<Rigidbody2DComponent>().RuntimeBody);
+#else
+			if (m_PhysicsWorld && entity.HasComponent<Rigidbody2DComponent>())
+				m_PhysicsWorld->RemovePhysicsBody(entity.GetComponent<Rigidbody2DComponent>().PhysicsHandle);
+#endif
 
 		m_Registry.destroy(entity.m_EntityID);
 	}
 
 	void Scene::InitializePhysics()
 	{
+#ifdef USE_BOX2D
+
+		m_PhysicsWorld = CreateRef<b2World>(b2Vec2(0.f, -9.81f));
+
+		auto view = m_Registry.view<TransformComponent, Rigidbody2DComponent>();
+		for (auto e : view)
+		{
+			auto [transform, rb2d] = view.get<TransformComponent, Rigidbody2DComponent>(e);
+			Entity entity(e, this);
+
+			b2BodyDef def;
+			def.position.Set(transform.Position.x, transform.Position.y);
+			def.angle = glm::radians(transform.Rotation.z);
+			def.linearVelocity.Set(rb2d.Velocity.x, rb2d.Velocity.y);
+			def.angularVelocity = glm::radians(rb2d.AngularVelocity);
+			def.gravityScale = rb2d.ApplyGravity ? 1.f : 0.f;
+			def.type = rb2d.IsStatic ? b2BodyType::b2_staticBody : b2BodyType::b2_dynamicBody;
+
+			b2MassData massData;
+			massData.mass = rb2d.Mass;
+			massData.center.Set(rb2d.CenterOfMass.x, rb2d.CenterOfMass.y);
+			massData.I = 1.f; // temp
+
+			// TODO : add properties to rigidbodycomponent
+			b2FixtureDef fixtureDef;
+			fixtureDef.density;
+			fixtureDef.friction;
+			fixtureDef.restitution = 0.6f;
+			fixtureDef.restitutionThreshold;
+
+			b2Body* body = m_PhysicsWorld->CreateBody(&def);
+			body->SetMassData(&massData);
+
+			if (entity.HasComponent<CircleCollider2DComponent>())
+			{
+				auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
+				b2CircleShape circle;
+				circle.m_p.Set(cc2d.Center.x, cc2d.Center.y);
+				circle.m_radius = cc2d.Radius;
+				
+
+				fixtureDef.shape = &circle;
+				body->CreateFixture(&fixtureDef);
+			}
+			else if (entity.HasComponent<BoxCollider2DComponent>())
+			{
+				auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
+				b2PolygonShape box;
+				box.SetAsBox(bc2d.Size.x * 0.5f, bc2d.Size.y * 0.5f, b2Vec2(bc2d.Center.x, bc2d.Center.y), glm::radians(bc2d.AngularOffset));
+
+				fixtureDef.shape = &box;
+				body->CreateFixture(&fixtureDef);
+			}
+
+
+			rb2d.RuntimeBody = body;
+		}
+
+#else
 		m_PhysicsWorld = CreateRef<PhysicsWorld>();
 
 		auto view = m_Registry.view<TransformComponent, Rigidbody2DComponent>();
@@ -221,6 +306,8 @@ namespace Olala {
 			physicsBody.ApplyGravity = rb2d.ApplyGravity;
 			physicsBody.Restitution = 1.f;
 		}
+#endif
+
 	}
 
 	void Scene::Reset()
@@ -259,7 +346,7 @@ namespace Olala {
 			if (oldEntity.HasComponent<Rigidbody2DComponent>())
 			{
 				auto& rb2d = newEntity.AddComponent<Rigidbody2DComponent>() = oldEntity.GetComponent<Rigidbody2DComponent>();
-				rb2d.PhysicsHandle = 0;
+				//rb2d.PhysicsHandle = 0;
 			}
 		}
 

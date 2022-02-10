@@ -19,6 +19,7 @@ private:
 	Olala::Ref<SceneViewPanel> m_SceneViewPanel;
 
 	bool m_DrawColliderBorder = false;
+	bool m_VSync = true;
 
 	float m_FrameRate = 0.f;
 	float m_AccumulatedFrametime = 0.f;

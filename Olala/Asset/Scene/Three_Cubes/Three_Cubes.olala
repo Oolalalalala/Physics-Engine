@@ -2,25 +2,39 @@ Scene: Three_Cubes
 Textures:
   {}
 Entities:
-  - Name: Box3
+  - Name: Editor Camera
     TransformComponent:
-      Position: [146, 0, 0]
+      Position: [0, 0, 0.151999995]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        NearPlane: -1
+        FarPlane: 1
+        Width: 1110.22449
+        Height: 600
+      IsMain: true
+      IsOn: true
+  - Name: Box1
+    TransformComponent:
+      Position: [-326, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Size: [80, 80]
-      Color: [0.80472362, 0.945945919, 0.536888242, 1]
+      Size: [100, 100]
+      Color: [0.864864886, 0.762934029, 0.470833778, 1]
       Texture: 0
     Rigidbody2DComponent:
-      Mass: 100
-      Velocity: [-25, 0]
+      Mass: 1
+      Velocity: [0, 0]
       AngularVelocity: 0
-      Static: false
+      Static: true
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
       AngularOffset: 0
-      Size: [80, 80]
+      Size: [100, 100]
   - Name: Box2
     TransformComponent:
       Position: [0, 0, 0]
@@ -40,36 +54,22 @@ Entities:
       Center: [0, 0]
       AngularOffset: 0
       Size: [50, 50]
-  - Name: Box1
+  - Name: Box3
     TransformComponent:
-      Position: [-326, 0, 0]
+      Position: [146, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Size: [100, 100]
-      Color: [0.864864886, 0.762934029, 0.470833778, 1]
+      Size: [80, 80]
+      Color: [0.80472362, 0.945945919, 0.536888242, 1]
       Texture: 0
     Rigidbody2DComponent:
-      Mass: 1
-      Velocity: [41, 0]
+      Mass: 100
+      Velocity: [-25, 0]
       AngularVelocity: 0
-      Static: true
+      Static: false
       Gravity: false
     BoxCollider2DComponent:
       Center: [0, 0]
       AngularOffset: 0
-      Size: [100, 100]
-  - Name: Editor Camera
-    TransformComponent:
-      Position: [0, 0, 0.151999995]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      Camera:
-        ProjectionType: 1
-        NearPlane: -1
-        FarPlane: 1
-        Width: 921.394592
-        Height: 600
-      IsMain: true
-      IsOn: true
+      Size: [80, 80]

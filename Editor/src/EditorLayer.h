@@ -1,11 +1,13 @@
 #pragma once
 
-#include <Olala.h>
 #include "Panel/SceneViewPanel.h"
 #include "Panel/PropertyPanel.h"
 #include "Panel/SceneHierarchyPanel.h"
 #include "Panel/AssetPanel.h"
 #include "Panel/DebugPanel.h"
+
+#include <Olala.h>
+
 
 class EditorLayer : public Olala::Layer
 {
@@ -21,9 +23,22 @@ public:
 
 private:
 	void DrawMenuBar();
+	void ProcessShortcuts();
+
+	// Application Function
+	void CreateNewScene();
+	void OpenScene();
+	void CloseScene();
+	void SaveScene();
+	void SaveSceneAsNew();
+	void ImportAsset();
+
+	void StartStopRuntime();
 
 	void OnRuntimeBegin();
 	void OnRuntimeEnd();
+
+	bool OnKeyPressed(Olala::KeyPressedEvent& e);
 
 private:
 	Olala::Ref<Olala::Scene> m_Scene;

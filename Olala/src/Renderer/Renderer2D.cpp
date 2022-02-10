@@ -216,7 +216,7 @@ namespace Olala {
         s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
         uint32_t indexCount = 0;
 
-        int length = std::min(s_Data.MaxTextureSlots, s_Data.QuadTextures.size());
+        int length = std::min(s_Data.MaxTextureSlots, (uint32_t)s_Data.QuadTextures.size());
         auto it = s_Data.QuadTextures.begin();
 
         for (int i = 0; i < length; i++, it++)

@@ -55,6 +55,7 @@ namespace Olala {
 
 		data->Depth = collideDistance - glm::distance(posA, posB);
 		data->Normal = glm::normalize(posB - posA);
+		
 
 		return true;
 	}

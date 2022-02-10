@@ -4,6 +4,10 @@
 #include "AssetManager.h"
 #include "Physics.h"
 
+#include "box2d/box2d.h"
+
+#define USE_BOX2D
+
 class SceneHierarchyPanel;
 
 namespace Olala {
@@ -17,7 +21,7 @@ namespace Olala {
 		~Scene();
 
 		void OnUpdate(float dt);
-		void OnRuntimeUpdate(float dt);
+		void OnUpdateRuntime(float dt);
 
 		Entity CreateEntity(const std::string& name);
 		void DestroyEntity(Entity entity);
@@ -33,7 +37,6 @@ namespace Olala {
 		void Reset();
 
 		Ref<AssetManager> GetAssetManager() { return m_AssetManager; }
-		Ref<PhysicsWorld> GetPhysicsWorld() { return m_PhysicsWorld; }
 		std::string& GetName() { return m_Name; }
 
 		static Ref<Scene> Copy(Ref<Scene> source);
@@ -41,10 +44,17 @@ namespace Olala {
 	private:
 		entt::registry m_Registry;
 		Ref<AssetManager> m_AssetManager;
-		Ref<PhysicsWorld> m_PhysicsWorld;
-
 		std::string m_Name = "Untitled";
 
+	#ifdef USE_BOX2D
+		Ref<b2World> m_PhysicsWorld;
+	#else
+		Ref<PhysicsWorld> m_PhysicsWorld;
+	public:
+		Ref<PhysicsWorld> GetPhysicsWorld() { return m_PhysicsWorld; }
+	#endif
+
+	private:
 		friend class Entity;
 		friend class SceneSerializer;
 		friend class ::SceneHierarchyPanel;

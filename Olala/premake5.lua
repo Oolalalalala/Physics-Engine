@@ -14,6 +14,8 @@ project "Olala"
     {
         "src/**.h",
         "src/**.cpp",
+        "vendor/box2d/include/**.h",
+        "vendor/box2d/src/**.cpp",
         "vendor/glm/**.hpp",
         "vendor/glm/**.inl",
         "vendor/spdlog/**.h",
@@ -33,16 +35,11 @@ project "Olala"
         "src",
         "vendor",
         "vendor/imgui",
+        "vendor/box2d/include",
         "vendor/yaml-cpp/include",
         "%{wks.location}/Physics/src",
         "%{wks.location}/Dependencies/GLFW/include",
         "%{wks.location}/Dependencies/GLEW/include"
-    }
-
-    libdirs
-    {
-        "%{wks.location}/Dependencies/GLFW/lib-vc2019",
-        "%{wks.location}/Dependencies/GLEW/lib/Release/Win32"
     }
 
     links
@@ -54,6 +51,24 @@ project "Olala"
         "glew32s.lib",
         "opengl32.lib"
     }
+
+    filter "files:vendor/box2d/**.cpp"
+        flags { "NoPCH" }
+        
+    filter "platforms:Win32"
+        libdirs
+        {
+            "%{wks.location}/Dependencies/GLFW/lib-vc2019/Win32",
+            "%{wks.location}/Dependencies/GLEW/lib/Release/Win32"
+        }
+
+
+    filter "platforms:Win64"
+        libdirs
+        {
+            "%{wks.location}/Dependencies/GLFW/lib-vc2019/x64",
+            "%{wks.location}/Dependencies/GLEW/lib/Release/x64"
+        }
 
     filter "system:windows"
 		systemversion "latest"

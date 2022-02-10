@@ -1,7 +1,15 @@
 workspace "Physics-Engine-2D"
+    platforms { "Win32" , "Win64" }
+    configurations { "Debug" , "Release" }
+
+
+filter { "platforms:Win32" }
+    system "Windows"
     architecture "x86"
 
-    configurations { "Debug" , "Release" }
+filter { "platforms:Win64" }
+    system "Windows"
+    architecture "x86_64"
 
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -15,3 +23,4 @@ include "Physics"
 include "Olala"
 include "Editor"
 include "Sandbox"
+    

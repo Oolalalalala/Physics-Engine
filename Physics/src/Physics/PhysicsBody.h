@@ -15,6 +15,7 @@ namespace Olala {
 		float Rotation = 0.f;
 		float AngularVelocity = 0.f;
 		float InvMass = 1.f; // Value of zero means static
+		float InvInertia = 1.f;
 		float Restitution = 1.f;
 		Ref<Collider> Collider;
 

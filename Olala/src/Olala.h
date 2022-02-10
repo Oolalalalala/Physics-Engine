@@ -1,5 +1,8 @@
 #pragma once
 
+// Use box2d library
+#define USE_BOX2D
+
 #include <Windows.h>
 
 
@@ -8,6 +11,9 @@
 #include "Core/Log.h"
 #include "Core/Layer.h"
 #include "Core/IO.h"
+
+#include "Event/KeyEvent.h"
+#include "Event/MouseEvent.h"
 
 // Renderer
 #include "Renderer/VertexArray.h"

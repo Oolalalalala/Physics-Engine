@@ -65,9 +65,10 @@ namespace Olala {
 						bodyA.Position -= data.Normal * data.Depth;
 					else
 					{
-						// Inaccurate but hard to notice
-						bodyA.Position -= data.Normal * data.Depth * 0.5f;
-						bodyB.Position += data.Normal * data.Depth * 0.5f;
+						// Need fixes
+						float vA = glm::dot(data.Normal, bodyA.Velocity), vB = glm::dot(data.Normal, bodyB.Velocity);
+						bodyA.Position -= data.Normal * std::abs(vA / (vB - vA));
+						bodyB.Position += data.Normal * std::abs(vB / (vA - vB));
 					}
 
 					float e = std::min(bodyA.Restitution, bodyB.Restitution); // There are many ways of calculating combined restitution

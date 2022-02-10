@@ -10,14 +10,14 @@ namespace Olala {
 	struct CollisionData
 	{
 		float Depth;
-		glm::vec2 Normal;
+		glm::vec2 Normal; // Normal pointing from A to B
 	};
 
 	class Collision
 	{
 	public:
 		template<typename A, typename B>
-		static bool TestCollision(const PhysicsBody& a, const PhysicsBody& b, CollisionData* data); // Normal pointing from A to B
+		static bool TestCollision(const PhysicsBody& a, const PhysicsBody& b, CollisionData* data);
 	};
 
 }

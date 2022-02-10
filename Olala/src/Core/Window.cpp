@@ -75,7 +75,7 @@ namespace Olala {
 			{
 			case GLFW_PRESS:
 			{
-				KeyPressedEvent event(key, 0);
+				KeyPressedEvent event(key, false, mods);
 				data.EventCallback(event);
 				break;
 			}
@@ -87,7 +87,7 @@ namespace Olala {
 			}
 			case GLFW_REPEAT:
 			{
-				KeyPressedEvent event(key, 1);
+				KeyPressedEvent event(key, true, mods);
 				data.EventCallback(event);
 				break;
 			}

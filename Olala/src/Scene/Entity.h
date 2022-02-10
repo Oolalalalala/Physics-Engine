@@ -46,6 +46,20 @@ namespace Olala {
 			return m_Scene->m_Registry.any<Args...>(m_EntityID);
 		}
 
+#ifdef USE_BOX2D
+
+		Ref<b2World> GetPhysicsWorld()
+		{
+			return m_Scene->m_PhysicsWorld;
+		}
+
+		b2Body& GetPhysicsBody()
+		{
+			return *(b2Body*)m_Scene->m_Registry.get<Rigidbody2DComponent>(m_EntityID).RuntimeBody;
+		}
+
+#else
+
 		Ref<PhysicsWorld> GetPhysicsWorld()
 		{
 			return m_Scene->m_PhysicsWorld;
@@ -55,7 +69,7 @@ namespace Olala {
 		{
 			return m_Scene->m_PhysicsWorld->GetPhysicsBody(m_Scene->m_Registry.get<Rigidbody2DComponent>(m_EntityID).PhysicsHandle);
 		}
-
+#endif
 		operator bool() { return m_EntityID != entt::null; }
 
 		bool operator==(const Entity& other)

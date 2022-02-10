@@ -43,11 +43,10 @@ void EditorLayer::OnUpdate(float dt)
     if (m_Scene)
     {
         if (m_IsRuntime)
-            m_RuntimeScene->OnRuntimeUpdate(dt);
+            m_RuntimeScene->OnUpdateRuntime(dt);
         else
             m_Scene->OnUpdate(dt);
     }
-
 }
 
 void EditorLayer::OnImGuiRender()
@@ -108,7 +107,7 @@ void EditorLayer::OnImGuiRender()
 
     ImGui::End();
 
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowStyleEditor();
 }
 
 void EditorLayer::DrawMenuBar()
@@ -117,151 +116,30 @@ void EditorLayer::DrawMenuBar()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-            if (ImGui::MenuItem("New Scene"))
-            {
-                // TODO : save check here
-                if (m_IsRuntime)
-                {
-                    OnRuntimeEnd();
-                    m_IsRuntime = false;
-                }
-
-                fs::path selectedFolder = Olala::FileDialog::SelectFolder("Select Folder");
-                if (!selectedFolder.empty())
-                {
-                    m_Scene = Olala::CreateRef<Olala::Scene>();
-
-                    m_EditorCamera = m_Scene->CreateEntity("Editor Camera");
-                    m_EditorCamera.AddComponent<Olala::CameraComponent>(Olala::CreateRef<Olala::OrthographicCamera>(), Olala::Framebuffer::Create(Olala::FramebufferSpecs()));
-                    m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
-
-                    Olala::SceneSerializer::CraeteDirectory(selectedFolder, m_Scene);
-                    m_SceneSerializer = Olala::CreateRef<Olala::SceneSerializer>(m_Scene, selectedFolder / m_Scene->GetName() / (m_Scene->GetName() + ".olala"));
-
-                    m_SceneViewPanel->SetScene(m_Scene);
-                    m_SceneViewPanel->SetCamera(m_EditorCamera);
-                    m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
-                    m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
-
-                    m_IsSceneLoaded = true;
-                    m_IsSceneSaved = true;
-
-                    LOG_INFO("New scene create");
-                }
-            }
-			if (ImGui::MenuItem("Open Scene"))
-			{
-                // TODO : save check
-                if (m_IsRuntime)
-                {
-                    OnRuntimeEnd();
-                    m_IsRuntime = false;
-                }
-
-                fs::path filepath = Olala::FileDialog::OpenFile("Select File", { "Scene File (.olala)", "*.olala" });
-
-                if (!filepath.empty())
-                {
-                    m_Scene = Olala::CreateRef<Olala::Scene>();
-                    m_SceneSerializer = Olala::CreateRef<Olala::SceneSerializer>(m_Scene, filepath);
-                    m_SceneSerializer->Deserialize();
-
-                    m_EditorCamera = GetEditorCamera(m_Scene);
-                    if (m_EditorCamera)
-                        m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
-
-                    m_SceneViewPanel->SetScene(m_Scene);
-                    m_SceneViewPanel->SetCamera(m_EditorCamera);
-                    m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
-                    m_PropertyPanel->DisplayEntity(Olala::Entity());
-                    m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
-
-                    m_IsSceneLoaded = true;
-                    m_IsSceneSaved = true;
-
-                    LOG_INFO("Scene opened, filepath = \"{0}\"", filepath.string());
-                }
-			}
+            if (ImGui::MenuItem("New Scene", "Ctrl+N"))
+                CreateNewScene();
+			if (ImGui::MenuItem("Open Scene", "Ctrl+O"))
+                OpenScene();
             if (ImGui::MenuItem("Close Scene") && m_IsSceneLoaded)
-            {
-                // Save check
-                if (!m_IsSceneSaved)
-                {
-                    auto result = Olala::FileDialog::MessageYesNoCancel("Message", "Save changes?");
-                    if (result == Olala::FileDialog::Result::yes)
-                        m_SceneSerializer->Serialize();
-                    if (result != Olala::FileDialog::Result::cancel)
-                    {
-                        // Reset
-                        m_Scene = nullptr;
-                        m_SceneSerializer = nullptr;
-                        m_SceneViewPanel->SetScene(nullptr);
-                        m_SceneViewPanel->SetCamera(Olala::Entity());
-                        m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
-                        m_PropertyPanel->DisplayEntity(Olala::Entity());
-                        m_AssetPanel->SetAssetManager(nullptr);
-                        m_EditorCamera = Olala::Entity();
+                CloseScene();
 
-                        m_IsSceneLoaded = false;
-
-                        LOG_INFO("Scene closed");
-                    }
-                }
-                else
-                {
-                    // Reset
-                    m_Scene = nullptr;
-                    m_SceneSerializer = nullptr;
-                    m_SceneViewPanel->SetScene(nullptr);
-                    m_SceneViewPanel->SetCamera(Olala::Entity());
-                    m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
-                    m_PropertyPanel->DisplayEntity(Olala::Entity());
-                    m_AssetPanel->SetAssetManager(nullptr);
-                    m_EditorCamera = Olala::Entity();
-
-                    m_IsSceneLoaded = false;
-
-                    LOG_INFO("Scene closed");
-                }
-
-            }
             ImGui::Separator();
-            if ((ImGui::MenuItem("Save", "Ctrl+S") ||
-                ((Olala::IO::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || Olala::IO::IsKeyPressed(GLFW_KEY_RIGHT_CONTROL)) && Olala::IO::IsKeyPressed(GLFW_KEY_S)))
-                && m_IsSceneLoaded)
-            {
-                LOG_INFO("Scene saved");
-                m_SceneSerializer->Serialize();
-                m_IsSceneSaved = true;
-            }
-            if (ImGui::MenuItem("Save As") && m_Scene)
-            {
-                fs::path folderPath = Olala::FileDialog::SelectFolder("Select Folder");
-                if (!folderPath.empty())
-                {
-                    Olala::SceneSerializer::CraeteDirectory(folderPath, m_Scene);
-                    Olala::SceneSerializer::CopyAssets(m_SceneSerializer->GetDirectoryPath(), folderPath / m_Scene->GetName());
-                    Olala::SceneSerializer(m_Scene, folderPath / m_Scene->GetName() / (m_Scene->GetName() + ".olala")).Serialize();
-                }
-			}
+
+            if (ImGui::MenuItem("Save", "Ctrl+S") && m_IsSceneLoaded)
+                SaveScene();
+            if (ImGui::MenuItem("Save As", "Ctrl+Shift+S") && m_IsSceneLoaded)
+                SaveSceneAsNew();
+
             ImGui::Separator();
-            if (ImGui::MenuItem("Import"))
-            {
-                std::string filepath = Olala::FileDialog::OpenFile("Select Asset", 
-                {   
-                    "All Files", "*",
-                    "Image (.jpg, .png, .jpeg, .bmp, .gif)", "*.jpg *.png *.jpeg *.bmp *.gif" 
-                });
-                if (!filepath.empty())
-                {
-                    m_SceneSerializer->Import<Olala::Texture2D>(filepath);
-                }
-            }
+
+            if (ImGui::MenuItem("Import", "Ctrl+I"))
+                ImportAsset();
+
             ImGui::Separator();
+
             if (ImGui::MenuItem("Exit"))
-            {
                 Olala::Application::Get().Close();
-            }
+
 			ImGui::EndMenu();
 		}
 
@@ -278,24 +156,193 @@ void EditorLayer::DrawMenuBar()
 
         if (ImGui::BeginMenu("Program"))
         {
-            if (ImGui::MenuItem(m_IsRuntime ? "Stop" : "Start", "F5"))
-            {
-                m_IsRuntime = !m_IsRuntime;
-                if (m_IsRuntime)
-                    OnRuntimeBegin();
-                else
-                    OnRuntimeEnd();
-            }
+            if (ImGui::MenuItem(m_IsRuntime ? "Stop" : "Start", "F5") && m_IsSceneLoaded)
+                StartStopRuntime();
             if (ImGui::MenuItem("Pause"))
-            {
                 m_IsPausing = true;
-            }
+
             ImGui::EndMenu();
         }
 
 		ImGui::EndMenuBar();
 	}
     
+}
+
+void EditorLayer::ProcessShortcuts()
+{
+    bool ctrl = Olala::IO::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || Olala::IO::IsKeyPressed(GLFW_KEY_RIGHT_CONTROL);
+    bool shift = Olala::IO::IsKeyPressed(GLFW_KEY_LEFT_SHIFT) || Olala::IO::IsKeyPressed(GLFW_KEY_RIGHT_SHIFT);
+
+    if (ctrl && Olala::IO::IsKeyPressed(GLFW_KEY_N))
+        CreateNewScene();
+    if (ctrl && Olala::IO::IsKeyPressed(GLFW_KEY_O))
+        OpenScene();
+    if (ctrl && Olala::IO::IsKeyPressed(GLFW_KEY_I))
+        ImportAsset();
+    if (ctrl && Olala::IO::IsKeyPressed(GLFW_KEY_S))
+        SaveScene();
+    if (ctrl && shift && Olala::IO::IsKeyPressed(GLFW_KEY_S))
+        SaveSceneAsNew();
+    if (Olala::IO::IsKeyPressed(GLFW_KEY_F5))
+        StartStopRuntime();
+}
+
+void EditorLayer::CreateNewScene()
+{
+    // TODO : save check here
+    if (m_IsRuntime)
+    {
+        OnRuntimeEnd();
+        m_IsRuntime = false;
+    }
+
+    fs::path selectedFolder = Olala::FileDialog::SelectFolder("Select Folder");
+    if (!selectedFolder.empty())
+    {
+        m_Scene = Olala::CreateRef<Olala::Scene>();
+
+        m_EditorCamera = m_Scene->CreateEntity("Editor Camera");
+        m_EditorCamera.AddComponent<Olala::CameraComponent>(Olala::CreateRef<Olala::OrthographicCamera>(), Olala::Framebuffer::Create(Olala::FramebufferSpecs()));
+        m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
+
+        Olala::SceneSerializer::CraeteDirectory(selectedFolder, m_Scene);
+        m_SceneSerializer = Olala::CreateRef<Olala::SceneSerializer>(m_Scene, selectedFolder / m_Scene->GetName() / (m_Scene->GetName() + ".olala"));
+
+        m_SceneViewPanel->SetScene(m_Scene);
+        m_SceneViewPanel->SetCamera(m_EditorCamera);
+        m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
+        m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
+
+        m_IsSceneLoaded = true;
+        m_IsSceneSaved = true;
+
+        LOG_INFO("New scene create");
+    }
+}
+
+void EditorLayer::OpenScene()
+{
+    // TODO : save check
+    if (m_IsRuntime)
+    {
+        OnRuntimeEnd();
+        m_IsRuntime = false;
+    }
+
+    fs::path filepath = Olala::FileDialog::OpenFile("Select File", { "Scene File (.olala)", "*.olala" });
+
+    if (!filepath.empty())
+    {
+        m_Scene = Olala::CreateRef<Olala::Scene>();
+        m_SceneSerializer = Olala::CreateRef<Olala::SceneSerializer>(m_Scene, filepath);
+        m_SceneSerializer->Deserialize();
+
+        m_EditorCamera = GetEditorCamera(m_Scene);
+        if (m_EditorCamera)
+            m_EditorCamera.AddComponent<Olala::EditorCameraControllerComponent>();
+
+        m_SceneViewPanel->SetScene(m_Scene);
+        m_SceneViewPanel->SetCamera(m_EditorCamera);
+        m_SceneHierarchyPanel->SetDisplayingScene(m_Scene);
+        m_PropertyPanel->DisplayEntity(Olala::Entity());
+        m_AssetPanel->SetAssetManager(m_Scene->GetAssetManager());
+
+        m_IsSceneLoaded = true;
+        m_IsSceneSaved = true;
+
+        LOG_INFO("Scene opened, filepath = \"{0}\"", filepath.string());
+    }
+}
+
+void EditorLayer::CloseScene()
+{
+    if (m_IsRuntime)
+    {
+        OnRuntimeEnd();
+        m_IsRuntime = false;
+    }
+
+    // Save check
+    if (!m_IsSceneSaved)
+    {
+        auto result = Olala::FileDialog::MessageYesNoCancel("Message", "Save changes?");
+        if (result == Olala::FileDialog::Result::yes)
+            m_SceneSerializer->Serialize();
+        if (result != Olala::FileDialog::Result::cancel)
+        {
+            // Reset
+            m_Scene = nullptr;
+            m_SceneSerializer = nullptr;
+            m_SceneViewPanel->SetScene(nullptr);
+            m_SceneViewPanel->SetCamera(Olala::Entity());
+            m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
+            m_PropertyPanel->DisplayEntity(Olala::Entity());
+            m_AssetPanel->SetAssetManager(nullptr);
+            m_EditorCamera = Olala::Entity();
+
+            m_IsSceneLoaded = false;
+
+            LOG_INFO("Scene closed");
+        }
+    }
+    else
+    {
+        // Reset
+        m_Scene = nullptr;
+        m_SceneSerializer = nullptr;
+        m_SceneViewPanel->SetScene(nullptr);
+        m_SceneViewPanel->SetCamera(Olala::Entity());
+        m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
+        m_PropertyPanel->DisplayEntity(Olala::Entity());
+        m_AssetPanel->SetAssetManager(nullptr);
+        m_EditorCamera = Olala::Entity();
+
+        m_IsSceneLoaded = false;
+
+        LOG_INFO("Scene closed");
+    }
+
+}
+
+void EditorLayer::SaveScene()
+{
+    LOG_INFO("Scene saved");
+    m_SceneSerializer->Serialize();
+    m_IsSceneSaved = true;
+}
+
+void EditorLayer::SaveSceneAsNew()
+{
+    fs::path folderPath = Olala::FileDialog::SelectFolder("Select Folder");
+    if (!folderPath.empty())
+    {
+        Olala::SceneSerializer::CraeteDirectory(folderPath, m_Scene);
+        Olala::SceneSerializer::CopyAssets(m_SceneSerializer->GetDirectoryPath(), folderPath / m_Scene->GetName());
+        Olala::SceneSerializer(m_Scene, folderPath / m_Scene->GetName() / (m_Scene->GetName() + ".olala")).Serialize();
+    }
+}
+
+void EditorLayer::ImportAsset()
+{
+    std::string filepath = Olala::FileDialog::OpenFile("Select Asset",
+        {
+            "All Files", "*",
+            "Image (.jpg, .png, .jpeg, .bmp, .gif)", "*.jpg *.png *.jpeg *.bmp *.gif"
+        });
+    if (!filepath.empty())
+    {
+        m_SceneSerializer->Import<Olala::Texture2D>(filepath);
+    }
+}
+
+void EditorLayer::StartStopRuntime()
+{
+    m_IsRuntime = !m_IsRuntime;
+    if (m_IsRuntime)
+        OnRuntimeBegin();
+    else
+        OnRuntimeEnd();
 }
 
 void EditorLayer::OnRuntimeBegin()
@@ -349,4 +396,57 @@ void EditorLayer::OnRuntimeEnd()
 
 void EditorLayer::OnEvent(Olala::Event& e)
 {
+    Olala::EventDispatcher dispatcher(e);
+
+    dispatcher.Dispatch<Olala::KeyPressedEvent>(BIND_EVENT_FN(OnKeyPressed));
+}
+
+bool EditorLayer::OnKeyPressed(Olala::KeyPressedEvent& e)
+{
+    if (e.IsRepeated()) 
+        return false;
+
+    bool ctrl = e.IsControlPressed();
+    bool shift = e.IsShiftPressed();
+
+
+    switch (e.GetKeyCode())
+    {
+        case GLFW_KEY_N:
+        {
+            if (ctrl)
+                CreateNewScene();
+            break;
+        }
+        case GLFW_KEY_O:
+        {
+            if (ctrl)
+                OpenScene();
+            break;
+        }
+        case GLFW_KEY_I:
+        {
+            if (ctrl)
+                ImportAsset();
+            break;
+        }
+        case GLFW_KEY_S:
+        {
+            if (ctrl)
+            {
+                if (shift)
+                    SaveSceneAsNew();
+                else
+                    SaveScene();
+            }
+            break;
+        }
+        case GLFW_KEY_F5:
+        {
+            StartStopRuntime();
+            break;
+        }
+    }
+
+    return false;
 }

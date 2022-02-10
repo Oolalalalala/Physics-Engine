@@ -32,6 +32,7 @@ void DebugPanel::OnImGuiRender()
 
 		ImGui::Text("FPS : %d", (int)m_FrameRate);
 		if (ImGui::Checkbox("Show collider border", &m_DrawColliderBorder)) m_SceneViewPanel->SetDrawCollider(m_DrawColliderBorder);
+		if (ImGui::Checkbox("VSync", &m_VSync)) Olala::Application::Get().GetWindow().SetVSync(m_VSync);
 		
 		m_IsFocused = ImGui::IsWindowFocused();
 		ImGui::End();

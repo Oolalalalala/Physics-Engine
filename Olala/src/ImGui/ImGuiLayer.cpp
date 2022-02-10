@@ -67,8 +67,8 @@ namespace Olala {
 		colors[ImGuiCol_ButtonHovered] = panelHoverColor;
 		colors[ImGuiCol_ButtonActive] = panelHoverColor;
 		colors[ImGuiCol_Header] = panelColor;
-		colors[ImGuiCol_HeaderHovered] = panelHoverColor;
-		colors[ImGuiCol_HeaderActive] = panelActiveColor;
+		colors[ImGuiCol_HeaderHovered] = lightBgColor;
+		colors[ImGuiCol_HeaderActive] = bgColor;
 		colors[ImGuiCol_Separator] = borderColor;
 		colors[ImGuiCol_SeparatorHovered] = borderColor;
 		colors[ImGuiCol_SeparatorActive] = borderColor;
@@ -93,7 +93,7 @@ namespace Olala {
 		style.ChildRounding = 0.0f;
 		style.FrameRounding = 0.0f;
 		style.GrabRounding = 0.0f;
-		style.PopupRounding = 0.0f;
+		style.PopupRounding = 5.0f;
 		style.ScrollbarRounding = 0.0f;
 		style.TabRounding = 5.0f;
 		

@@ -18,6 +18,7 @@ project "Editor"
 		"%{wks.location}/Physics/src",
 		"%{wks.location}/Olala/src",
 		"%{wks.location}/Olala/vendor",
+		"%{wks.location}/Olala/vendor/box2d/include",
         "%{wks.location}/Dependencies/GLFW/include",
         "%{wks.location}/Dependencies/GLEW/include"
 	}

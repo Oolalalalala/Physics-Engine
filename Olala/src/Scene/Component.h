@@ -14,6 +14,7 @@
 
 #include <string>
 
+
 namespace Olala {
 
 	struct TagComponent
@@ -90,7 +91,11 @@ namespace Olala {
 		bool IsStatic = false;
 		bool ApplyGravity = true;
 
+#ifdef USE_BOX2D
+		void* RuntimeBody;
+#else
 		PhysicsID PhysicsHandle = 0;
+#endif
 
 		Rigidbody2DComponent() = default;
 		Rigidbody2DComponent(float mass, bool applyGravity = true, bool isStatic = false)

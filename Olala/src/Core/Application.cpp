@@ -6,8 +6,6 @@
 
 namespace Olala {
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application(const std::string& name)
@@ -44,6 +42,7 @@ namespace Olala {
 			{
 				layer->OnUpdate(m_Timer->GetDeltaTime());
 			}
+			
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : *m_LayerStack)
