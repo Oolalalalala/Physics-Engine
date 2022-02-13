@@ -8,18 +8,22 @@ namespace Olala {
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application(const std::string& name)
-		: m_ApplicationName(name)
+	Application::Application(const ApplicationSpecs& specs)
+		: m_ApplicationName(specs.Name)
 	{
 		s_Instance = this;
-		Init();
+		Init(specs);
 	}
 
-	void Application::Init()
+	void Application::Init(const ApplicationSpecs& specs)
 	{
 		Log::Init();
 
-		m_Window = Window::Create(WindowProps(m_ApplicationName, 1600, 900, /*VSync*/true));
+		WindowSpecs windowSpecs(specs.Name, specs.Width, specs.Height, specs.VSync);
+		windowSpecs.IconImagePath = specs.IconImagePath;
+		windowSpecs.SmallIconImagePath = specs.SmallIconImagePath;
+
+		m_Window = Window::Create(windowSpecs);
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
 		m_Timer = CreateScope<Timer>();
@@ -64,7 +68,7 @@ namespace Olala {
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		if (dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose))) CORE_LOG_TRACE("Window Close Event");
+		if (dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose))) OLA_CORE_TRACE("Application closed");
 
 		for (auto it = m_LayerStack->rbegin(); it != m_LayerStack->rend(); it++)
 		{

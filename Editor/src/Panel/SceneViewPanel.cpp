@@ -46,7 +46,7 @@ void SceneViewPanel::OnImGuiRender()
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0.f, 0.f });
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.f);
 
-		ImGui::Begin(m_Name.c_str(), &m_IsOpen);
+		ImGui::Begin(m_Name.c_str(), &m_IsOpen, ImGuiWindowFlags_NoScrollbar);
 		if (m_Scene && m_EditorCamera)
 		{
 			ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();

@@ -5,7 +5,7 @@ namespace Olala {
 	class Texture2D
 	{
 	public:
-		Texture2D(const std::string path);
+		Texture2D(const std::string& path);
 		~Texture2D();
 
 		uint32_t GetWidth() const { return m_Width; }
@@ -21,12 +21,17 @@ namespace Olala {
 			return m_RendererID == other.m_RendererID;
 		}
 
+		static void LoadToGLFWImage(GLFWimage& image, const std::string& path);
+		static void FreeGLFWImage(GLFWimage& image);
+
+
 		static Ref<Texture2D> Create(const std::string& filepath);
 
 	private:
 		bool m_IsLoaded = false;
-		uint32_t m_Width, m_Height;
-		uint32_t m_RendererID;
+		void* m_Data = nullptr;
+		uint32_t m_Width = 0, m_Height = 0;
+		uint32_t m_RendererID = 0;
 	};
 
 }

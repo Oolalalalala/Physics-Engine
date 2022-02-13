@@ -10,7 +10,7 @@ namespace Olala {
 		return CreateRef<Texture2D>(path);
 	}
 
-	Texture2D::Texture2D(const std::string path)
+	Texture2D::Texture2D(const std::string& path)
 	{
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
@@ -19,7 +19,7 @@ namespace Olala {
 
 		if (!data)
 		{
-			CORE_LOG_WARN("Cannot load texture 2D, path : {}", path);
+			OLA_CORE_WARN("Cannot load texture 2D, path : {}", path);
 			return;
 		}
 
@@ -55,6 +55,35 @@ namespace Olala {
 	Texture2D::~Texture2D()
 	{
 		glDeleteTextures(1, &m_RendererID);
+	}
+
+	void Texture2D::LoadToGLFWImage(GLFWimage& image, const std::string& path)
+	{
+		int width, height, channels;
+		stbi_set_flip_vertically_on_load(0);
+
+		auto* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+
+		if (!data)
+		{
+			OLA_CORE_WARN("Cannot load texture 2D, path : {}", path);
+			return;
+		}
+
+		if (channels != 4)
+		{
+			OLA_CORE_ERROR("Texture format incorrect, path : {}", path);
+			return;
+		}
+
+		image.width = width;
+		image.height = height;
+		image.pixels = data;
+	}
+
+	void Texture2D::FreeGLFWImage(GLFWimage& image)
+	{
+		stbi_image_free(image.pixels);
 	}
 
 	void Texture2D::Bind(uint32_t slot) const

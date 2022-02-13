@@ -6,13 +6,15 @@ struct GLFWwindow;
 
 namespace Olala {
 
-	struct WindowProps {
-		std::string title;
-		unsigned int width, height;
-		bool vSync;
-		WindowProps() = default;
-		WindowProps(const std::string& title, unsigned int width = 800, unsigned int height = 600, bool vSync = true)
-			: title(title), width(width), height(height), vSync(vSync) {}
+	struct WindowSpecs {
+		std::string Title = "";
+		unsigned int Width = 1280, Height = 720;
+		std::string IconImagePath = "";
+		std::string SmallIconImagePath = "";
+		bool VSync = true;
+		WindowSpecs() = default;
+		WindowSpecs(const std::string& title, unsigned int width = 800, unsigned int height = 600, bool vSync = true)
+			: Title(title), Width(width), Height(height), VSync(vSync) {}
 	};
 
 
@@ -21,9 +23,9 @@ namespace Olala {
 	public:
 		using EventCallbackFn = std::function<void(Event&)>;
 
-		static Scope<Window> Create(const WindowProps& props);
+		static Scope<Window> Create(const WindowSpecs& props);
 
-		Window(const WindowProps& props);
+		Window(const WindowSpecs& props);
 
 		unsigned int GetWidth() const { return m_Data.Width; }
 		unsigned int GetHeight() const { return m_Data.Height; }
@@ -36,7 +38,7 @@ namespace Olala {
 		void SetEventCallback(EventCallbackFn callback) { m_Data.EventCallback = callback; }
 
 	private:
-		void Init(const WindowProps& props);
+		void Init(const WindowSpecs& props);
 		void ShutDown();
 
 	private:

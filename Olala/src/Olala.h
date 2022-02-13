@@ -38,6 +38,8 @@
 #include "Scene/SceneSerializer.h"
 
 
+#include "ImGui/FontManager.h"
+
 #include "Utils/FileDialog.h"
 
 

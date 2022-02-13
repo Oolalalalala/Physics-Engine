@@ -7,11 +7,19 @@
 #include "ImGui/ImGuiLayer.h"
 
 namespace Olala {
+
+	struct ApplicationSpecs {
+		std::string Name = "Application";
+		uint32_t Width = 1280, Height = 720;
+		std::string IconImagePath = "";
+		std::string SmallIconImagePath = "";
+		bool VSync = true;
+	};
 	
 	class Application
 	{
 	public:
-		Application(const std::string& name);
+		Application(const ApplicationSpecs& specs);
 
 		void Run();
 		void Close();
@@ -28,7 +36,7 @@ namespace Olala {
 		void PushOverlay(Layer* layer);
 
 	private:
-		void Init();
+		void Init(const ApplicationSpecs& specs);
 
 	private:
 		bool m_Running;

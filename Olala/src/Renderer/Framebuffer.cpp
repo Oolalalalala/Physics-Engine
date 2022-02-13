@@ -51,7 +51,7 @@ namespace Olala {
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_DepthBufferRendererID, 0);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			CORE_LOG_ERROR("Framebuffer creation incomplete");
+			OLA_CORE_ERROR("Framebuffer creation incomplete");
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}

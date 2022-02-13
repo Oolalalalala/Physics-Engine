@@ -212,6 +212,20 @@ void PropertyPanel::DrawEntityContext()
 	{
 		ImGui::DragFloat2("Size##Sprite", (float*)&sprite.Size, 1.f, 0.001f, 1000.f);
 		ImGui::ColorEdit4("Color", (float*)&sprite.Color);
+
+		if (sprite.Texture)
+			ImGui::Image((ImTextureID)sprite.Texture->GetRendererID(), { ImGui::GetWindowContentRegionWidth(), ImGui::GetWindowContentRegionWidth() }, { 0, 1 }, { 1,0 });
+		else
+			ImGui::ColorButton("Texture", *(ImVec4*)&sprite.Color, 0, { ImGui::GetWindowContentRegionWidth(), ImGui::GetWindowContentRegionWidth() });
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Texture"))
+			{
+				sprite.Texture = *(Olala::Ref<Olala::Texture2D>*)payload->Data;
+			}
+			ImGui::EndDragDropTarget();
+		}
 	});
 
 	// Rigidbody 2D
@@ -266,7 +280,6 @@ static void AddComponent<Olala::CameraComponent>(Olala::Entity& entity)
 template<>
 static void AddComponent<Olala::Rigidbody2DComponent>(Olala::Entity& entity)
 {
-	// TODO : create add_to_physics_world function in scene.h
 	auto& rigidbody2d = entity.AddComponent<Olala::Rigidbody2DComponent>();
 	auto& transform = entity.GetComponent<Olala::TransformComponent>();
 	auto physicsWorld = entity.GetPhysicsWorld();

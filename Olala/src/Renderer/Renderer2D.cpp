@@ -123,7 +123,7 @@ namespace Olala {
             s_Data.QuadVertexBufferBase = new Renderer2DData::QuadVertexData[s_Data.MaxQuadCount * 4];
             s_Data.QuadDataArray = new Renderer2DData::QuadData[s_Data.MaxQuadCount];
 
-            s_Data.TextureShader = Shader::Create("../Olala/Asset/Shader/Texture.glsl");
+            s_Data.TextureShader = Shader::Create("../Olala/Asset/Internal/Shader/Texture.glsl");
 
             // Set the texture uniform index
             s_Data.TextureShader->Bind();
@@ -169,7 +169,7 @@ namespace Olala {
             s_Data.CircleVertexBufferBase = new Renderer2DData::CircleVertexData[s_Data.MaxCircleCount * 4];
             s_Data.CircleDataArray = new Renderer2DData::CircleData[s_Data.MaxCircleCount];
 
-            s_Data.CircleShader = Shader::Create("../Olala/Asset/Shader/Circle.glsl");
+            s_Data.CircleShader = Shader::Create("../Olala/Asset/Internal/Shader/Circle.glsl");
         }
 
         // Uniform buffer

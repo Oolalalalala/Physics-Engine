@@ -44,10 +44,10 @@ namespace Olala {
 				in.read(&result[0], size);
 			}
 			else
-				CORE_LOG_WARN("Cannot open shader file, path : {}", filepath);
+				OLA_CORE_WARN("Cannot open shader file, path : {}", filepath);
 		}
 		else
-			CORE_LOG_WARN("Cannot open shader file, path : {}", filepath);
+			OLA_CORE_WARN("Cannot open shader file, path : {}", filepath);
 
 		return result;
 	}
@@ -94,7 +94,7 @@ namespace Olala {
 			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
 			char* message = (char*)alloca(length * sizeof(char));
 			glGetShaderInfoLog(id, length, &length, message);
-			CORE_LOG_WARN("Shader compilation failed, path : {}\nMessage : \n{}", m_Filepath, message);
+			OLA_CORE_WARN("Shader compilation failed, path : {}\nMessage : \n{}", m_Filepath, message);
 		}
 
 		return id;
@@ -166,7 +166,7 @@ namespace Olala {
 		int location = glGetUniformLocation(m_RendererID, name.c_str());
 		if (location == -1)
 		{
-			CORE_LOG_ERROR("Uniform does not exists, name : {}", name);
+			OLA_CORE_ERROR("Uniform does not exists, name : {}", name);
 			return -1;
 		}
 

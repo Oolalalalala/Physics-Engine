@@ -322,7 +322,7 @@ namespace Olala {
 						float farPlane    =  cameraComponent["Camera"]["FarPlane"].as<float>();
 						float fieldOfView =  cameraComponent["Camera"]["FieldOfView"].as<float>();
 						float aspectRatio =  cameraComponent["Camera"]["AspectRatio"].as<float>();
-						camera.Camera = CreateRef<PerspectiveCamera>(nearPlane, farPlane, fieldOfView, aspectRatio);
+						camera.Camera = CreateRef<PerspectiveCamera>(fieldOfView, aspectRatio, nearPlane, farPlane);
 					}
 					else
 					{

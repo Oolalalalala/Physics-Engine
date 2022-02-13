@@ -44,6 +44,7 @@ private:
 	Olala::Ref<Olala::Scene> m_Scene;
 	Olala::Ref<Olala::Scene> m_RuntimeScene;
 	Olala::Ref<Olala::SceneSerializer> m_SceneSerializer;
+	Olala::Ref<Olala::FontManager> m_FontManager;
 
 	// Panels
 	Olala::Ref<SceneViewPanel> m_SceneViewPanel;

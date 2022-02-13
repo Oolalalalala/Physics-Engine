@@ -7,6 +7,7 @@
 #include "Renderer/RenderCommand.h"
 #include "Renderer/Renderer2D.h"
 #include "glm/gtx/rotate_vector.hpp"
+#include "glm/gtx/quaternion.hpp"
 
 namespace Olala {
 
@@ -49,7 +50,7 @@ namespace Olala {
 			{
 				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 				camera.Camera->SetPosition(transform.Position);
-				camera.Camera->SetDirection(glm::quat(glm::radians(transform.Rotation)) * glm::vec3(0.0f, 0.0f, -1.0f)); // Not sure if correct
+				camera.Camera->SetDirection(glm::inverse(glm::toMat4(glm::quat(glm::radians(transform.Rotation)))) * glm::vec4(0.f, 0.f, 1.f, 0.0f));
 
 				if (camera.IsOn && camera.RenderTarget != nullptr)
 					cameras.emplace_back(entity, this);
@@ -152,7 +153,7 @@ namespace Olala {
 			{
 				auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
 				camera.Camera->SetPosition(transform.Position);
-				camera.Camera->SetDirection(glm::quat(glm::radians(transform.Rotation)) * glm::vec3(0.0f, 0.0f, -1.0f)); // Not sure if correct
+				camera.Camera->SetDirection(glm::inverse(glm::toMat4(glm::quat(glm::radians(transform.Rotation)))) * glm::vec4(0.f, 0.f, 1.f, 0.0f));
 
 				if (camera.IsOn && camera.RenderTarget != nullptr)
 					cameras.emplace_back(entity, this);
@@ -239,7 +240,7 @@ namespace Olala {
 			fixtureDef.density;
 			fixtureDef.friction;
 			fixtureDef.restitution = 0.6f;
-			fixtureDef.restitutionThreshold;
+			fixtureDef.restitutionThreshold = 10.f;
 
 			b2Body* body = m_PhysicsWorld->CreateBody(&def);
 			body->SetMassData(&massData);
@@ -259,7 +260,7 @@ namespace Olala {
 			{
 				auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
 				b2PolygonShape box;
-				box.SetAsBox(bc2d.Size.x * 0.5f, bc2d.Size.y * 0.5f, b2Vec2(bc2d.Center.x, bc2d.Center.y), glm::radians(bc2d.AngularOffset));
+				box.SetAsBox(bc2d.Size.x * transform.Scale.x * 0.5f, bc2d.Size.y * transform.Scale.y * 0.5f, b2Vec2(bc2d.Center.x, bc2d.Center.y), glm::radians(bc2d.AngularOffset));
 
 				fixtureDef.shape = &box;
 				body->CreateFixture(&fixtureDef);

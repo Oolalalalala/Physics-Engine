@@ -23,7 +23,7 @@ namespace Olala {
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 		io.ConfigWindowsMoveFromTitleBarOnly = true;
 		
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("../Olala/Asset/Fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 18.f);
+		//io.FontDefault = io.Fonts->AddFontFromFileTTF("../Olala/Asset/Internal/Fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 24.f);
 
 		// Custom Sytle
 		ImGuiStyle& style = ImGui::GetStyle();

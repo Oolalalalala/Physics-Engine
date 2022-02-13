@@ -21,6 +21,11 @@ void EditorLayer::OnAttach()
 	m_SceneHierarchyPanel = Olala::CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertyPanel);
     m_AssetPanel = Olala::CreateRef<AssetPanel>(nullptr);
     m_DebugPanel = Olala::CreateRef<DebugPanel>(m_SceneViewPanel);
+
+    // Font manager
+    m_FontManager = Olala::CreateRef<Olala::FontManager>();
+    m_FontManager->AddFont("regular font", "../Olala/Asset/Internal/Fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 18.f);
+    m_FontManager->AddFont("large font", "../Olala/Asset/Internal/Fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 21.f);
 }
 
 void EditorLayer::OnDetach()
@@ -51,6 +56,8 @@ void EditorLayer::OnUpdate(float dt)
 
 void EditorLayer::OnImGuiRender()
 {
+    ImGui::PushFont(m_FontManager->GetFont("regular font"));
+
     static bool opt_fullscreen = true;
     static bool opt_padding = false;
     static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
@@ -94,8 +101,9 @@ void EditorLayer::OnImGuiRender()
     }
 
     // Menu bar
+    ImGui::PushFont(m_FontManager->GetFont("large font"));
     DrawMenuBar();
-
+    ImGui::PopFont();
 
     // Panels
     m_SceneHierarchyPanel  -> OnImGuiRender();
@@ -107,7 +115,10 @@ void EditorLayer::OnImGuiRender()
 
     ImGui::End();
 
+    ImGui::ShowDemoWindow();
     //ImGui::ShowStyleEditor();
+
+    ImGui::PopFont();
 }
 
 void EditorLayer::DrawMenuBar()
@@ -166,7 +177,6 @@ void EditorLayer::DrawMenuBar()
 
 		ImGui::EndMenuBar();
 	}
-    
 }
 
 void EditorLayer::ProcessShortcuts()
@@ -217,17 +227,27 @@ void EditorLayer::CreateNewScene()
         m_IsSceneLoaded = true;
         m_IsSceneSaved = true;
 
-        LOG_INFO("New scene create");
+        OLA_TRACE("New scene create");
     }
 }
 
 void EditorLayer::OpenScene()
 {
-    // TODO : save check
-    if (m_IsRuntime)
+    if (m_IsSceneLoaded)
     {
-        OnRuntimeEnd();
-        m_IsRuntime = false;
+        if (!m_IsSceneSaved)
+        {
+            auto result = Olala::FileDialog::MessageYesNoCancel("Message", "Save Scene?");
+            if (result == Olala::FileDialog::Result::cancel)
+                return;
+            if (result == Olala::FileDialog::Result::yes)
+                m_SceneSerializer->Serialize();
+            m_IsSceneSaved = true;
+        }
+        if (m_IsRuntime)
+            OnRuntimeEnd();
+
+        CloseScene();
     }
 
     fs::path filepath = Olala::FileDialog::OpenFile("Select File", { "Scene File (.olala)", "*.olala" });
@@ -251,65 +271,47 @@ void EditorLayer::OpenScene()
         m_IsSceneLoaded = true;
         m_IsSceneSaved = true;
 
-        LOG_INFO("Scene opened, filepath = \"{0}\"", filepath.string());
+        OLA_TRACE("Scene [{0}] opened", m_Scene->GetName());
     }
 }
 
 void EditorLayer::CloseScene()
 {
-    if (m_IsRuntime)
-    {
-        OnRuntimeEnd();
-        m_IsRuntime = false;
-    }
-
     // Save check
     if (!m_IsSceneSaved)
     {
         auto result = Olala::FileDialog::MessageYesNoCancel("Message", "Save changes?");
+        if (result == Olala::FileDialog::Result::cancel)
+            return;
+
         if (result == Olala::FileDialog::Result::yes)
             m_SceneSerializer->Serialize();
-        if (result != Olala::FileDialog::Result::cancel)
-        {
-            // Reset
-            m_Scene = nullptr;
-            m_SceneSerializer = nullptr;
-            m_SceneViewPanel->SetScene(nullptr);
-            m_SceneViewPanel->SetCamera(Olala::Entity());
-            m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
-            m_PropertyPanel->DisplayEntity(Olala::Entity());
-            m_AssetPanel->SetAssetManager(nullptr);
-            m_EditorCamera = Olala::Entity();
 
-            m_IsSceneLoaded = false;
-
-            LOG_INFO("Scene closed");
-        }
+        m_IsSceneSaved = true;
     }
-    else
-    {
-        // Reset
-        m_Scene = nullptr;
-        m_SceneSerializer = nullptr;
-        m_SceneViewPanel->SetScene(nullptr);
-        m_SceneViewPanel->SetCamera(Olala::Entity());
-        m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
-        m_PropertyPanel->DisplayEntity(Olala::Entity());
-        m_AssetPanel->SetAssetManager(nullptr);
-        m_EditorCamera = Olala::Entity();
+    if (m_IsRuntime)
+        OnRuntimeEnd();
 
-        m_IsSceneLoaded = false;
+    OLA_TRACE("Scene [{0}] closed", m_Scene->GetName());
 
-        LOG_INFO("Scene closed");
-    }
+    // Reset
+    m_Scene = nullptr;
+    m_SceneSerializer = nullptr;
+    m_SceneViewPanel->SetScene(nullptr);
+    m_SceneViewPanel->SetCamera(Olala::Entity());
+    m_SceneHierarchyPanel->SetDisplayingScene(nullptr);
+    m_PropertyPanel->DisplayEntity(Olala::Entity());
+    m_AssetPanel->SetAssetManager(nullptr);
+    m_EditorCamera = Olala::Entity();
 
+    m_IsSceneLoaded = false;
 }
 
 void EditorLayer::SaveScene()
 {
-    LOG_INFO("Scene saved");
     m_SceneSerializer->Serialize();
     m_IsSceneSaved = true;
+    OLA_TRACE("Scene [{0}] saved", m_Scene->GetName());
 }
 
 void EditorLayer::SaveSceneAsNew()
@@ -321,6 +323,8 @@ void EditorLayer::SaveSceneAsNew()
         Olala::SceneSerializer::CopyAssets(m_SceneSerializer->GetDirectoryPath(), folderPath / m_Scene->GetName());
         Olala::SceneSerializer(m_Scene, folderPath / m_Scene->GetName() / (m_Scene->GetName() + ".olala")).Serialize();
     }
+
+    OLA_TRACE("Save scene as new, location = \"{0}\"", folderPath.string());
 }
 
 void EditorLayer::ImportAsset()
@@ -333,13 +337,13 @@ void EditorLayer::ImportAsset()
     if (!filepath.empty())
     {
         m_SceneSerializer->Import<Olala::Texture2D>(filepath);
+        OLA_TRACE("Import asset [{0}]", fs::path(filepath).filename().string());
     }
 }
 
 void EditorLayer::StartStopRuntime()
 {
-    m_IsRuntime = !m_IsRuntime;
-    if (m_IsRuntime)
+    if (!m_IsRuntime)
         OnRuntimeBegin();
     else
         OnRuntimeEnd();
@@ -366,8 +370,9 @@ void EditorLayer::OnRuntimeBegin()
 
     m_PropertyPanel->DisplayEntity(Olala::Entity());
     m_PropertyPanel->SetIsRuntime(true);
+    m_IsRuntime = true;
 
-    LOG_INFO("Runtime begins");
+    OLA_TRACE("Runtime begins");
 }
 
 void EditorLayer::OnRuntimeEnd()
@@ -390,8 +395,9 @@ void EditorLayer::OnRuntimeEnd()
     m_PropertyPanel->SetIsRuntime(false);
 
     m_RuntimeScene = nullptr;
+    m_IsRuntime = false;
 
-    LOG_INFO("Runtime ends");
+    OLA_TRACE("Runtime ends");
 }
 
 void EditorLayer::OnEvent(Olala::Event& e)

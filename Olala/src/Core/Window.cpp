@@ -3,17 +3,18 @@
 #include "Event/ApplicationEvent.h"
 #include "Event/KeyEvent.h"
 #include "Event/MouseEvent.h"
+#include "Renderer/Texture2D.h"
 
 namespace Olala {
 
 	uint32_t Window::s_WindowCount = 0;
 
-	Scope<Window> Window::Create(const WindowProps& props)
+	Scope<Window> Window::Create(const WindowSpecs& props)
 	{
 		return CreateScope<Window>(props);
 	}
 
-	Window::Window(const WindowProps& props)
+	Window::Window(const WindowSpecs& props)
 	{
 		Init(props);
 		s_WindowCount++;
@@ -25,27 +26,51 @@ namespace Olala {
 		glfwSwapBuffers(m_GLFWwindow);
 	}
 
-	void Window::Init(const WindowProps& props)
+	void Window::Init(const WindowSpecs& specs)
 	{
-		m_Data.Title = props.title;
-		m_Data.Width = props.width;
-		m_Data.Height = props.height;
-		m_Data.VSync = props.vSync;
+		m_Data.Title = specs.Title;
+		m_Data.Width = specs.Width;
+		m_Data.Height = specs.Height;
+		m_Data.VSync = specs.VSync;
 
 		if (!s_WindowCount)
 		{
 			if (!glfwInit())
-				CORE_LOG_CRITICAL("GLFW initialization failure");
+				OLA_CORE_CRITICAL("GLFW initialization failure");
 		}
 
-		m_GLFWwindow = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
+		m_GLFWwindow = glfwCreateWindow(specs.Width, specs.Height, specs.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_GLFWwindow);
 
 		if (!s_WindowCount)
 		{
 			if (glewInit() != GLEW_OK && s_WindowCount)
-				CORE_LOG_CRITICAL("GLEW initialization failure");
+				OLA_CORE_CRITICAL("GLEW initialization failure");
 		}
+
+		// Icons
+		GLFWimage images[2];
+		if (specs.IconImagePath.size() && specs.SmallIconImagePath.size())
+		{
+			Texture2D::LoadToGLFWImage(images[0], specs.IconImagePath);
+			Texture2D::LoadToGLFWImage(images[1], specs.SmallIconImagePath);
+			glfwSetWindowIcon(m_GLFWwindow, 2, images);
+			Texture2D::FreeGLFWImage(images[0]);
+			Texture2D::FreeGLFWImage(images[1]);
+		}
+		else if (specs.IconImagePath.size())
+		{
+			Texture2D::LoadToGLFWImage(images[0], specs.IconImagePath);
+			glfwSetWindowIcon(m_GLFWwindow, 1, images);
+			Texture2D::FreeGLFWImage(images[0]);
+		}
+		else if (specs.SmallIconImagePath.size())
+		{
+			Texture2D::LoadToGLFWImage(images[0], specs.SmallIconImagePath);
+			glfwSetWindowIcon(m_GLFWwindow, 1, images);
+			Texture2D::FreeGLFWImage(images[0]);
+		}
+
 
 		glfwSetWindowUserPointer(m_GLFWwindow, &m_Data);
 
@@ -139,7 +164,7 @@ namespace Olala {
 			data.EventCallback(event);
 		});
 
-		SetVSync(props.vSync);
+		SetVSync(specs.VSync);
 	}
 
 	void Window::ShutDown()

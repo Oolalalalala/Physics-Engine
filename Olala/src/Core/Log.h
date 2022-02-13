@@ -27,14 +27,14 @@ namespace Olala {
 
 }
 
-#define CORE_LOG_TRACE(...)    ::Olala::Log::GetCoreLogger()->trace(__VA_ARGS__)
-#define CORE_LOG_INFO(...)     ::Olala::Log::GetCoreLogger()->info(__VA_ARGS__)
-#define CORE_LOG_WARN(...)     ::Olala::Log::GetCoreLogger()->warn(__VA_ARGS__)
-#define CORE_LOG_ERROR(...)    ::Olala::Log::GetCoreLogger()->error(__VA_ARGS__)
-#define CORE_LOG_CRITICAL(...) ::Olala::Log::GetCoreLogger()->critical(__VA_ARGS__)
+#define OLA_CORE_TRACE(...)    ::Olala::Log::GetCoreLogger()->trace(__VA_ARGS__)
+#define OLA_CORE_INFO(...)     ::Olala::Log::GetCoreLogger()->info(__VA_ARGS__)
+#define OLA_CORE_WARN(...)     ::Olala::Log::GetCoreLogger()->warn(__VA_ARGS__)
+#define OLA_CORE_ERROR(...)    ::Olala::Log::GetCoreLogger()->error(__VA_ARGS__)
+#define OLA_CORE_CRITICAL(...) ::Olala::Log::GetCoreLogger()->critical(__VA_ARGS__)
 							   
-#define LOG_TRACE(...)         ::Olala::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define LOG_INFO(...)          ::Olala::Log::GetClientLogger()->info(__VA_ARGS__)
-#define LOG_WARN(...)          ::Olala::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define LOG_ERROR(...)         ::Olala::Log::GetClientLogger()->error(__VA_ARGS__)
-#define LOG_CRITICAL(...)      ::Olala::Log::GetClientLogger()->critical(__VA_ARGS__)
+#define OLA_TRACE(...)         ::Olala::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define OLA_INFO(...)          ::Olala::Log::GetClientLogger()->info(__VA_ARGS__)
+#define OLA_WARN(...)          ::Olala::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define OLA_ERROR(...)         ::Olala::Log::GetClientLogger()->error(__VA_ARGS__)
+#define OLA_CRITICAL(...)      ::Olala::Log::GetClientLogger()->critical(__VA_ARGS__)

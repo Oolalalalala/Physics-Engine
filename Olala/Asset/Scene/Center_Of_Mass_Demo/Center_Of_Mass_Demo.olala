@@ -2,17 +2,31 @@ Scene: Center_Of_Mass_Demo
 Textures:
   {}
 Entities:
-  - Name: Box3
+  - Name: Editor Camera
     TransformComponent:
-      Position: [290, 0, 0]
+      Position: [0, 0, 0]
+      Rotation: [0, 180, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        NearPlane: -1
+        FarPlane: 1
+        Width: 1171.57898
+        Height: 600
+      IsMain: true
+      IsOn: true
+  - Name: Box1
+    TransformComponent:
+      Position: [-326, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Size: [125, 125]
-      Color: [0.80472362, 0.945945919, 0.536888242, 1]
+      Color: [0.864864886, 0.762934029, 0.470833778, 1]
       Texture: 0
     Rigidbody2DComponent:
-      Mass: 100
+      Mass: 1
       Velocity: [0, 0]
       AngularVelocity: 0
       Static: true
@@ -39,17 +53,17 @@ Entities:
     CircleCollider2DComponent:
       Center: [0, 28]
       Radius: 45.0009995
-  - Name: Box1
+  - Name: Box3
     TransformComponent:
-      Position: [-326, 0, 0]
+      Position: [290, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Size: [125, 125]
-      Color: [0.864864886, 0.762934029, 0.470833778, 1]
+      Color: [0.80472362, 0.945945919, 0.536888242, 1]
       Texture: 0
     Rigidbody2DComponent:
-      Mass: 1
+      Mass: 100
       Velocity: [0, 0]
       AngularVelocity: 0
       Static: true
@@ -58,17 +72,3 @@ Entities:
       Center: [0, 0]
       AngularOffset: 0
       Size: [125, 125]
-  - Name: Editor Camera
-    TransformComponent:
-      Position: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      Camera:
-        ProjectionType: 1
-        NearPlane: -1
-        FarPlane: 1
-        Width: 1117.18945
-        Height: 600
-      IsMain: true
-      IsOn: true
