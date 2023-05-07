@@ -240,7 +240,6 @@ namespace Olala {
         s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
         s_Data.QuadVertexArray->Bind();
-        s_Data.QuadVertexBuffer->Bind();
         s_Data.QuadVertexArray->GetIndexBuffer()->Bind();
         RenderCommand::DrawIndexed(s_Data.QuadVertexArray, indexCount);
     }
